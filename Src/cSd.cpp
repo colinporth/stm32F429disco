@@ -63,7 +63,7 @@ uint8_t SD_Init() {
   uSdHandle.Init.ClockPowerSave      = SDIO_CLOCK_POWER_SAVE_DISABLE;
   uSdHandle.Init.BusWide             = SDIO_BUS_WIDE_1B;
   uSdHandle.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
-  uSdHandle.Init.ClockDiv            = SDIO_TRANSFER_CLK_DIV;
+  uSdHandle.Init.ClockDiv            = 4; //SDIO_TRANSFER_CLK_DIV;
 
    __HAL_RCC_DMA2_CLK_ENABLE();
 

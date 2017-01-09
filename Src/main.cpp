@@ -2919,7 +2919,7 @@ int main() {
   lcd = new cLcd (SDRAM_BANK2_ADDR, SDRAM_BANK2_ADDR + 0x200000);
 
   const std::string kHello = "built " + std::string(__TIME__) + " on " + std::string(__DATE__);
-  lcd->init ("hello Colin - " + kHello);
+  lcd->init ("stm32F429disco test - " + kHello);
   lcd->displayOn();
 
   lcd->startRender();
@@ -2929,8 +2929,8 @@ int main() {
   //initPs2gpio();
   //initPs2touchpad();
   //stream = true;
-  int ret = SD_Init();
-  lcd->info ("SDinit " + dec(ret));
+  //int ret = SD_Init();
+  //lcd->info ("SDinit " + dec(ret));
 
   while (true) {
     lcd->startRender();
