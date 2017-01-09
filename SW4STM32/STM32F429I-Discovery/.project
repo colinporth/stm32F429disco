@@ -59,12 +59,12 @@
 		<link>
 			<name>stm32f4xx_it.c</name>
 			<type>1</type>
-			<locationURI>copy_PARENT/Src/stm32f4xx_it.c</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/stm32f4xx_it.c</locationURI>
 		</link>
 		<link>
 			<name>syscalls.c</name>
 			<type>1</type>
-			<locationURI>copy_PARENT/Src/syscalls.c</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/syscalls.c</locationURI>
 		</link>
 		<link>
 			<name>HAL_Driver/stm32f4xx_hal.c</name>

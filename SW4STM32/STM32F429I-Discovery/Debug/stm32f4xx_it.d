@@ -1,5 +1,4 @@
-stm32f4xx_it.o: \
- c:\users\colin\stm32cube\repository\stm32cube_fw_f4_v1.14.0\projects\stm32f429i-discovery\examples\fmc\fmc_sdram_lowpower\src\stm32f4xx_it.c \
+stm32f4xx_it.o: C:/Users/colin/Desktop/stm32F429disco/Src/stm32f4xx_it.c \
  C:/Users/colin/Desktop/stm32F429disco/Inc/stm32f4xx.h \
  C:/Users/colin/Desktop/stm32F429disco/Inc/stm32f429xx.h \
  C:/Users/colin/Desktop/stm32F429disco/Inc/core_cm4.h \
@@ -36,7 +35,7 @@ stm32f4xx_it.o: \
  C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_spi.h \
  C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_uart.h \
  C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_usart.h \
- c:\users\colin\stm32cube\repository\stm32cube_fw_f4_v1.14.0\projects\stm32f429i-discovery\examples\fmc\fmc_sdram_lowpower\src\cSdPrivate.h
+ C:/Users/colin/Desktop/stm32F429disco/Src/cSdPrivate.h
 
 C:/Users/colin/Desktop/stm32F429disco/Inc/stm32f4xx.h:
 
@@ -110,4 +109,4 @@ C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_uart.h:
 
 C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_usart.h:
 
-c:\users\colin\stm32cube\repository\stm32cube_fw_f4_v1.14.0\projects\stm32f429i-discovery\examples\fmc\fmc_sdram_lowpower\src\cSdPrivate.h:
+C:/Users/colin/Desktop/stm32F429disco/Src/cSdPrivate.h:

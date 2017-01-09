@@ -11,8 +11,8 @@ C_SRCS += \
 C:/Users/colin/Desktop/stm32F429disco/Src/heap_5.c \
 C:/Users/colin/Desktop/stm32F429disco/Src/stm32f429i_discovery.c \
 C:/Users/colin/Desktop/stm32F429disco/Src/stm32f429i_discovery_sdram.c \
-C://Users/colin/STM32Cube/Repository/STM32Cube_FW_F4_V1.14.0/Projects/STM32F429I-Discovery/Examples/FMC/FMC_SDRAM_LowPower/Src/stm32f4xx_it.c \
-C://Users/colin/STM32Cube/Repository/STM32Cube_FW_F4_V1.14.0/Projects/STM32F429I-Discovery/Examples/FMC/FMC_SDRAM_LowPower/Src/syscalls.c 
+C:/Users/colin/Desktop/stm32F429disco/Src/stm32f4xx_it.c \
+C:/Users/colin/Desktop/stm32F429disco/Src/syscalls.c 
 
 OBJS += \
 ./cSd.o \
@@ -76,7 +76,7 @@ stm32f429i_discovery_sdram.o: C:/Users/colin/Desktop/stm32F429disco/Src/stm32f42
 	@echo 'Finished building: $<'
 	@echo ' '
 
-stm32f4xx_it.o: C://Users/colin/STM32Cube/Repository/STM32Cube_FW_F4_V1.14.0/Projects/STM32F429I-Discovery/Examples/FMC/FMC_SDRAM_LowPower/Src/stm32f4xx_it.c
+stm32f4xx_it.o: C:/Users/colin/Desktop/stm32F429disco/Src/stm32f4xx_it.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo %cd%
@@ -84,7 +84,7 @@ stm32f4xx_it.o: C://Users/colin/STM32Cube/Repository/STM32Cube_FW_F4_V1.14.0/Pro
 	@echo 'Finished building: $<'
 	@echo ' '
 
-syscalls.o: C://Users/colin/STM32Cube/Repository/STM32Cube_FW_F4_V1.14.0/Projects/STM32F429I-Discovery/Examples/FMC/FMC_SDRAM_LowPower/Src/syscalls.c
+syscalls.o: C:/Users/colin/Desktop/stm32F429disco/Src/syscalls.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo %cd%

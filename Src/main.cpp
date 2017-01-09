@@ -2929,8 +2929,8 @@ int main() {
   //initPs2gpio();
   //initPs2touchpad();
   //stream = true;
-  //int ret = SD_Init();
-  //lcd->info ("SDinit " + dec(ret));
+  int ret = SD_Init();
+  lcd->info ("SDinit " + dec(ret));
 
   while (true) {
     lcd->startRender();

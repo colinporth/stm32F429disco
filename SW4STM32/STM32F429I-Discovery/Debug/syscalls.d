@@ -1,5 +1,4 @@
-syscalls.o: \
- c:\users\colin\stm32cube\repository\stm32cube_fw_f4_v1.14.0\projects\stm32f429i-discovery\examples\fmc\fmc_sdram_lowpower\src\syscalls.c \
+syscalls.o: C:/Users/colin/Desktop/stm32F429disco/Src/syscalls.c \
  C:/Users/colin/Desktop/stm32F429disco/Inc/stm32f4xx.h \
  C:/Users/colin/Desktop/stm32F429disco/Inc/stm32f429xx.h \
  C:/Users/colin/Desktop/stm32F429disco/Inc/core_cm4.h \
