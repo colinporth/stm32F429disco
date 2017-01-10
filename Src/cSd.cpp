@@ -63,7 +63,7 @@ uint8_t SD_Init() {
   uSdHandle.Init.ClockPowerSave      = SDIO_CLOCK_POWER_SAVE_DISABLE;
   uSdHandle.Init.BusWide             = SDIO_BUS_WIDE_1B;
   uSdHandle.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
-  uSdHandle.Init.ClockDiv            = 4; //SDIO_TRANSFER_CLK_DIV;
+  uSdHandle.Init.ClockDiv            = SDIO_TRANSFER_CLK_DIV;
 
    __HAL_RCC_DMA2_CLK_ENABLE();
 
@@ -123,20 +123,20 @@ uint8_t SD_Init() {
   //HAL_DMA_DeInit (&dma_tx_handle);
   //HAL_DMA_Init (&dma_tx_handle);
   //}}}
-  HAL_NVIC_SetPriority (SDIO_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ (SDIO_IRQn);
   //HAL_NVIC_SetPriority (DMA2_Stream3_IRQn, 6, 0);  // f for 769
   //HAL_NVIC_EnableIRQ (DMA2_Stream3_IRQn);
   //HAL_NVIC_SetPriority (DMA2_Stream6_IRQn, 6, 0);  // f for 769
   //HAL_NVIC_EnableIRQ (DMA2_Stream6_IRQn);
+  HAL_NVIC_SetPriority (SDIO_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ (SDIO_IRQn);
 
   // HAL SD initialization
   if (HAL_SD_Init (&uSdHandle, &uSdCardInfo) != SD_OK)
     return MSD_ERROR;
   if (HAL_SD_WideBusOperation_Config (&uSdHandle, SDIO_BUS_WIDE_4B) != SD_OK)
     return MSD_ERROR;
-  if (HAL_SD_HighSpeed (&uSdHandle) != SD_OK)
-    return MSD_ERROR;
+  //if (HAL_SD_HighSpeed (&uSdHandle) != SD_OK)
+  //  return MSD_ERROR;
 
   //osMutexDef (sdMutex);
   //mSdMutex = osMutexCreate (osMutex (sdMutex));
@@ -191,8 +191,8 @@ std::string SD_info() {
 //{{{
 uint8_t SD_Read (uint8_t* buf, uint32_t blk_addr, uint16_t blocks) {
 
-  //if (HAL_SD_ReadBlocks (&uSdHandle, (uint32_t*)buf, blk_addr * 512, blocks) != SD_OK)
-  //  return MSD_ERROR;
+  if (HAL_SD_ReadBlocks (&uSdHandle, (uint32_t*)buf, blk_addr * 512, 512, blocks) != SD_OK)
+    return MSD_ERROR;
   //SCB_InvalidateDCache_by_Addr ((uint32_t*)((uint32_t)buf & 0xFFFFFFE0), (blocks * 512) + 32);
 
   return MSD_OK;

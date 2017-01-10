@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 C:/Users/colin/Desktop/stm32F429disco/Src/cSd.cpp \
+C:/Users/colin/Desktop/stm32F429disco/Src/fatFs.cpp \
 C:/Users/colin/Desktop/stm32F429disco/Src/main.cpp 
 
 C_SRCS += \
@@ -16,6 +17,7 @@ C:/Users/colin/Desktop/stm32F429disco/Src/syscalls.c
 
 OBJS += \
 ./cSd.o \
+./fatFs.o \
 ./heap_5.o \
 ./main.o \
 ./stm32f429i_discovery.o \
@@ -32,11 +34,20 @@ C_DEPS += \
 
 CPP_DEPS += \
 ./cSd.d \
+./fatFs.d \
 ./main.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
 cSd.o: C:/Users/colin/Desktop/stm32F429disco/Src/cSd.cpp
+	@echo 'Building file: $<'
+	@echo 'Invoking: MCU G++ Compiler'
+	@echo %cd%
+	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -std=c++0x -DUSE_HAL_DRIVER -DFT2_BUILD_LIBRARY -DSTM32F429xx -DUSE_STM32F429I_DISCO -I"C:/Users/colin/Desktop/stm32F429disco/Inc" -I"C:/Users/colin/Desktop/stm32F429disco/freetype/include" -I"C:/Users/colin/Desktop/stm32F429disco/HAL_Driver"  -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fno-exceptions -fno-rtti -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+fatFs.o: C:/Users/colin/Desktop/stm32F429disco/Src/fatFs.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU G++ Compiler'
 	@echo %cd%

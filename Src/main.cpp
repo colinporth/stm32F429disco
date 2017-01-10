@@ -1,11 +1,13 @@
 // main.cpp
 //{{{  includes
 #include <stdint.h>
+#include <stdlib.h>
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <iomanip>
 #include <map>
+#include <vector>
 
 #include "heap.h"
 
@@ -13,10 +15,14 @@
 #include "stm32f4xx_hal.h"
 
 #include "cSd.h"
+#include "fatFs.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include "FreeSansBold.h"
+
+
+#include "diskio.h"
 //}}}
 //{{{  clock defines
 #define HSE_VALUE        ((uint32_t)8000000)
@@ -2902,6 +2908,120 @@ void initPs2touchpad() {
   }
 //}}}
 
+static volatile DSTATUS Stat = STA_NOINIT;
+
+//{{{
+DSTATUS diskStatus() {
+
+  return SD_GetStatus() == SD_TRANSFER_OK ? 0 : STA_NOINIT;
+  }
+//}}}
+//{{{
+DSTATUS diskInitialize() {
+
+  return SD_GetStatus() == SD_TRANSFER_OK ? 0 : STA_NOINIT;
+  }
+//}}}
+
+//{{{
+DRESULT diskIoctl (BYTE cmd, void* buff) {
+
+  DRESULT res = RES_ERROR;
+
+  switch (cmd) {
+    // Make sure that no pending write process
+    case CTRL_SYNC :
+      res = RES_OK;
+      break;
+
+    // Get number of sectors on the disk (DWORD)
+    case GET_SECTOR_COUNT : {
+      HAL_SD_CardInfoTypedef CardInfo;
+      SD_GetCardInfo (&CardInfo);
+      *(DWORD*)buff = CardInfo.CardCapacity / SECTOR_SIZE;
+      res = RES_OK;
+      break;
+      }
+
+    // Get R/W sector size (WORD)
+    case GET_SECTOR_SIZE :
+      *(WORD*)buff = SECTOR_SIZE;
+      res = RES_OK;
+      break;
+
+    // Get erase block size in unit of sector (DWORD)
+    case GET_BLOCK_SIZE :
+      *(DWORD*)buff = SECTOR_SIZE;
+      res = RES_OK;
+      break;
+
+    default:
+      res = RES_PARERR;
+    }
+
+  return res;
+  }
+//}}}
+//{{{
+DRESULT diskRead (BYTE* buffer, DWORD sector, UINT count) {
+
+  if ((uint32_t)buffer & 0x03) {
+    lcd->info ("diskRead align b:" + hex ((int)buffer) + " sec:" + dec (sector) + " num:" + dec (count));
+
+    // not 32bit aligned, dma fails,
+    auto tempBuffer = (uint8_t*)pvPortMalloc (count * SECTOR_SIZE);
+
+    // read into 32bit aligned tempBuffer
+    auto result = SD_ReadCached (tempBuffer, sector, count) == MSD_OK ? RES_OK : RES_ERROR;
+    memcpy (buffer, tempBuffer, count * SECTOR_SIZE);
+
+    vPortFree (tempBuffer);
+    return result;
+    }
+
+  else
+    lcd->info ("diskRead - sec:" + dec (sector) + " num:" + dec (count));
+    return SD_ReadCached ((uint8_t*)buffer, sector, count) == MSD_OK ? RES_OK : RES_ERROR;
+  }
+//}}}
+//{{{
+DRESULT diskWrite (const BYTE* buffer, DWORD sector, UINT count) {
+  return SD_WriteCached ((uint8_t*)buffer, (uint64_t)(sector * SECTOR_SIZE), count) == MSD_OK ? RES_OK : RES_ERROR;
+  }
+//}}}
+
+std::vector<std::string> mMp3Files;
+//{{{
+void listDirectory (std::string directoryName, std::string ext) {
+
+  lcd->info ("dir " + directoryName);
+
+  cDirectory directory (directoryName);
+  if (directory.getError()) {
+    //{{{  open error
+    lcd->info (COL_RED, "directory open error:"  + dec (directory.getError()));
+    return;
+    }
+    //}}}
+
+  cFileInfo fileInfo;
+  while ((directory.find (fileInfo) == FR_OK) && !fileInfo.getEmpty()) {
+    if (fileInfo.getBack()) {
+      //debug (fileInfo.getName());
+      }
+
+    else if (fileInfo.isDirectory()) {
+      //listDirectory (directoryName + "/" + fileInfo.getName(), ext);
+      }
+    else { //if (fileInfo.matchExtension (ext.c_str())) {
+      mMp3Files.push_back (directoryName + "/" + fileInfo.getName());
+      lcd->info (fileInfo.getName());
+      cFile file (directoryName + "/" + fileInfo.getName(), FA_OPEN_EXISTING | FA_READ);
+      lcd->info ("- filesize " + dec (file.getSize()));
+      }
+    }
+  }
+//}}}
 //{{{
 int main() {
 
@@ -2926,11 +3046,19 @@ int main() {
   lcd->clear (COL_BLACK);
   lcd->endRender (true);
 
-  //initPs2gpio();
-  //initPs2touchpad();
-  //stream = true;
+  initPs2gpio();
+  initPs2touchpad();
+  stream = true;
   int ret = SD_Init();
   lcd->info ("SDinit " + dec(ret));
+
+  cFatFs* fatFs = cFatFs::create();
+  if (fatFs->mount() != FR_OK)
+    lcd->info ("fatFs mount problem");
+  else
+    lcd->info (fatFs->getLabel() + " vsn:" + hex (fatFs->getVolumeSerialNumber()) +
+               " freeSectors:" + dec (fatFs->getFreeSectors()));
+  listDirectory ("", "JPG");
 
   while (true) {
     lcd->startRender();

@@ -37,6 +37,7 @@ main.o: C:/Users/colin/Desktop/stm32F429disco/Src/main.cpp \
  C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_uart.h \
  C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_usart.h \
  C:/Users/colin/Desktop/stm32F429disco/Src/cSd.h \
+ C:/Users/colin/Desktop/stm32F429disco/Src/fatFs.h \
  C:/Users/colin/Desktop/stm32F429disco/freetype/include/ft2build.h \
  C:/Users/colin/Desktop/stm32F429disco/freetype/include/config/ftheader.h \
  C:/Users/colin/Desktop/stm32F429disco/freetype/include/internal/internal.h \
@@ -50,7 +51,8 @@ main.o: C:/Users/colin/Desktop/stm32F429disco/Src/main.cpp \
  C:/Users/colin/Desktop/stm32F429disco/freetype/include/fterrors.h \
  C:/Users/colin/Desktop/stm32F429disco/freetype/include/ftmoderr.h \
  C:/Users/colin/Desktop/stm32F429disco/freetype/include/fterrdef.h \
- C:/Users/colin/Desktop/stm32F429disco/Src/FreeSansBold.h
+ C:/Users/colin/Desktop/stm32F429disco/Src/FreeSansBold.h \
+ C:/Users/colin/Desktop/stm32F429disco/Src/diskio.h
 
 C:/Users/colin/Desktop/stm32F429disco/Inc/heap.h:
 
@@ -128,6 +130,8 @@ C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_usart.h:
 
 C:/Users/colin/Desktop/stm32F429disco/Src/cSd.h:
 
+C:/Users/colin/Desktop/stm32F429disco/Src/fatFs.h:
+
 C:/Users/colin/Desktop/stm32F429disco/freetype/include/ft2build.h:
 
 C:/Users/colin/Desktop/stm32F429disco/freetype/include/config/ftheader.h:
@@ -155,3 +159,5 @@ C:/Users/colin/Desktop/stm32F429disco/freetype/include/ftmoderr.h:
 C:/Users/colin/Desktop/stm32F429disco/freetype/include/fterrdef.h:
 
 C:/Users/colin/Desktop/stm32F429disco/Src/FreeSansBold.h:
+
+C:/Users/colin/Desktop/stm32F429disco/Src/diskio.h:

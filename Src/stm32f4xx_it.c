@@ -26,4 +26,4 @@ void PendSV_Handler() { }
 
 void SysTick_Handler() { HAL_IncTick(); }
 
-//void SDIO_IRQHandler() { HAL_SD_IRQHandler (&uSdHandle); }
+void SDIO_IRQHandler() { HAL_SD_IRQHandler (&uSdHandle); }

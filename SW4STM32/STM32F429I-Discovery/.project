@@ -32,6 +32,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/cSd.cpp</locationURI>
 		</link>
 		<link>
+			<name>fatFs.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/fatFs.cpp</locationURI>
+		</link>
+		<link>
 			<name>heap_5.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/heap_5.c</locationURI>
