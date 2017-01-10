@@ -60,6 +60,7 @@ uint8_t SD_Init() {
 
   uSdHandle.Init.ClockEdge           = SDIO_CLOCK_EDGE_RISING;
   uSdHandle.Init.ClockBypass         = SDIO_CLOCK_BYPASS_DISABLE;
+ // uSdHandle.Init.ClockBypass         = SDIO_CLOCK_BYPASS_ENABLE;
   uSdHandle.Init.ClockPowerSave      = SDIO_CLOCK_POWER_SAVE_DISABLE;
   uSdHandle.Init.BusWide             = SDIO_BUS_WIDE_1B;
   uSdHandle.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;

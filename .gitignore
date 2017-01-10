@@ -60,3 +60,5 @@ Temporary Items
 *.elf
 *.o
 *.o
+*.o
+*.bin

@@ -3046,19 +3046,22 @@ int main() {
   lcd->clear (COL_BLACK);
   lcd->endRender (true);
 
-  initPs2gpio();
-  initPs2touchpad();
-  stream = true;
-  int ret = SD_Init();
-  lcd->info ("SDinit " + dec(ret));
+  //initPs2gpio();
+  //initPs2touchpad();
+  //stream = true;
 
-  cFatFs* fatFs = cFatFs::create();
-  if (fatFs->mount() != FR_OK)
-    lcd->info ("fatFs mount problem");
-  else
-    lcd->info (fatFs->getLabel() + " vsn:" + hex (fatFs->getVolumeSerialNumber()) +
-               " freeSectors:" + dec (fatFs->getFreeSectors()));
-  listDirectory ("", "JPG");
+  if (true) {
+    int ret = SD_Init();
+    lcd->info ("SDinit " + dec(ret));
+
+    cFatFs* fatFs = cFatFs::create();
+    if (fatFs->mount() != FR_OK)
+      lcd->info ("fatFs mount problem");
+    else
+      lcd->info (fatFs->getLabel() + " vsn:" + hex (fatFs->getVolumeSerialNumber()) +
+                 " freeSectors:" + dec (fatFs->getFreeSectors()));
+    listDirectory ("", "JPG");
+    }
 
   while (true) {
     lcd->startRender();
