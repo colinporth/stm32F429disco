@@ -31,7 +31,6 @@ template <typename T> std::string hex (T value, uint16_t width = 0) {
   }
 //}}}
 
-SD_HandleTypeDef uSdHandle;
 //{{{  static vars
 static HAL_SD_CardInfoTypedef uSdCardInfo;
 static DMA_HandleTypeDef dmaRxHandle;
@@ -49,6 +48,11 @@ static uint32_t mWrites = 0;
 static uint32_t mWriteMultipleLen = 0;
 static uint32_t mWriteBlock = 0xFFFFFFFF;
 //}}}
+
+SD_HandleTypeDef uSdHandle;
+extern "C" { void SDIO_IRQHandler() { HAL_SD_IRQHandler (&uSdHandle); } }
+extern "C" { void DMA2_Stream3_IRQHandler() { HAL_DMA_IRQHandler (uSdHandle.hdmarx); } }
+extern "C" { void DMA2_Stream6_IRQHandler() { HAL_DMA_IRQHandler (uSdHandle.hdmatx); } }
 
 //{{{
 uint8_t SD_Init() {
