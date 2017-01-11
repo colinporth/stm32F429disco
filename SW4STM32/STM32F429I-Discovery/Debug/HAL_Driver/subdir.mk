@@ -13,7 +13,6 @@ C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_gpio.c \
 C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_i2c.c \
 C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_i2c_ex.c \
 C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_ltdc.c \
-C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_ltdc_ex.c \
 C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_pwr.c \
 C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_pwr_ex.c \
 C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_rcc.c \
@@ -35,7 +34,6 @@ OBJS += \
 ./HAL_Driver/stm32f4xx_hal_i2c.o \
 ./HAL_Driver/stm32f4xx_hal_i2c_ex.o \
 ./HAL_Driver/stm32f4xx_hal_ltdc.o \
-./HAL_Driver/stm32f4xx_hal_ltdc_ex.o \
 ./HAL_Driver/stm32f4xx_hal_pwr.o \
 ./HAL_Driver/stm32f4xx_hal_pwr_ex.o \
 ./HAL_Driver/stm32f4xx_hal_rcc.o \
@@ -57,7 +55,6 @@ C_DEPS += \
 ./HAL_Driver/stm32f4xx_hal_i2c.d \
 ./HAL_Driver/stm32f4xx_hal_i2c_ex.d \
 ./HAL_Driver/stm32f4xx_hal_ltdc.d \
-./HAL_Driver/stm32f4xx_hal_ltdc_ex.d \
 ./HAL_Driver/stm32f4xx_hal_pwr.d \
 ./HAL_Driver/stm32f4xx_hal_pwr_ex.d \
 ./HAL_Driver/stm32f4xx_hal_rcc.d \
@@ -136,14 +133,6 @@ HAL_Driver/stm32f4xx_hal_i2c_ex.o: C:/Users/colin/Desktop/stm32F429disco/HAL_Dri
 	@echo ' '
 
 HAL_Driver/stm32f4xx_hal_ltdc.o: C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_ltdc.c
-	@echo 'Building file: $<'
-	@echo 'Invoking: MCU GCC Compiler'
-	@echo %cd%
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DFT2_BUILD_LIBRARY -DSTM32F429xx -DUSE_STM32F429I_DISCO -I"C:/Users/colin/Desktop/stm32F429disco/HAL_Driver" -I"C:/Users/colin/Desktop/stm32F429disco/Inc" -I"C:/Users/colin/Desktop/stm32F429disco/freetype/include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -Wno-unused-variable -Wno-pointer-sign -Wno-main -Wno-format -Wno-address -Wno-unused-but-set-variable -Wno-strict-aliasing -Wno-parentheses -Wno-missing-braces -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
-	@echo 'Finished building: $<'
-	@echo ' '
-
-HAL_Driver/stm32f4xx_hal_ltdc_ex.o: C:/Users/colin/Desktop/stm32F429disco/HAL_Driver/stm32f4xx_hal_ltdc_ex.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo %cd%

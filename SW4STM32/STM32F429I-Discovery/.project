@@ -112,11 +112,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/HAL_Driver/stm32f4xx_hal_ltdc.c</locationURI>
 		</link>
 		<link>
-			<name>HAL_Driver/stm32f4xx_hal_ltdc_ex.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/HAL_Driver/stm32f4xx_hal_ltdc_ex.c</locationURI>
-		</link>
-		<link>
 			<name>HAL_Driver/stm32f4xx_hal_pwr.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/HAL_Driver/stm32f4xx_hal_pwr.c</locationURI>

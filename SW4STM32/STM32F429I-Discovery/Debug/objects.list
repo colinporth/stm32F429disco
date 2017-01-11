@@ -7,7 +7,6 @@
 "HAL_Driver/stm32f4xx_hal_i2c.o"
 "HAL_Driver/stm32f4xx_hal_i2c_ex.o"
 "HAL_Driver/stm32f4xx_hal_ltdc.o"
-"HAL_Driver/stm32f4xx_hal_ltdc_ex.o"
 "HAL_Driver/stm32f4xx_hal_pwr.o"
 "HAL_Driver/stm32f4xx_hal_pwr_ex.o"
 "HAL_Driver/stm32f4xx_hal_rcc.o"
