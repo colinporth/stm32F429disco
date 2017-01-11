@@ -27,3 +27,5 @@ void PendSV_Handler() { }
 void SysTick_Handler() { HAL_IncTick(); }
 
 void SDIO_IRQHandler() { HAL_SD_IRQHandler (&uSdHandle); }
+void DMA2_Stream3_IRQHandler() { HAL_DMA_IRQHandler (uSdHandle.hdmarx); }
+void DMA2_Stream6_IRQHandler() { HAL_DMA_IRQHandler (uSdHandle.hdmatx); }

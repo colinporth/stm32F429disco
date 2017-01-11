@@ -57,11 +57,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/stm32f429i_discovery.c</locationURI>
 		</link>
 		<link>
-			<name>stm32f429i_discovery_sdram.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/stm32f429i_discovery_sdram.c</locationURI>
-		</link>
-		<link>
 			<name>stm32f4xx_it.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/stm32f4xx_it.c</locationURI>

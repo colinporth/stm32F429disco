@@ -13,6 +13,7 @@
 
 #include "stm32f4xx.h"
 #include "stm32f4xx_hal.h"
+#include "stm32f429i_discovery.h"
 
 #include "cSd.h"
 #include "fatFs.h"
@@ -1608,8 +1609,8 @@ public:
     // preload fontChars
     for (char ch = 0x20; ch <= 0x7F; ch++)
       loadChar (getFontHeight(), ch);
-    for (char ch = 0x21; ch <= 0x3F; ch++)
-      loadChar (getBigFontHeight(), ch);
+    //for (char ch = 0x21; ch <= 0x3F; ch++)
+    //  loadChar (getBigFontHeight(), ch);
     //for (char ch = 0x21; ch <= 0x3F; ch++)
     //  loadChar (getSmallFontHeight(), ch);
 
@@ -2909,7 +2910,6 @@ void initPs2touchpad() {
 //}}}
 
 static volatile DSTATUS Stat = STA_NOINIT;
-
 //{{{
 DSTATUS diskStatus() {
 
@@ -2922,7 +2922,6 @@ DSTATUS diskInitialize() {
   return SD_GetStatus() == SD_TRANSFER_OK ? 0 : STA_NOINIT;
   }
 //}}}
-
 //{{{
 DRESULT diskIoctl (BYTE cmd, void* buff) {
 
@@ -2979,9 +2978,10 @@ DRESULT diskRead (BYTE* buffer, DWORD sector, UINT count) {
     return result;
     }
 
-  else
-    lcd->info ("diskRead - sec:" + dec (sector) + " num:" + dec (count));
+  else {
+    //lcd->info ("diskRead - sec:" + dec (sector) + " num:" + dec (count));
     return SD_ReadCached ((uint8_t*)buffer, sector, count) == MSD_OK ? RES_OK : RES_ERROR;
+    }
   }
 //}}}
 //{{{
@@ -3011,13 +3011,12 @@ void listDirectory (std::string directoryName, std::string ext) {
       }
 
     else if (fileInfo.isDirectory()) {
-      //listDirectory (directoryName + "/" + fileInfo.getName(), ext);
+      listDirectory (directoryName + "/" + fileInfo.getName(), ext);
       }
-    else { //if (fileInfo.matchExtension (ext.c_str())) {
+    else if (fileInfo.matchExtension (ext.c_str())) {
       mMp3Files.push_back (directoryName + "/" + fileInfo.getName());
-      lcd->info (fileInfo.getName());
       cFile file (directoryName + "/" + fileInfo.getName(), FA_OPEN_EXISTING | FA_READ);
-      lcd->info ("- filesize " + dec (file.getSize()));
+      lcd->info (dec (file.getSize()) + " " + fileInfo.getName());
       }
     }
   }
@@ -3028,6 +3027,7 @@ int main() {
   HAL_Init();
   SystemClockConfig180();
   initDebugUart();
+  BSP_PB_Init (BUTTON_KEY, BUTTON_MODE_GPIO);
   //configureDtrace4();
   SDRAMgpioInit();
   SDRAMbank1Init();
@@ -3036,21 +3036,20 @@ int main() {
   HeapRegion_t xHeapRegions[] = { {(uint8_t*)SDRAM_BANK2_ADDR + 0x400000, 0x400000 }, { nullptr, 0 } };
   heapInit (xHeapRegions);
 
-  lcd = new cLcd (SDRAM_BANK2_ADDR, SDRAM_BANK2_ADDR + 0x200000);
+  // clear frameBuffer
+  memset ((void*)SDRAM_BANK2_ADDR, 0, 0x400000);
 
+  lcd = new cLcd (SDRAM_BANK2_ADDR, SDRAM_BANK2_ADDR + 0x200000);
   const std::string kHello = "built " + std::string(__TIME__) + " on " + std::string(__DATE__);
   lcd->init ("stm32F429disco test - " + kHello);
   lcd->displayOn();
 
-  lcd->startRender();
-  lcd->clear (COL_BLACK);
-  lcd->endRender (true);
-
-  //initPs2gpio();
-  //initPs2touchpad();
-  //stream = true;
-
-  if (true) {
+  if (BSP_PB_GetState (BUTTON_KEY) == GPIO_PIN_SET) {
+    initPs2gpio();
+    initPs2touchpad();
+    stream = true;
+    }
+  else {
     int ret = SD_Init();
     lcd->info ("SDinit " + dec(ret));
 

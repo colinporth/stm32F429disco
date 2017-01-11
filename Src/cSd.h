@@ -4,7 +4,7 @@
 #include <string>
 //}}}
 
-typedef enum { MSD_OK, MSD_ERROR, MSD_ERROR_SD_NOT_PRESENT } MSD_RESULT;
+typedef enum { MSD_OK, MSD_ERROR, MSD_ERROR_SD_NOT_PRESENT, MSD_NO_HIGH_SPEED } MSD_RESULT;
 
 uint8_t SD_Init();
 uint8_t SD_ITConfig();

@@ -118,8 +118,6 @@ public:
     }
   //}}}
   //}}}
-  void* operator new (std::size_t size) { return pvPortMalloc (size); }
-  void operator delete (void *ptr) { vPortFree (ptr); }
 
   //{{{  gets
   FRESULT getError() { return mResult; }
@@ -220,8 +218,6 @@ public:
   cDirectory (std::string path);
   ~cDirectory();
   //}}}
-  void* operator new (std::size_t size) { return pvPortMalloc (size); }
-  void operator delete (void *ptr) { vPortFree (ptr); }
   //{{{  gets
   FRESULT getError() { return mResult; }
   //}}}
@@ -269,8 +265,6 @@ public:
   cFile (std::string path, BYTE mode);
   ~cFile();
   //}}}
-  void* operator new (std::size_t size) { return pvPortMalloc (size); }
-  void operator delete (void *ptr) { vPortFree (ptr); }
   //{{{  gets
   FRESULT getError() { return mResult; }
 

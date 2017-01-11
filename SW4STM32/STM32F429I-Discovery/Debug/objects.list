@@ -23,7 +23,6 @@
 "heap_5.o"
 "main.o"
 "stm32f429i_discovery.o"
-"stm32f429i_discovery_sdram.o"
 "stm32f4xx_it.o"
 "syscalls.o"
 "freetype/autofit.o"

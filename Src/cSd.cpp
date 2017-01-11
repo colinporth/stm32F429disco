@@ -31,12 +31,11 @@ template <typename T> std::string hex (T value, uint16_t width = 0) {
   }
 //}}}
 
-
 SD_HandleTypeDef uSdHandle;
 //{{{  static vars
 static HAL_SD_CardInfoTypedef uSdCardInfo;
-static DMA_HandleTypeDef dma_rx_handle;
-static DMA_HandleTypeDef dma_tx_handle;
+static DMA_HandleTypeDef dmaRxHandle;
+static DMA_HandleTypeDef dmaTxHandle;
 
 static const uint32_t mReadCacheSize = 0x40;
 static uint8_t* mReadCache = 0;
@@ -51,26 +50,19 @@ static uint32_t mWriteMultipleLen = 0;
 static uint32_t mWriteBlock = 0xFFFFFFFF;
 //}}}
 
-//osMutexId mSdMutex;
-//if ((mSdMutex, 1000) == osOK)) {
-//osMutexRelease (mSdMutex);
-
 //{{{
 uint8_t SD_Init() {
 
+  uSdHandle.Instance = SDIO;
   uSdHandle.Init.ClockEdge           = SDIO_CLOCK_EDGE_RISING;
-  uSdHandle.Init.ClockBypass         = SDIO_CLOCK_BYPASS_DISABLE;
- // uSdHandle.Init.ClockBypass         = SDIO_CLOCK_BYPASS_ENABLE;
+  uSdHandle.Init.ClockBypass         = SDIO_CLOCK_BYPASS_DISABLE;  // SDIO_CLOCK_BYPASS_ENABLE;
   uSdHandle.Init.ClockPowerSave      = SDIO_CLOCK_POWER_SAVE_DISABLE;
   uSdHandle.Init.BusWide             = SDIO_BUS_WIDE_1B;
   uSdHandle.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
   uSdHandle.Init.ClockDiv            = SDIO_TRANSFER_CLK_DIV;
 
-   __HAL_RCC_DMA2_CLK_ENABLE();
-
-  // sd interrupt
-  uSdHandle.Instance = SDIO;
   __HAL_RCC_SDIO_CLK_ENABLE();
+  __HAL_RCC_DMA2_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   //{{{  gpio init
@@ -87,47 +79,48 @@ uint8_t SD_Init() {
   HAL_GPIO_Init (GPIOD, &gpio_init_structure);
   //}}}
   //{{{  DMA rx parameters
-  dma_rx_handle.Instance                 = DMA2_Stream3;
-  dma_rx_handle.Init.Channel             = DMA_CHANNEL_4;
-  dma_rx_handle.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-  dma_rx_handle.Init.PeriphInc           = DMA_PINC_DISABLE;
-  dma_rx_handle.Init.MemInc              = DMA_MINC_ENABLE;
-  dma_rx_handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-  dma_rx_handle.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
-  dma_rx_handle.Init.Mode                = DMA_PFCTRL;
-  dma_rx_handle.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
-  dma_rx_handle.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
-  dma_rx_handle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-  dma_rx_handle.Init.MemBurst            = DMA_MBURST_INC4;
-  dma_rx_handle.Init.PeriphBurst         = DMA_PBURST_INC4;
-
-  //__HAL_LINKDMA (&uSdHandle, hdmarx, dma_rx_handle);
-  //HAL_DMA_DeInit (&dma_rx_handle);
-  //HAL_DMA_Init (&dma_rx_handle);
+  dmaRxHandle.Instance                 = DMA2_Stream3;
+  dmaRxHandle.Init.Channel             = DMA_CHANNEL_4;
+  dmaRxHandle.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+  dmaRxHandle.Init.PeriphInc           = DMA_PINC_DISABLE;
+  dmaRxHandle.Init.MemInc              = DMA_MINC_ENABLE;
+  dmaRxHandle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+  dmaRxHandle.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
+  dmaRxHandle.Init.Mode                = DMA_PFCTRL;
+  dmaRxHandle.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
+  dmaRxHandle.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
+  dmaRxHandle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+  dmaRxHandle.Init.MemBurst            = DMA_MBURST_INC4;
+  dmaRxHandle.Init.PeriphBurst         = DMA_PBURST_INC4;
+  __HAL_LINKDMA (&uSdHandle, hdmarx, dmaRxHandle);
+  HAL_DMA_DeInit (&dmaRxHandle);
+  HAL_DMA_Init (&dmaRxHandle);
   //}}}
   //{{{  DMA tx parameters
-  dma_tx_handle.Instance                 = DMA2_Stream6;
-  dma_tx_handle.Init.Channel             = DMA_CHANNEL_4;
-  dma_tx_handle.Init.Direction           = DMA_MEMORY_TO_PERIPH;
-  dma_tx_handle.Init.PeriphInc           = DMA_PINC_DISABLE;
-  dma_tx_handle.Init.MemInc              = DMA_MINC_ENABLE;
-  dma_tx_handle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-  dma_tx_handle.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
-  dma_tx_handle.Init.Mode                = DMA_PFCTRL;
-  dma_tx_handle.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
-  dma_tx_handle.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
-  dma_tx_handle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-  dma_tx_handle.Init.MemBurst            = DMA_MBURST_INC4;
-  dma_tx_handle.Init.PeriphBurst         = DMA_PBURST_INC4;
+  dmaTxHandle.Instance                 = DMA2_Stream6;
+  dmaTxHandle.Init.Channel             = DMA_CHANNEL_4;
+  dmaTxHandle.Init.Direction           = DMA_MEMORY_TO_PERIPH;
+  dmaTxHandle.Init.PeriphInc           = DMA_PINC_DISABLE;
+  dmaTxHandle.Init.MemInc              = DMA_MINC_ENABLE;
+  dmaTxHandle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+  dmaTxHandle.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
+  dmaTxHandle.Init.Mode                = DMA_PFCTRL;
+  dmaTxHandle.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
+  dmaTxHandle.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
+  dmaTxHandle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+  dmaTxHandle.Init.MemBurst            = DMA_MBURST_INC4;
+  dmaTxHandle.Init.PeriphBurst         = DMA_PBURST_INC4;
 
-  //__HAL_LINKDMA (&uSdHandle, hdmatx, dma_tx_handle);
-  //HAL_DMA_DeInit (&dma_tx_handle);
-  //HAL_DMA_Init (&dma_tx_handle);
+  __HAL_LINKDMA (&uSdHandle, hdmatx, dmaTxHandle);
+  HAL_DMA_DeInit (&dmaTxHandle);
+  HAL_DMA_Init (&dmaTxHandle);
   //}}}
-  //HAL_NVIC_SetPriority (DMA2_Stream3_IRQn, 6, 0);  // f for 769
-  //HAL_NVIC_EnableIRQ (DMA2_Stream3_IRQn);
-  //HAL_NVIC_SetPriority (DMA2_Stream6_IRQn, 6, 0);  // f for 769
-  //HAL_NVIC_EnableIRQ (DMA2_Stream6_IRQn);
+
+  HAL_NVIC_SetPriority (DMA2_Stream3_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ (DMA2_Stream3_IRQn);
+  HAL_NVIC_SetPriority (DMA2_Stream6_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ (DMA2_Stream6_IRQn);
+
   HAL_NVIC_SetPriority (SDIO_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ (SDIO_IRQn);
 
@@ -136,18 +129,13 @@ uint8_t SD_Init() {
     return MSD_ERROR;
   if (HAL_SD_WideBusOperation_Config (&uSdHandle, SDIO_BUS_WIDE_4B) != SD_OK)
     return MSD_ERROR;
-  //if (HAL_SD_HighSpeed (&uSdHandle) != SD_OK)
-  //  return MSD_ERROR;
 
-  //osMutexDef (sdMutex);
-  //mSdMutex = osMutexCreate (osMutex (sdMutex));
-
-  mReadCache = (uint8_t*)pvPortMalloc (512 * mReadCacheSize);
-
-  return MSD_OK;
+  //if (HAL_SD_HighSpeed (&uSdHandle) == SD_OK)
+    return MSD_OK;
+  //else
+  //  return MSD_NO_HIGH_SPEED;
   }
 //}}}
-
 //{{{
 uint8_t SD_ITConfig() {
 
@@ -192,8 +180,11 @@ std::string SD_info() {
 //{{{
 uint8_t SD_Read (uint8_t* buf, uint32_t blk_addr, uint16_t blocks) {
 
-  if (HAL_SD_ReadBlocks (&uSdHandle, (uint32_t*)buf, blk_addr * 512, 512, blocks) != SD_OK)
+  if (HAL_SD_ReadBlocks_DMA (&uSdHandle, (uint32_t*)buf, blk_addr * 512, 512, blocks) != SD_OK)
     return MSD_ERROR;
+  if (HAL_SD_CheckReadOperation (&uSdHandle, 0xFFFFFFF) != SD_OK)
+    return MSD_ERROR;
+
   //SCB_InvalidateDCache_by_Addr ((uint32_t*)((uint32_t)buf & 0xFFFFFFE0), (blocks * 512) + 32);
 
   return MSD_OK;
@@ -243,31 +234,7 @@ int8_t SD_GetCapacity (uint32_t* block_num, uint16_t* block_size) {
 //{{{
 int8_t SD_ReadCached (uint8_t* buf, uint32_t blk_addr, uint16_t blocks) {
 
-  if (SD_present()) {
-    if ((blk_addr >= mReadCacheBlock) && (blk_addr + blocks <= mReadCacheBlock + mReadCacheSize)) {
-      mReadHits++;
-      memcpy (buf, mReadCache + ((blk_addr - mReadCacheBlock) * 512), blocks * 512);
-      }
-    else {
-      mReads++;
-      SD_Read (mReadCache, blk_addr, mReadCacheSize);
-      memcpy (buf, mReadCache, blocks * 512);
-      mReadCacheBlock = blk_addr;
-      }
-
-    if (blk_addr != mReadBlock + mReadMultipleLen) {
-      if (mReadMultipleLen) {
-        // flush pending multiple
-        //cLcd::debug ("rm:" + dec (mReadBlock) + "::" + dec (mReadMultipleLen));
-        mReadMultipleLen = 0;
-        }
-      mReadBlock = blk_addr;
-      }
-    mReadMultipleLen += blocks;
-    return 0;
-    }
-
-  return -1;
+  return SD_Read (buf, blk_addr, blocks);
   }
 //}}}
 //{{{
