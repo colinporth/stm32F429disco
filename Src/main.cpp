@@ -1647,7 +1647,7 @@ public:
     bool tailing = mLastLine == (int)mFirstLine + mNumDrawLines - 1;
 
     auto line = (mLastLine < mMaxLine-1) ? mLastLine+1 : mLastLine;
-    mLines[line].mTime = 0; //xTaskGetTickCount();
+    mLines[line].mTime = HAL_GetTick(); //xTaskGetTickCount();
     mLines[line].mColour = colour;
     mLines[line].mString = str;
     mLastLine = line;
@@ -1697,7 +1697,7 @@ public:
     //if (xSemaphoreTake (ltdc.sem, 100) == pdFALSE)
     //  ltdc.timeouts++;
 
-    //mDrawStartTime = xTaskGetTickCount();
+    mDrawStartTime = HAL_GetTick();
     }
   //}}}
   //{{{
@@ -1774,7 +1774,7 @@ public:
     mDma2dCurBuf = mDma2dBuf;
     *mDma2dCurBuf = kEnd;
 
-    //mDrawTime = xTaskGetTickCount() - mDrawStartTime;
+    mDrawTime = HAL_GetTick() - mDrawStartTime;
     }
   //}}}
 
@@ -2344,7 +2344,7 @@ private:
     for (auto i = 0; i < mMaxLine; i++)
       mLines[i].clear();
 
-    //mStartTime = xTaskGetTickCount();
+    mStartTime = HAL_GetTick();
     mLastLine = -1;
     mFirstLine = 0;
     }
