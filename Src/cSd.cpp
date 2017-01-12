@@ -135,9 +135,7 @@ uint8_t SD_Init() {
     return MSD_ERROR;
 
   //if (HAL_SD_HighSpeed (&uSdHandle) == SD_OK)
-    return MSD_OK;
-  //else
-  //  return MSD_NO_HIGH_SPEED;
+  return MSD_OK;
   }
 //}}}
 //{{{

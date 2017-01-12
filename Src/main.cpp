@@ -1,7 +1,12 @@
 // main.cpp
+#define bigMalloc(size,tag)    pvPortMalloc(size)
+#define bigFree                vPortFree
+#define smallMalloc(size,tag)  malloc(size)
+#define smallFree              free
 //{{{  includes
 #include <stdint.h>
 #include <stdlib.h>
+#include <math.h>
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -22,6 +27,7 @@
 #include FT_FREETYPE_H
 #include "FreeSansBold.h"
 
+#include "cJpegPic.h"
 
 #include "diskio.h"
 //}}}
@@ -1452,6 +1458,7 @@ void memoryTest() {
   }
 //}}}
 //}}}
+
 //{{{  lcd
 //{{{  colour defines
 #define COL_WHITE         0xFFFF
@@ -1637,6 +1644,12 @@ public:
     }
   //}}}
   //{{{
+  void debug (std::string str) {
+    info (COL_WHITE, str);
+    render();
+    }
+  //}}}
+  //{{{
   void info (std::string str) {
     info (COL_WHITE, str);
     }
@@ -1779,6 +1792,13 @@ public:
   //}}}
 
   //{{{
+  void render() {
+    startRender();
+    clear (COL_BLACK);
+    endRender (true);
+    }
+  //}}}
+  //{{{
   void displayOn() {
     GPIOD->BSRR = GPIO_PIN_13;   // ADJ hi
     }
@@ -1865,7 +1885,7 @@ public:
   //}}}
   //{{{
   void copy (uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height) {
-  // copy RGB888 to ARGB8888
+  // copy
 
     // output
     *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x3C; // OMAR - output start address
@@ -1880,7 +1900,7 @@ public:
 
     // src - fgnd
     *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x1C; // FGPFCCR - fgnd PFC
-    *mDma2dCurBuf++ = DMA2D_INPUT_RGB888;
+    *mDma2dCurBuf++ = DMA2D_INPUT_RGB565;
 
     *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x0C; // FGMAR - fgnd address
     *mDma2dCurBuf++ = (uint32_t)src;
@@ -2990,11 +3010,12 @@ DRESULT diskWrite (const BYTE* buffer, DWORD sector, UINT count) {
   }
 //}}}
 
-std::vector<std::string> mMp3Files;
+std::vector<std::string> mFileNames;
 //{{{
 void listDirectory (std::string directoryName, std::string ext) {
 
-  lcd->info ("dir " + directoryName);
+  //lcd->info ("dir " + directoryName);
+  //lcd->render();
 
   cDirectory directory (directoryName);
   if (directory.getError()) {
@@ -3014,9 +3035,9 @@ void listDirectory (std::string directoryName, std::string ext) {
       listDirectory (directoryName + "/" + fileInfo.getName(), ext);
       }
     else if (fileInfo.matchExtension (ext.c_str())) {
-      mMp3Files.push_back (directoryName + "/" + fileInfo.getName());
-      cFile file (directoryName + "/" + fileInfo.getName(), FA_OPEN_EXISTING | FA_READ);
-      lcd->info (dec (file.getSize()) + " " + fileInfo.getName());
+      mFileNames.push_back (directoryName + "/" + fileInfo.getName());
+      //lcd->info (fileInfo.getName());
+      //lcd->render();
       }
     }
   }
@@ -3043,13 +3064,17 @@ int main() {
   const std::string kHello = "built " + std::string(__TIME__) + " on " + std::string(__DATE__);
   lcd->init ("stm32F429disco test - " + kHello);
   lcd->displayOn();
+  lcd->render();
 
   if (BSP_PB_GetState (BUTTON_KEY) == GPIO_PIN_SET) {
+    //{{{  ps2
     initPs2gpio();
     initPs2touchpad();
     stream = true;
     }
+    //}}}
   else {
+    //{{{  sd
     int ret = SD_Init();
     lcd->info ("SDinit " + dec(ret));
 
@@ -3061,6 +3086,42 @@ int main() {
                  " freeSectors:" + dec (fatFs->getFreeSectors()));
     listDirectory ("", "JPG");
     }
+    //}}}
+
+  for (auto fileStr : mFileNames) {
+    cFile file (fileStr, FA_OPEN_EXISTING | FA_READ);
+    auto buf = (uint8_t*)pvPortMalloc (file.getSize());
+
+    auto bytesRead = 0;
+    FRESULT fresult = file.read (buf, file.getSize(), bytesRead);
+
+    cJpegPic jpeg (2, buf);
+    jpeg.readHeader();
+    auto width = jpeg.getWidth();
+    auto height = jpeg.getHeight();
+
+    lcd->info (dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + " " + fileStr);
+
+    if ((width > 800) || (height > 600)) {
+      auto out = jpeg.decodeBody (3);
+      lcd->startRender();
+      lcd->clear (COL_BLACK);
+      lcd->copy (out, 0, 0, width>>3 , height>>3);
+      lcd->endRender (true);
+      vPortFree (out);
+      }
+    else {
+      auto out = jpeg.decodeBody (0);
+      lcd->startRender();
+      lcd->clear (COL_BLACK);
+      lcd->copy (out, 0, 0, width , height);
+      lcd->endRender (true);
+      vPortFree (out);
+      }
+
+    vPortFree (buf);
+    }
+  HAL_Delay (100000);
 
   while (true) {
     lcd->startRender();
