@@ -866,65 +866,40 @@ HAL_SD_ErrorTypedef HAL_SD_WriteBlocks_DMA(SD_HandleTypeDef *hsd, uint32_t *pWri
 }
 /*}}}*/
 /*{{{*/
-/**
-  * @brief  This function waits until the SD DMA data read transfer is finished.
-  *         This API should be called after HAL_SD_ReadBlocks_DMA() function
-  *         to insure that all data sent by the card is already transferred by the
-  *         DMA controller.
-  * @param  hsd: SD handle
-  * @param  Timeout: Timeout duration
-  * @retval SD Card error state
-  */
-HAL_SD_ErrorTypedef HAL_SD_CheckReadOperation(SD_HandleTypeDef *hsd, uint32_t Timeout)
-{
+HAL_SD_ErrorTypedef HAL_SD_CheckReadOperation(SD_HandleTypeDef *hsd, uint32_t Timeout) {
+
   HAL_SD_ErrorTypedef errorstate = SD_OK;
-  uint32_t timeout = Timeout;
-  uint32_t tmp1, tmp2;
-  HAL_SD_ErrorTypedef tmp3;
 
   /* Wait for DMA/SD transfer end or SD error variables to be in SD handle */
-  tmp1 = hsd->DmaTransferCplt;
-  tmp2 = hsd->SdTransferCplt;
-  tmp3 = (HAL_SD_ErrorTypedef)hsd->SdTransferErr;
-
-  while ((tmp1 == 0U) && (tmp2 == 0U) && (tmp3 == SD_OK) && (timeout > 0U))
-  {
-    tmp1 = hsd->DmaTransferCplt;
-    tmp2 = hsd->SdTransferCplt;
-    tmp3 = (HAL_SD_ErrorTypedef)hsd->SdTransferErr;
-    timeout--;
-  }
-
-  timeout = Timeout;
+  while ((hsd->DmaTransferCplt == 0) &&
+         (hsd->SdTransferCplt == 0) &&
+         ((HAL_SD_ErrorTypedef)hsd->SdTransferErr == SD_OK) && (Timeout > 0)) {
+    HAL_Delay (1);
+    Timeout--;
+    }
 
   /* Wait until the Rx transfer is no longer active */
-  while((__HAL_SD_SDIO_GET_FLAG(hsd, SDIO_FLAG_RXACT)) && (timeout > 0U))
-  {
-    timeout--;
-  }
+  while ((__HAL_SD_SDIO_GET_FLAG(hsd, SDIO_FLAG_RXACT)) && (Timeout > 0)) {
+    HAL_Delay (1);
+    Timeout--;
+    }
 
   /* Send stop command in multiblock read */
   if (hsd->SdOperation == SD_READ_MULTIPLE_BLOCK)
-  {
-    errorstate = HAL_SD_StopTransfer(hsd);
-  }
+    errorstate = HAL_SD_StopTransfer (hsd);
 
-  if ((timeout == 0U) && (errorstate == SD_OK))
-  {
+  if ((Timeout == 0) && (errorstate == SD_OK))
     errorstate = SD_DATA_TIMEOUT;
-  }
 
   /* Clear all the static flags */
   __HAL_SD_SDIO_CLEAR_FLAG(hsd, SDIO_STATIC_FLAGS);
 
   /* Return error state */
   if (hsd->SdTransferErr != SD_OK)
-  {
     return (HAL_SD_ErrorTypedef)(hsd->SdTransferErr);
-  }
 
   return errorstate;
-}
+  }
 /*}}}*/
 /*{{{*/
 /**

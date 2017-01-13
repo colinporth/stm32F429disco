@@ -20,7 +20,6 @@
 #include "stm32f4xx_hal.h"
 #include "stm32f429i_discovery.h"
 
-#include "cSd.h"
 #include "fatFs.h"
 
 #include <ft2build.h>
@@ -1458,8 +1457,7 @@ void memoryTest() {
   }
 //}}}
 //}}}
-
-//{{{  lcd
+//{{{  Lcd
 //{{{  colour defines
 #define COL_WHITE         0xFFFF
 //#define COL_LIGHTGREY     0xFFD3D3D3
@@ -1900,7 +1898,8 @@ public:
 
     // src - fgnd
     *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x1C; // FGPFCCR - fgnd PFC
-    *mDma2dCurBuf++ = DMA2D_INPUT_RGB565;
+    //*mDma2dCurBuf++ = DMA2D_INPUT_RGB565;
+    *mDma2dCurBuf++ = DMA2D_INPUT_RGB888;
 
     *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x0C; // FGMAR - fgnd address
     *mDma2dCurBuf++ = (uint32_t)src;
@@ -2462,7 +2461,7 @@ private:
   //}}}
   };
 //}}}
-
+//{{{  Ps2
 //{{{  ps2 keyboard defines
 #define PS2_TAB       9
 #define PS2_ENTER     13
@@ -2840,7 +2839,6 @@ void ps2sendTouchpadSpecialCommand (uint8_t arg) {
     }
   }
 //}}}
-
 //{{{
 void initPs2gpio() {
 
@@ -2928,16 +2926,260 @@ void initPs2touchpad() {
   ps2send (0xF4); // touchpad enable streaming
   }
 //}}}
+//}}}
+//{{{  Sd
+typedef enum { MSD_OK, MSD_ERROR, MSD_ERROR_SD_NOT_PRESENT, MSD_NO_HIGH_SPEED } MSD_RESULT;
+//{{{  static vars
+SD_HandleTypeDef uSdHandle;
+HAL_SD_CardInfoTypedef uSdCardInfo;
+DMA_HandleTypeDef dmaRxHandle;
+DMA_HandleTypeDef dmaTxHandle;
 
+const uint32_t mReadCacheSize = 0x40;
+uint8_t* mReadCache = 0;
+uint32_t mReadCacheBlock = 0xFFFFFFB0;
+uint32_t mReads = 0;
+uint32_t mReadHits = 0;
+uint32_t mReadMultipleLen = 0;
+uint32_t mReadBlock = 0xFFFFFFFF;
+
+uint32_t mWrites = 0;
+int32_t mWriteMultipleLen = 0;
+uint32_t mWriteBlock = 0xFFFFFFFF;
+//}}}
+
+extern "C" { void SDIO_IRQHandler() { HAL_SD_IRQHandler (&uSdHandle); } }
+extern "C" { void DMA2_Stream3_IRQHandler() { HAL_DMA_IRQHandler (uSdHandle.hdmarx); } }
+extern "C" { void DMA2_Stream6_IRQHandler() { HAL_DMA_IRQHandler (uSdHandle.hdmatx); } }
+
+//{{{
+uint8_t SD_Init() {
+
+  uSdHandle.Instance = SDIO;
+  uSdHandle.Init.ClockEdge           = SDIO_CLOCK_EDGE_RISING;
+  uSdHandle.Init.ClockBypass         = SDIO_CLOCK_BYPASS_DISABLE;  // SDIO_CLOCK_BYPASS_ENABLE;
+  uSdHandle.Init.ClockPowerSave      = SDIO_CLOCK_POWER_SAVE_DISABLE;
+  uSdHandle.Init.BusWide             = SDIO_BUS_WIDE_1B;
+  uSdHandle.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
+  uSdHandle.Init.ClockDiv            = 0;
+
+  __HAL_RCC_SDIO_CLK_ENABLE();
+  __HAL_RCC_DMA2_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  //{{{  gpio init
+  GPIO_InitTypeDef  gpio_init_structure;
+  gpio_init_structure.Mode      = GPIO_MODE_AF_PP;
+  gpio_init_structure.Pull      = GPIO_PULLUP;
+  gpio_init_structure.Speed     = GPIO_SPEED_HIGH;
+  gpio_init_structure.Alternate = GPIO_AF12_SDIO;
+
+  gpio_init_structure.Pin = GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12;
+  HAL_GPIO_Init (GPIOC, &gpio_init_structure);
+
+  gpio_init_structure.Pin = GPIO_PIN_2;
+  HAL_GPIO_Init (GPIOD, &gpio_init_structure);
+  //}}}
+  //{{{  DMA rx parameters
+  dmaRxHandle.Instance                 = DMA2_Stream3;
+  dmaRxHandle.Init.Channel             = DMA_CHANNEL_4;
+  dmaRxHandle.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+  dmaRxHandle.Init.PeriphInc           = DMA_PINC_DISABLE;
+  dmaRxHandle.Init.MemInc              = DMA_MINC_ENABLE;
+  dmaRxHandle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+  dmaRxHandle.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
+  dmaRxHandle.Init.Mode                = DMA_PFCTRL;
+  dmaRxHandle.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
+  dmaRxHandle.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
+  dmaRxHandle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+  dmaRxHandle.Init.MemBurst            = DMA_MBURST_INC4;
+  dmaRxHandle.Init.PeriphBurst         = DMA_PBURST_INC4;
+  __HAL_LINKDMA (&uSdHandle, hdmarx, dmaRxHandle);
+  HAL_DMA_DeInit (&dmaRxHandle);
+  HAL_DMA_Init (&dmaRxHandle);
+  //}}}
+  //{{{  DMA tx parameters
+  dmaTxHandle.Instance                 = DMA2_Stream6;
+  dmaTxHandle.Init.Channel             = DMA_CHANNEL_4;
+  dmaTxHandle.Init.Direction           = DMA_MEMORY_TO_PERIPH;
+  dmaTxHandle.Init.PeriphInc           = DMA_PINC_DISABLE;
+  dmaTxHandle.Init.MemInc              = DMA_MINC_ENABLE;
+  dmaTxHandle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+  dmaTxHandle.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
+  dmaTxHandle.Init.Mode                = DMA_PFCTRL;
+  dmaTxHandle.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
+  dmaTxHandle.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
+  dmaTxHandle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+  dmaTxHandle.Init.MemBurst            = DMA_MBURST_INC4;
+  dmaTxHandle.Init.PeriphBurst         = DMA_PBURST_INC4;
+
+  __HAL_LINKDMA (&uSdHandle, hdmatx, dmaTxHandle);
+  HAL_DMA_DeInit (&dmaTxHandle);
+  HAL_DMA_Init (&dmaTxHandle);
+  //}}}
+
+  HAL_NVIC_SetPriority (DMA2_Stream3_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ (DMA2_Stream3_IRQn);
+  HAL_NVIC_SetPriority (DMA2_Stream6_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ (DMA2_Stream6_IRQn);
+
+  HAL_NVIC_SetPriority (SDIO_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ (SDIO_IRQn);
+
+  // HAL SD initialization
+  if (HAL_SD_Init (&uSdHandle, &uSdCardInfo) != SD_OK)
+    return MSD_ERROR;
+  if (HAL_SD_WideBusOperation_Config (&uSdHandle, SDIO_BUS_WIDE_4B) != SD_OK)
+    return MSD_ERROR;
+
+  //if (HAL_SD_HighSpeed (&uSdHandle) == SD_OK)
+  return MSD_OK;
+  }
+//}}}
+//{{{
+uint8_t SD_ITConfig() {
+
+  //GPIO_InitTypeDef gpio_init_structure;
+  //gpio_init_structure.Pin = SD_DETECT_PIN;
+  //gpio_init_structure.Pull = GPIO_PULLUP;
+  //gpio_init_structure.Speed = GPIO_SPEED_FAST;
+  //gpio_init_structure.Mode = GPIO_MODE_IT_RISING_FALLING;
+  //HAL_GPIO_Init (SD_DETECT_GPIO_PORT, &gpio_init_structure);
+
+  // Enable and set SD detect EXTI Interrupt to the lowest priority */
+  //HAL_NVIC_SetPriority ((IRQn_Type)(SD_DETECT_EXTI_IRQn), 0x0F, 0x00);
+  //HAL_NVIC_EnableIRQ ((IRQn_Type)(SD_DETECT_EXTI_IRQn));
+
+  return MSD_OK;
+  }
+//}}}
+
+//{{{
+bool SD_present() {
+  return true;
+  //!(SD_DETECT_GPIO_PORT->IDR & SD_DETECT_PIN);
+  }
+//}}}
+//{{{
+int8_t SD_IsReady() {
+  return (SD_present() && (HAL_SD_GetStatus (&uSdHandle) == SD_TRANSFER_OK)) ? 0 : -1;
+  }
+//}}}
+//{{{
+int8_t SD_GetCapacity (uint32_t* block_num, uint16_t* block_size) {
+
+  if (SD_present()) {
+    HAL_SD_CardInfoTypedef info;
+    HAL_SD_Get_CardInfo (&uSdHandle, &info);
+    *block_num = (info.CardCapacity) / 512 - 1;
+    *block_size = 512;
+    return 0;
+    }
+
+  return -1;
+  }
+//}}}
+
+//{{{
+HAL_SD_TransferStateTypedef SD_GetStatus() {
+  return HAL_SD_GetStatus (&uSdHandle);
+  }
+//}}}
+//{{{
+void SD_GetCardInfo (HAL_SD_CardInfoTypedef* CardInfo) {
+  HAL_SD_Get_CardInfo (&uSdHandle, CardInfo);
+  }
+//}}}
+//{{{
+std::string SD_info() {
+  return "r:" + dec (mReadHits) + ":" + dec (mReads) + ":"  + dec (mReadBlock + mReadMultipleLen) +
+         " w:" + dec (mWrites);
+  }
+//}}}
+
+//{{{
+uint8_t SD_Read (uint8_t* buf, uint32_t blk_addr, uint16_t blocks) {
+
+  uint32_t tmp = (uint32_t)buf;
+
+  auto result = HAL_SD_ReadBlocks_DMA (&uSdHandle, (uint32_t*)buf, blk_addr * 512, 512, blocks);
+  if (result != SD_OK) {
+    lcd->debug ("HAL_SD_ReadBlocks_DMA:" + hex (tmp) + " " + dec (blk_addr) + " num:" + dec (blocks) +  dec (result));
+    return MSD_ERROR;
+    }
+
+  result = HAL_SD_CheckReadOperation (&uSdHandle, 500);
+  if (result != SD_OK) {
+    lcd->debug ("HAL_SD_CheckReadOperation:" + hex (tmp) + " " + dec (blk_addr) + " num:" + dec (blocks) +  dec (result));
+    return MSD_ERROR;
+    }
+  //SCB_InvalidateDCache_by_Addr ((uint32_t*)((uint32_t)buf & 0xFFFFFFE0), (blocks * 512) + 32);
+
+  return MSD_OK;
+  }
+//}}}
+//{{{
+uint8_t SD_Write (uint8_t* buf, uint32_t blk_addr, uint16_t blocks) {
+
+  //if (HAL_SD_WriteBlocks (&uSdHandle, (uint32_t*)buf, blk_addr * 512, blocks) != SD_OK)
+  //  return MSD_ERROR;
+  //can't remove ?
+  HAL_SD_CheckWriteOperation (&uSdHandle, 0xFFFFFFFF);
+
+  return MSD_OK;
+  }
+//}}}
+//{{{
+int8_t SD_ReadCached (uint8_t* buf, uint32_t blk_addr, uint16_t blocks) {
+
+  return SD_Read (buf, blk_addr, blocks);
+  }
+//}}}
+//{{{
+int8_t SD_WriteCached (uint8_t* buf, uint32_t blk_addr, uint16_t blocks) {
+
+  if (SD_present()) {
+    mWrites++;
+    SD_Write (buf, blk_addr, blocks);
+
+    mReadCacheBlock = 0xFFFFFFF0;
+    if (blk_addr != mWriteBlock + mWriteMultipleLen) {
+      if (mWriteMultipleLen) {
+        // flush pending multiple
+        //cLcd::debug ("wm:" + dec (mWriteBlock) + "::" + dec (mWriteMultipleLen));
+        mWriteMultipleLen = 0;
+        }
+      mWriteBlock = blk_addr;
+      }
+    mWriteMultipleLen += blocks;
+
+    return 0;
+    }
+
+  return -1;
+  }
+//}}}
+
+//{{{
+uint8_t SD_Erase (uint64_t StartAddr, uint64_t EndAddr) {
+  if (HAL_SD_Erase (&uSdHandle, StartAddr, EndAddr) != SD_OK)
+    return MSD_ERROR;
+  else
+    return MSD_OK;
+  }
+//}}}
+//}}}
+//{{{  diskio
 static volatile DSTATUS Stat = STA_NOINIT;
 //{{{
-DSTATUS diskStatus() {
+DSTATUS diskInitialize() {
 
   return SD_GetStatus() == SD_TRANSFER_OK ? 0 : STA_NOINIT;
   }
 //}}}
+
 //{{{
-DSTATUS diskInitialize() {
+DSTATUS diskStatus() {
 
   return SD_GetStatus() == SD_TRANSFER_OK ? 0 : STA_NOINIT;
   }
@@ -2981,6 +3223,7 @@ DRESULT diskIoctl (BYTE cmd, void* buff) {
   return res;
   }
 //}}}
+
 //{{{
 DRESULT diskRead (BYTE* buffer, DWORD sector, UINT count) {
 
@@ -3008,6 +3251,7 @@ DRESULT diskRead (BYTE* buffer, DWORD sector, UINT count) {
 DRESULT diskWrite (const BYTE* buffer, DWORD sector, UINT count) {
   return SD_WriteCached ((uint8_t*)buffer, (uint64_t)(sector * SECTOR_SIZE), count) == MSD_OK ? RES_OK : RES_ERROR;
   }
+//}}}
 //}}}
 
 std::vector<std::string> mFileNames;
@@ -3089,36 +3333,36 @@ int main() {
     //}}}
 
   for (auto fileStr : mFileNames) {
+    lcd->info ("read");
     cFile file (fileStr, FA_OPEN_EXISTING | FA_READ);
     auto buf = (uint8_t*)pvPortMalloc (file.getSize());
-
     auto bytesRead = 0;
-    FRESULT fresult = file.read (buf, file.getSize(), bytesRead);
+    file.read (buf, file.getSize(), bytesRead);
+    lcd->info ("read done");
 
-    cJpegPic jpeg (2, buf);
+    cJpegPic jpeg (3, buf);
     jpeg.readHeader();
     auto width = jpeg.getWidth();
     auto height = jpeg.getHeight();
+    lcd->info ("header done");
 
-    lcd->info (dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + " " + fileStr);
-
-    if ((width > 800) || (height > 600)) {
-      auto out = jpeg.decodeBody (3);
-      lcd->startRender();
-      lcd->clear (COL_BLACK);
-      lcd->copy (out, 0, 0, width>>3 , height>>3);
-      lcd->endRender (true);
-      vPortFree (out);
-      }
-    else {
-      auto out = jpeg.decodeBody (0);
-      lcd->startRender();
-      lcd->clear (COL_BLACK);
-      lcd->copy (out, 0, 0, width , height);
-      lcd->endRender (true);
-      vPortFree (out);
+    auto scaleShift = 0;
+    auto scale = 1;
+    while ((scaleShift < 3) &&
+           ((width / scale > lcd->getLcdWidthPix()) || (height /scale > lcd->getLcdHeightPix()))) {
+      scale *= 2;
+      scaleShift++;
       }
 
+    auto out = jpeg.decodeBody (scaleShift);
+    lcd->info ("body " + dec(file.getSize()) + " " + dec(scaleShift) + " " + dec(width) + ":" + dec(height) + " " + fileStr);
+
+    lcd->startRender();
+    lcd->clear (COL_BLACK);
+    lcd->copy (out, 0, 0, width>>scaleShift , height>>scaleShift);
+    lcd->endRender (true);
+
+    vPortFree (out);
     vPortFree (buf);
     }
   HAL_Delay (100000);

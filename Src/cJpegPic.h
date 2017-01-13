@@ -322,6 +322,8 @@ public:
     bigFree (mInputBuffer);
     }
   //}}}
+  void* operator new (std::size_t size) { return smallMalloc (size, "cJpegPic"); }
+  void operator delete (void *ptr) { smallFree (ptr); }
 
   // iPic
   virtual uint16_t getWidth() { return mWidth; }
@@ -1319,11 +1321,11 @@ private:
             lumaPtr += 64 * 2;
           for (uint32_t ix = 0; ix < mx; ix += 8, lumaPtr += 64) {
             // convert YCbCr to BGRA
-            auto b = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
-            auto g = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
-            auto r = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
-            *dstPtr++ = ((g & 0x1C) << 3) | ((b & 0xF8) >> 3);
-            *dstPtr++ = (r & 0xF8)        | (g >> 5);
+            *dstPtr++ = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
+            *dstPtr++ = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
+            *dstPtr++ = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
+            if (mBytesPerPixel == 4)
+              *dstPtr++ = 0xFF;
             }
           }
         }
@@ -1360,11 +1362,9 @@ private:
               chromaPtr++;
 
             // Convert YCbCr to BGRA
-            auto b = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
-            auto g = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
-            auto r = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
-            *bgra++ = ((g & 0x1C) << 3) | ((b & 0xF8) >> 3);
-            *bgra++ = (r & 0xF8)        | ((g & 0xE0) >> 5);
+            *bgra++ = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
+            *bgra++ = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
+            *bgra++ = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
             }
           }
 
@@ -1458,11 +1458,11 @@ private:
             chromaPtr++;
 
           // convert YCbCr to BGRA
-          auto b = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
-          auto g = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
-          auto r = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
-          *dstPtr++ = ((g & 0x1C) << 3) | ((b & 0xF8) >> 3);
-          *dstPtr++ = (r & 0xF8)        | (g >> 5);
+          *dstPtr++ = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
+          *dstPtr++ = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
+          *dstPtr++ = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
+          if (mBytesPerPixel == 4)
+            *dstPtr++ = 0xFF;
           }
         }
       }
