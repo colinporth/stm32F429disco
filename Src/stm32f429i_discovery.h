@@ -19,13 +19,13 @@ typedef enum { BUTTON_MODE_GPIO = 0, BUTTON_MODE_EXTI = 1 }ButtonMode_TypeDef;
 
 #define LED3_PIN                                GPIO_PIN_13
 #define LED3_GPIO_PORT                          GPIOG
-#define LED3_GPIO_CLK_ENABLE()                  __GPIOG_CLK_ENABLE()
-#define LED3_GPIO_CLK_DISABLE()                 __GPIOG_CLK_DISABLE()
+#define LED3_GPIO_CLK_ENABLE()                  __HAL_RCC_GPIOG_CLK_ENABLE()
+#define LED3_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOG_CLK_DISABLE()
 
 #define LED4_PIN                                GPIO_PIN_14
 #define LED4_GPIO_PORT                          GPIOG
-#define LED4_GPIO_CLK_ENABLE()                  __GPIOG_CLK_ENABLE()
-#define LED4_GPIO_CLK_DISABLE()                 __GPIOG_CLK_DISABLE()
+#define LED4_GPIO_CLK_ENABLE()                  __HAL_RCC_GPIOG_CLK_ENABLE()
+#define LED4_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOG_CLK_DISABLE()
 
 #define LEDx_GPIO_CLK_ENABLE(__INDEX__)  do{if((__INDEX__) == 0) LED3_GPIO_CLK_ENABLE(); else \
                                             if((__INDEX__) == 1) LED4_GPIO_CLK_ENABLE(); \
@@ -38,8 +38,8 @@ typedef enum { BUTTON_MODE_GPIO = 0, BUTTON_MODE_EXTI = 1 }ButtonMode_TypeDef;
 
 #define KEY_BUTTON_PIN                         GPIO_PIN_0
 #define KEY_BUTTON_GPIO_PORT                   GPIOA
-#define KEY_BUTTON_GPIO_CLK_ENABLE()           __GPIOA_CLK_ENABLE()
-#define KEY_BUTTON_GPIO_CLK_DISABLE()          __GPIOA_CLK_DISABLE()
+#define KEY_BUTTON_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOA_CLK_ENABLE()
+#define KEY_BUTTON_GPIO_CLK_DISABLE()          __HAL_RCC_GPIOA_CLK_DISABLE()
 #define KEY_BUTTON_EXTI_IRQn                   EXTI0_IRQn
 
 #define BUTTONx_GPIO_CLK_ENABLE(__INDEX__)     do{if((__INDEX__) == 0) KEY_BUTTON_GPIO_CLK_ENABLE(); \
@@ -53,9 +53,9 @@ typedef enum { BUTTON_MODE_GPIO = 0, BUTTON_MODE_EXTI = 1 }ButtonMode_TypeDef;
 #define DISCOVERY_I2Cx_CLOCK_ENABLE()           __I2C3_CLK_ENABLE()
 #define DISCOVERY_I2Cx_FORCE_RESET()            __I2C3_FORCE_RESET()
 #define DISCOVERY_I2Cx_RELEASE_RESET()          __I2C3_RELEASE_RESET()
-#define DISCOVERY_I2Cx_SDA_GPIO_CLK_ENABLE()    __GPIOC_CLK_ENABLE()
-#define DISCOVERY_I2Cx_SCL_GPIO_CLK_ENABLE()    __GPIOA_CLK_ENABLE()
-#define DISCOVERY_I2Cx_SDA_GPIO_CLK_DISABLE()   __GPIOC_CLK_DISABLE()
+#define DISCOVERY_I2Cx_SDA_GPIO_CLK_ENABLE()    __HAL_RCC_GPIOC_CLK_ENABLE()
+#define DISCOVERY_I2Cx_SCL_GPIO_CLK_ENABLE()    __HAL_RCC_GPIOA_CLK_ENABLE()
+#define DISCOVERY_I2Cx_SDA_GPIO_CLK_DISABLE()   __HAL_RCC_GPIOC_CLK_DISABLE()
 
 /* Definition for DISCO I2Cx Pins */
 #define DISCOVERY_I2Cx_SCL_PIN                  GPIO_PIN_8
@@ -82,8 +82,8 @@ typedef enum { BUTTON_MODE_GPIO = 0, BUTTON_MODE_EXTI = 1 }ButtonMode_TypeDef;
 #define DISCOVERY_SPIx_CLK_ENABLE()             __SPI5_CLK_ENABLE()
 #define DISCOVERY_SPIx_GPIO_PORT                GPIOF                      /* GPIOF */
 #define DISCOVERY_SPIx_AF                       GPIO_AF5_SPI5
-#define DISCOVERY_SPIx_GPIO_CLK_ENABLE()        __GPIOF_CLK_ENABLE()
-#define DISCOVERY_SPIx_GPIO_CLK_DISABLE()       __GPIOF_CLK_DISABLE()
+#define DISCOVERY_SPIx_GPIO_CLK_ENABLE()        __HAL_RCC_GPIOF_CLK_ENABLE()
+#define DISCOVERY_SPIx_GPIO_CLK_DISABLE()       __HAL_RCC_GPIOF_CLK_DISABLE()
 #define DISCOVERY_SPIx_SCK_PIN                  GPIO_PIN_7                 /* PF.07 */
 #define DISCOVERY_SPIx_MISO_PIN                 GPIO_PIN_8                 /* PF.08 */
 #define DISCOVERY_SPIx_MOSI_PIN                 GPIO_PIN_9                 /* PF.09 */
@@ -98,8 +98,8 @@ typedef enum { BUTTON_MODE_GPIO = 0, BUTTON_MODE_EXTI = 1 }ButtonMode_TypeDef;
 /* Definition for external IT for STMPE811 */
 #define STMPE811_INT_PIN                        GPIO_PIN_15
 #define STMPE811_INT_GPIO_PORT                  GPIOA
-#define STMPE811_INT_CLK_ENABLE()               __GPIOA_CLK_ENABLE()
-#define STMPE811_INT_CLK_DISABLE()              __GPIOA_CLK_DISABLE()
+#define STMPE811_INT_CLK_ENABLE()               __HAL_RCC_GPIOA_CLK_ENABLE()
+#define STMPE811_INT_CLK_DISABLE()              __HAL_RCC_GPIOA_CLK_DISABLE()
 #define STMPE811_INT_EXTI                       EXTI15_10_IRQn
 #define STMPE811_INT_EXTIHandler                EXTI15_10_IRQHandler
 

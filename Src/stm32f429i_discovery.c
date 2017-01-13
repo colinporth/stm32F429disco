@@ -43,7 +43,7 @@ void BSP_LED_Init(Led_TypeDef Led)
   GPIO_InitStruct.Pin = GPIO_PIN[Led];
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FAST;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 
   HAL_GPIO_Init(GPIO_PORT[Led], &GPIO_InitStruct);
 
@@ -194,7 +194,7 @@ static void I2Cx_ITConfig()
 
   GPIO_InitStruct.Pin   = STMPE811_INT_PIN;
   GPIO_InitStruct.Pull  = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Mode  = GPIO_MODE_IT_FALLING;
   HAL_GPIO_Init(STMPE811_INT_GPIO_PORT, &GPIO_InitStruct);
 
@@ -401,14 +401,14 @@ void LCD_IO_Init()
     GPIO_InitStructure.Pin     = LCD_WRX_PIN;
     GPIO_InitStructure.Mode    = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStructure.Pull    = GPIO_NOPULL;
-    GPIO_InitStructure.Speed   = GPIO_SPEED_FAST;
+    GPIO_InitStructure.Speed   = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(LCD_WRX_GPIO_PORT, &GPIO_InitStructure);
 
     LCD_RDX_GPIO_CLK_ENABLE();
     GPIO_InitStructure.Pin     = LCD_RDX_PIN;
     GPIO_InitStructure.Mode    = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStructure.Pull    = GPIO_NOPULL;
-    GPIO_InitStructure.Speed   = GPIO_SPEED_FAST;
+    GPIO_InitStructure.Speed   = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(LCD_RDX_GPIO_PORT, &GPIO_InitStructure);
 
     /* Configure the LCD Control pins ----------------------------------------*/
@@ -418,7 +418,7 @@ void LCD_IO_Init()
     GPIO_InitStructure.Pin     = LCD_NCS_PIN;
     GPIO_InitStructure.Mode    = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStructure.Pull    = GPIO_NOPULL;
-    GPIO_InitStructure.Speed   = GPIO_SPEED_FAST;
+    GPIO_InitStructure.Speed   = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(LCD_NCS_GPIO_PORT, &GPIO_InitStructure);
 
     /* Set or Reset the control line */
@@ -542,7 +542,7 @@ void GYRO_IO_Init()
   GPIO_InitStructure.Pin = GYRO_CS_PIN;
   GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStructure.Pull  = GPIO_NOPULL;
-  GPIO_InitStructure.Speed = GPIO_SPEED_MEDIUM;
+  GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_MEDIUM;
   HAL_GPIO_Init(GYRO_CS_GPIO_PORT, &GPIO_InitStructure);
 
   /* Deselect: Chip Select high */
@@ -552,7 +552,7 @@ void GYRO_IO_Init()
   GYRO_INT_GPIO_CLK_ENABLE();
   GPIO_InitStructure.Pin = GYRO_INT1_PIN | GYRO_INT2_PIN;
   GPIO_InitStructure.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStructure.Speed = GPIO_SPEED_FAST;
+  GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
   GPIO_InitStructure.Pull= GPIO_NOPULL;
   HAL_GPIO_Init(GYRO_INT_GPIO_PORT, &GPIO_InitStructure);
 

@@ -81,7 +81,7 @@
   * @param  hsd: SD handle
   * @retval None
   */
-__weak void HAL_SD_MspInit(SD_HandleTypeDef *hsd)
+__weak void HAL_SD_MspInit (SD_HandleTypeDef *hsd)
 {
   /* Prevent unused argument(s) compilation warning */
   UNUSED(hsd);
@@ -96,7 +96,7 @@ __weak void HAL_SD_MspInit(SD_HandleTypeDef *hsd)
   * @param  hsd: SD handle
   * @retval None
   */
-__weak void HAL_SD_MspDeInit(SD_HandleTypeDef *hsd)
+__weak void HAL_SD_MspDeInit (SD_HandleTypeDef *hsd)
 {
   /* Prevent unused argument(s) compilation warning */
   UNUSED(hsd);
@@ -106,12 +106,7 @@ __weak void HAL_SD_MspDeInit(SD_HandleTypeDef *hsd)
 }
 /*}}}*/
 /*{{{*/
-/**
-  * @brief  SD end of transfer callback.
-  * @param  hsd: SD handle
-  * @retval None
-  */
-__weak void HAL_SD_XferCpltCallback(SD_HandleTypeDef *hsd)
+__weak void HAL_SD_XferCpltCallback (SD_HandleTypeDef *hsd)
 {
   /* Prevent unused argument(s) compilation warning */
   UNUSED(hsd);
@@ -126,7 +121,7 @@ __weak void HAL_SD_XferCpltCallback(SD_HandleTypeDef *hsd)
   * @param  hsd: SD handle
   * @retval None
   */
-__weak void HAL_SD_XferErrorCallback(SD_HandleTypeDef *hsd)
+__weak void HAL_SD_XferErrorCallback (SD_HandleTypeDef *hsd)
 {
   /* Prevent unused argument(s) compilation warning */
   UNUSED(hsd);
@@ -704,37 +699,25 @@ static HAL_SD_ErrorTypedef SD_FindSCR(SD_HandleTypeDef *hsd, uint32_t *pSCR)
 }
 /*}}}*/
 /*{{{*/
-/**
-  * @brief  Enables the SDIO wide bus mode.
-  * @param  hsd: SD handle
-  * @retval SD Card error state
-  */
-static HAL_SD_ErrorTypedef SD_WideBus_Enable(SD_HandleTypeDef *hsd)
-{
-  SDIO_CmdInitTypeDef sdio_cmdinitstructure;
+static HAL_SD_ErrorTypedef SD_WideBus_Enable(SD_HandleTypeDef *hsd) {
+
   HAL_SD_ErrorTypedef errorstate = SD_OK;
 
-  uint32_t scr[2U] = {0U, 0U};
-
-  if((SDIO_GetResponse(SDIO_RESP1) & SD_CARD_LOCKED) == SD_CARD_LOCKED)
-  {
+  if ((SDIO_GetResponse(SDIO_RESP1) & SD_CARD_LOCKED) == SD_CARD_LOCKED) {
     errorstate = SD_LOCK_UNLOCK_FAILED;
-
     return errorstate;
-  }
+    }
 
   /* Get SCR Register */
-  errorstate = SD_FindSCR(hsd, scr);
-
-  if(errorstate != SD_OK)
-  {
+  uint32_t scr[2U] = {0U, 0U};
+  errorstate = SD_FindSCR (hsd, scr);
+  if (errorstate != SD_OK)
     return errorstate;
-  }
 
   /* If requested card supports wide bus operation */
-  if((scr[1U] & SD_WIDE_BUS_SUPPORT) != SD_ALLZERO)
-  {
+  if ((scr[1U] & SD_WIDE_BUS_SUPPORT) != SD_ALLZERO) {
     /* Send CMD55 APP_CMD with argument as card's RCA.*/
+    SDIO_CmdInitTypeDef sdio_cmdinitstructure;
     sdio_cmdinitstructure.Argument         = (uint32_t)(hsd->RCA << 16U);
     sdio_cmdinitstructure.CmdIndex         = SD_CMD_APP_CMD;
     sdio_cmdinitstructure.Response         = SDIO_RESPONSE_SHORT;
@@ -744,34 +727,22 @@ static HAL_SD_ErrorTypedef SD_WideBus_Enable(SD_HandleTypeDef *hsd)
 
     /* Check for error conditions */
     errorstate = SD_CmdResp1Error(hsd, SD_CMD_APP_CMD);
-
     if(errorstate != SD_OK)
-    {
       return errorstate;
-    }
 
     /* Send ACMD6 APP_CMD with argument as 2 for wide bus mode */
     sdio_cmdinitstructure.Argument         = 2U;
     sdio_cmdinitstructure.CmdIndex         = SD_CMD_APP_SD_SET_BUSWIDTH;
-    SDIO_SendCommand(hsd->Instance, &sdio_cmdinitstructure);
+    SDIO_SendCommand (hsd->Instance, &sdio_cmdinitstructure);
 
     /* Check for error conditions */
     errorstate = SD_CmdResp1Error(hsd, SD_CMD_APP_SD_SET_BUSWIDTH);
-
-    if(errorstate != SD_OK)
-    {
-      return errorstate;
     }
-
-    return errorstate;
-  }
   else
-  {
     errorstate = SD_REQUEST_NOT_APPLICABLE;
 
-    return errorstate;
+  return errorstate;
   }
-}
 /*}}}*/
 /*{{{*/
 /**
