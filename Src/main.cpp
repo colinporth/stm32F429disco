@@ -799,15 +799,46 @@ template <typename T> std::string dec (T value, uint16_t width = 0, char fill = 
   }
 //}}}
 
-const uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
-//{{{  vars
-uint32_t SystemCoreClock = 16000000;
-
-int globalCounter = 0;
-//}}}
 UART_HandleTypeDef DebugUartHandle;
+//{{{
+void initDebugUart() {
+
+  __USART1_FORCE_RESET();
+  __USART1_RELEASE_RESET();
+  __GPIOA_CLK_ENABLE();
+  __USART1_CLK_ENABLE();
+
+  // PA9 - USART1 tx pin configuration
+  GPIO_InitTypeDef  GPIO_InitStruct;
+  GPIO_InitStruct.Pin       = GPIO_PIN_9;
+  GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull      = GPIO_PULLUP;
+  GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
+  HAL_GPIO_Init (GPIOA, &GPIO_InitStruct);
+
+  // PA10 - USART1 rx pin configuration
+  //GPIO_InitStruct.Pin = GPIO_PIN_10;
+  //HAL_GPIO_Init (GPIOA, &GPIO_InitStruct);
+
+  // 8 Bits, One Stop bit, Parity = None, RTS,CTS flow control
+  DebugUartHandle.Instance   = USART1;
+  DebugUartHandle.Init.BaudRate   = 230400;
+  DebugUartHandle.Init.WordLength = UART_WORDLENGTH_8B;
+  DebugUartHandle.Init.StopBits   = UART_STOPBITS_1;
+  DebugUartHandle.Init.Parity     = UART_PARITY_NONE;
+  DebugUartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
+  DebugUartHandle.Init.Mode       = UART_MODE_TX;
+  //DebugUartHandle.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  HAL_UART_Init (&DebugUartHandle);
+  }
+//}}}
 
 //{{{  config
+const uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
+uint32_t SystemCoreClock = 16000000;
+int globalCounter = 0;
+
 //{{{
 void configureSWO() {
 
@@ -1233,39 +1264,6 @@ void SDRAMbank2Init() {
   }
 //}}}
 
-//{{{
-void initDebugUart() {
-
-  __USART1_FORCE_RESET();
-  __USART1_RELEASE_RESET();
-  __GPIOA_CLK_ENABLE();
-  __USART1_CLK_ENABLE();
-
-  // PA9 - USART1 tx pin configuration
-  GPIO_InitTypeDef  GPIO_InitStruct;
-  GPIO_InitStruct.Pin       = GPIO_PIN_9;
-  GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull      = GPIO_PULLUP;
-  GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
-  HAL_GPIO_Init (GPIOA, &GPIO_InitStruct);
-
-  // PA10 - USART1 rx pin configuration
-  //GPIO_InitStruct.Pin = GPIO_PIN_10;
-  //HAL_GPIO_Init (GPIOA, &GPIO_InitStruct);
-
-  // 8 Bits, One Stop bit, Parity = None, RTS,CTS flow control
-  DebugUartHandle.Instance   = USART1;
-  DebugUartHandle.Init.BaudRate   = 230400;
-  DebugUartHandle.Init.WordLength = UART_WORDLENGTH_8B;
-  DebugUartHandle.Init.StopBits   = UART_STOPBITS_1;
-  DebugUartHandle.Init.Parity     = UART_PARITY_NONE;
-  DebugUartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
-  DebugUartHandle.Init.Mode       = UART_MODE_TX;
-  //DebugUartHandle.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  HAL_UART_Init (&DebugUartHandle);
-  }
-//}}}
 //{{{
 void SystemCoreClockUpdate() {
 
@@ -2968,13 +2966,25 @@ uint8_t SD_Init() {
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   //{{{  gpio init
+  // PC8,PC9,PC10,PC11 - SDIO D0-D3
+  //              PC12 - SDIO CLK
+  //               PD2 - SDIO CMD
+  //               PC6 - SD present lo
+
   GPIO_InitTypeDef  gpio_init_structure;
+
+  // sdPresent init - PC6
+  gpio_init_structure.Pin       = GPIO_PIN_6;
+  gpio_init_structure.Mode      = GPIO_MODE_INPUT;
+  gpio_init_structure.Pull      = GPIO_PULLUP;
+  gpio_init_structure.Speed     = GPIO_SPEED_HIGH;
+  HAL_GPIO_Init (GPIOC, &gpio_init_structure);
+
+  gpio_init_structure.Pin       = GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12;
   gpio_init_structure.Mode      = GPIO_MODE_AF_PP;
   gpio_init_structure.Pull      = GPIO_PULLUP;
   gpio_init_structure.Speed     = GPIO_SPEED_HIGH;
   gpio_init_structure.Alternate = GPIO_AF12_SDIO;
-
-  gpio_init_structure.Pin = GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12;
   HAL_GPIO_Init (GPIOC, &gpio_init_structure);
 
   gpio_init_structure.Pin = GPIO_PIN_2;
@@ -3056,8 +3066,7 @@ uint8_t SD_ITConfig() {
 
 //{{{
 bool SD_present() {
-  return true;
-  //!(SD_DETECT_GPIO_PORT->IDR & SD_DETECT_PIN);
+  return !(GPIOC->IDR & GPIO_PIN_6);
   }
 //}}}
 //{{{
@@ -3319,16 +3328,20 @@ int main() {
     //}}}
   else {
     //{{{  sd
-    int ret = SD_Init();
-    lcd->info ("SDinit " + dec(ret));
+    if (SD_present()) {
+      int ret = SD_Init();
+      lcd->debug ("SDinit " + dec(ret));
 
-    cFatFs* fatFs = cFatFs::create();
-    if (fatFs->mount() != FR_OK)
-      lcd->info ("fatFs mount problem");
+      cFatFs* fatFs = cFatFs::create();
+      if (fatFs->mount() != FR_OK)
+        lcd->debug ("fatFs mount problem");
+      else
+        lcd->debug ("SD label:" + fatFs->getLabel() + " vsn:" + hex (fatFs->getVolumeSerialNumber()) +
+                   " freeSectors:" + dec (fatFs->getFreeSectors()));
+      listDirectory ("", "JPG");
+      }
     else
-      lcd->info (fatFs->getLabel() + " vsn:" + hex (fatFs->getVolumeSerialNumber()) +
-                 " freeSectors:" + dec (fatFs->getFreeSectors()));
-    listDirectory ("", "JPG");
+      lcd->debug ("no SD card");
     }
     //}}}
 
