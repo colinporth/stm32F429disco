@@ -23,15 +23,6 @@ typedef struct {
   uint16_t DstHeight;      /* Dst height */
   } RESIZE_InitTypedef;
 //}}}
-//{{{  struct D2D_Loop_Typedef
-typedef struct {
-  uint32_t BaseAddress;
-  uint32_t BlendIndex;  // loop Blend index (Q21)
-  uint32_t BlendCoeff;  // loop Blend coefficient (Q21)
-  uint16_t SrcPitch;
-  uint16_t DstPitch;
-  } D2D_Loop_Typedef;
-//}}}
 
 void resize (RESIZE_InitTypedef* R) {
 
@@ -48,36 +39,28 @@ void resize (RESIZE_InitTypedef* R) {
   uint32_t BlendIndex = BlendCoeff >> 1;
   //{{{  first loop
   DMA2D->OPFCCR = workFormat;
-  DMA2D->FGPFCCR = R->SrcFormat;
   DMA2D->BGPFCCR = 0xff000000 | R->SrcFormat;
-  DMA2D->NLR = (1 | (R->SrcWidth << 16));
+  DMA2D->NLR = (R->SrcWidth << 16) | 1;
 
-  // bgnd = line, fgnd = line + 1
+  uint32_t fccr = R->SrcFormat | ((BlendIndex >> 13) << 24);
+  uint32_t srcPtr = BaseAddress + (BlendIndex >> 21) * SrcPitch;
+  uint32_t srcPtr1 = srcPtr + SrcPitch;
   uint32_t dstPtr = (uint32_t)workBuf;
-  DMA2D->OMAR = dstPtr;
-  DMA2D->BGMAR = BaseAddress + ((BlendIndex >> 21) * SrcPitch);
-  DMA2D->FGMAR = DMA2D->BGMAR + SrcPitch;
-  DMA2D->FGPFCCR &= 0x00ffffff;
-  DMA2D->FGPFCCR |= ((BlendIndex >> 13) << 24);
-  DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-  dstPtr += DstPitch;
-  BlendIndex += BlendCoeff;
-
-  while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
-  DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
-                 DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
   //}}}
   auto loop = R->DstHeight;
   while (loop--) {
     //{{{  loop lines, src->work
+    DMA2D->BGMAR = srcPtr;
+    DMA2D->FGMAR = srcPtr1;
     DMA2D->OMAR = dstPtr;
-    DMA2D->BGMAR = BaseAddress + (BlendIndex >> 21) * SrcPitch;
-    DMA2D->FGMAR = DMA2D->BGMAR + SrcPitch;
-    DMA2D->FGPFCCR &= 0x00ffffff;
-    DMA2D->FGPFCCR |= ((BlendIndex >> 13) << 24);
+    DMA2D->FGPFCCR = fccr;
+
     DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-    dstPtr += DstPitch;
     BlendIndex += BlendCoeff;
+    fccr = R->SrcFormat | ((BlendIndex >> 13) << 24);
+    srcPtr = BaseAddress + (BlendIndex >> 21) * SrcPitch;
+    srcPtr1 = srcPtr + SrcPitch;
+    dstPtr += DstPitch;
 
     while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
     DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
@@ -92,41 +75,32 @@ void resize (RESIZE_InitTypedef* R) {
   BlendCoeff = ((R->SrcWidth-1) << 21) / R->DstWidth;
   BlendIndex = BlendCoeff >> 1;
   //{{{  second loop
-  DMA2D->FGPFCCR = workFormat;
   DMA2D->BGPFCCR = 0xff000000 | workFormat;
   DMA2D->OPFCCR  = R->DstFormat;
-  DMA2D->NLR = R->DstHeight | (1 << 16);
+  DMA2D->NLR = (1 << 16) | R->DstHeight;
 
   DMA2D->OOR = R->DstPitch - 1;
   DMA2D->FGOR = R->SrcWidth - 1;
   DMA2D->BGOR = R->SrcWidth - 1;
 
+  fccr = workFormat | ((BlendIndex >> 13) << 24);
+  srcPtr = BaseAddress + (BlendIndex >> 21) * SrcPitch;
+  srcPtr1 = srcPtr + SrcPitch;
   dstPtr = (uint32_t)R->DstBaseAddress + ((R->DstY * R->DstPitch) + R->DstX) * kFormatBytes[R->DstFormat];
-  DMA2D->OMAR = dstPtr;
-  DMA2D->BGMAR = BaseAddress + (BlendIndex >> 21) * SrcPitch;
-  DMA2D->FGMAR = DMA2D->BGMAR + SrcPitch;
-  DMA2D->FGPFCCR &= 0x00ffffff;
-  DMA2D->FGPFCCR |= ((BlendIndex >> 13) << 24);
-
-  DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-  dstPtr += DstPitch;
-  BlendIndex += BlendCoeff;
-
-  while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
-  DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
-                 DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
   //}}}
   loop = R->DstWidth;
   while (loop--) {
     //{{{  loop columns, work->Dst
+    DMA2D->BGMAR = srcPtr;
+    DMA2D->FGMAR = srcPtr1;
     DMA2D->OMAR = dstPtr;
-    DMA2D->BGMAR = BaseAddress + (BlendIndex >> 21) * SrcPitch;
-    DMA2D->FGMAR = DMA2D->BGMAR + SrcPitch;
-    DMA2D->FGPFCCR &= 0x00ffffff;
-    DMA2D->FGPFCCR |= ((BlendIndex >> 13) << 24);
+    DMA2D->FGPFCCR = fccr;
     DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-    dstPtr += DstPitch;
     BlendIndex += BlendCoeff;
+    fccr = workFormat | ((BlendIndex >> 13) << 24);
+    srcPtr = BaseAddress + (BlendIndex >> 21) * SrcPitch;
+    srcPtr1 = srcPtr + SrcPitch;
+    dstPtr += DstPitch;
 
     while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
     DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
