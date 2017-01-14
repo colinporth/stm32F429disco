@@ -3375,19 +3375,15 @@ int main() {
 		//lcd->copy (out, 0, 0, width >> scaleShift , height >> scaleShift);
 		lcd->endRender (true);
 
-		uint32_t* workBuf = (uint32_t*)pvPortMalloc ((width >> scaleShift) * 600 * 4);
-		lcd->debug ("- buf " + hex ((uint32_t)workBuf) + " " +
-								hex ((uint32_t)out) + " " +
-								hex ((width >> scaleShift) * 500 * 4));
+		uint32_t* workBuf = (uint32_t*)pvPortMalloc ((width >> scaleShift) * 1280 * 2);
+		lcd->debug ("buf " + hex ((uint32_t)workBuf) + " " + hex ((uint32_t)out));
 
-		for (int i = 200; i < 600; i += 7) {
-			RESIZE_InitTypedef Resize = {
-				(void*)out, width >> scaleShift, DMA2D_INPUT_RGB888, 0, 0, width >> scaleShift, height >> scaleShift,
-				(void*)SDRAM_BANK2_ADDR, 800, DMA2D_RGB565, 0, 0, i, i,
-				workBuf };
-			resize (&Resize);
-			//lcd->debug ("done");
-			}
+		RESIZE_InitTypedef Resize = {
+			(void*)out, width >> scaleShift, DMA2D_INPUT_RGB888, 0, 0, width >> scaleShift, height >> scaleShift,
+			(void*)SDRAM_BANK2_ADDR, 800, DMA2D_RGB565, 0, 0, 800, 1280,
+			workBuf };
+		resize (&Resize);
+
 		vPortFree (workBuf);
 		vPortFree (out);
 		}
