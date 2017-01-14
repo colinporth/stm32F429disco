@@ -3370,7 +3370,6 @@ int main() {
 
 		lcd->info ("- decode " + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + " " + dec(scaleShift));
 
-
 		lcd->startRender();
 		lcd->clear (COL_BLACK);
 		//lcd->copy (out, 0, 0, width >> scaleShift , height >> scaleShift);
@@ -3381,16 +3380,15 @@ int main() {
 								hex ((uint32_t)out) + " " +
 								hex ((width >> scaleShift) * 500 * 4));
 
-		for (int i = 200; i < 800; i += 3) {
+		for (int i = 200; i < 600; i += 7) {
 			RESIZE_InitTypedef Resize = {
 				(void*)out, width >> scaleShift, DMA2D_INPUT_RGB888, 0, 0, width >> scaleShift, height >> scaleShift,
 				(void*)SDRAM_BANK2_ADDR, 800, DMA2D_RGB565, 0, 0, i, i,
 				workBuf };
 			resize (&Resize);
-			//vPortFree (workBuf);
 			//lcd->debug ("done");
 			}
-
+		vPortFree (workBuf);
 		vPortFree (out);
 		}
 
