@@ -834,7 +834,7 @@ void initDebugUart() {
 	}
 //}}}
 
-//{{{  config
+//{{{  sys
 const uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
 uint32_t SystemCoreClock = 16000000;
 int globalCounter = 0;
@@ -1545,13 +1545,15 @@ void LCD_DMA2D_IRQHandler() {
 				}
 
 			case kStamp:
+				DMA2D->FGPFCCR = DMA2D_INPUT_A8;  // fgnd PFC
+				DMA2D->BGPFCCR = DMA2D_INPUT_RGB565;
+				DMA2D->OPFCCR  = DMA2D_INPUT_RGB565;
 				DMA2D->OMAR    = *mDma2dIsrBuf;   // output start address
 				DMA2D->BGMAR   = *mDma2dIsrBuf++; // - repeated to bgnd start addres
 				DMA2D->OOR     = *mDma2dIsrBuf;   // output stride
 				DMA2D->BGOR    = *mDma2dIsrBuf++; // - repeated to bgnd stride
 				DMA2D->NLR     = *mDma2dIsrBuf++; // width:height
 				DMA2D->FGMAR   = *mDma2dIsrBuf++; // fgnd start address
-				DMA2D->FGPFCCR = DMA2D_INPUT_A8;  // fgnd PFC
 				DMA2D->FGOR    = 0;               // fgnd stride
 				DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
 				while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
@@ -1588,10 +1590,6 @@ public:
 
 		mDrawBuffer = !mDrawBuffer;
 		ltdcInit (mBuffer[mDrawBuffer]);
-
-		// init unchanging dma2d regs
-		DMA2D->OPFCCR  = DMA2D_INPUT_RGB565;
-		DMA2D->BGPFCCR = DMA2D_INPUT_RGB565;
 
 		// zero out first opcode, point past it
 		mDma2dBuf = (uint32_t*)DMA2D_BUFFER;
@@ -3262,6 +3260,7 @@ DRESULT diskWrite (const BYTE* buffer, DWORD sector, UINT count) {
 //}}}
 //}}}
 
+#include "resize.h"
 std::vector<std::string> mFileNames;
 //{{{
 void listDirectory (std::string directoryName, std::string ext) {
@@ -3352,10 +3351,10 @@ int main() {
 		file.read (buf, file.getSize(), bytesRead);
 		lcd->info ("- read");
 
-		cJpegPic jpeg (3, buf);
-		jpeg.readHeader();
-		auto width = jpeg.getWidth();
-		auto height = jpeg.getHeight();
+		cJpegPic* jpeg = new cJpegPic(3, buf);
+		jpeg->readHeader();
+		auto width = jpeg->getWidth();
+		auto height = jpeg->getHeight();
 
 		auto scaleShift = 0;
 		auto scale = 1;
@@ -3365,18 +3364,35 @@ int main() {
 			scaleShift++;
 			}
 
-		auto out = jpeg.decodeBody (scaleShift);
+		auto out = jpeg->decodeBody (scaleShift);
+		delete (jpeg);
+		vPortFree (buf);
+
 		lcd->info ("- decode " + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + " " + dec(scaleShift));
+
 
 		lcd->startRender();
 		lcd->clear (COL_BLACK);
-		lcd->copy (out, 0, 0, width >> scaleShift , height >> scaleShift);
+		//lcd->copy (out, 0, 0, width >> scaleShift , height >> scaleShift);
 		lcd->endRender (true);
 
+		uint32_t* workBuf = (uint32_t*)pvPortMalloc ((width >> scaleShift) * 600 * 4);
+		lcd->debug ("- buf " + hex ((uint32_t)workBuf) + " " +
+								hex ((uint32_t)out) + " " +
+								hex ((width >> scaleShift) * 500 * 4));
+
+		for (int i = 200; i < 800; i += 3) {
+			RESIZE_InitTypedef Resize = {
+				(void*)out, width >> scaleShift, DMA2D_INPUT_RGB888, 0, 0, width >> scaleShift, height >> scaleShift,
+				(void*)SDRAM_BANK2_ADDR, 800, DMA2D_RGB565, 0, 0, i, i,
+				workBuf };
+			resize (&Resize);
+			//vPortFree (workBuf);
+			//lcd->debug ("done");
+			}
+
 		vPortFree (out);
-		vPortFree (buf);
 		}
-	HAL_Delay (100000);
 
 	while (true) {
 		lcd->startRender();
