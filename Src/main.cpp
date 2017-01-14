@@ -3368,23 +3368,18 @@ int main() {
 		delete (jpeg);
 		vPortFree (buf);
 
-		lcd->info ("- decode " + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + " " + dec(scaleShift));
+		lcd->debug ("- decode " + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + " " + dec(scaleShift));
 
 		lcd->startRender();
 		lcd->clear (COL_BLACK);
 		//lcd->copy (out, 0, 0, width >> scaleShift , height >> scaleShift);
 		lcd->endRender (true);
 
-		uint32_t* workBuf = (uint32_t*)pvPortMalloc ((width >> scaleShift) * 1280 * 2);
-		lcd->debug ("buf " + hex ((uint32_t)workBuf) + " " + hex ((uint32_t)out));
-
 		RESIZE_InitTypedef Resize = {
 			(void*)out, width >> scaleShift, DMA2D_INPUT_RGB888, 0, 0, width >> scaleShift, height >> scaleShift,
-			(void*)SDRAM_BANK2_ADDR, 800, DMA2D_RGB565, 0, 0, 800, 1280,
-			workBuf };
+			(void*)SDRAM_BANK2_ADDR, 800, DMA2D_RGB565, 0, 0, 800, 1024 };
 		resize (&Resize);
 
-		vPortFree (workBuf);
 		vPortFree (out);
 		}
 
