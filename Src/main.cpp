@@ -2251,6 +2251,94 @@ public:
     }
   //}}}
   //{{{
+  void sizeRotate (tSizeParams* sizeParams) {
+  // do size with 90 rotate
+
+    const uint16_t kFormatBytes[6] = {4,3,2,2,2,1};
+    //const uint32_t tmpFormat = DMA2D_ARGB8888;
+    const uint32_t tmpFormat = DMA2D_RGB565;
+    uint32_t tmpBuf = (uint32_t)pvPortMalloc (sizeParams->srcWidth * sizeParams->dstHeight * kFormatBytes[tmpFormat]);
+
+    // first pass
+    uint32_t srcBase = sizeParams->srcBase +
+                       ((sizeParams->srcY * sizeParams->srcPitch) + sizeParams->srcX) * kFormatBytes[sizeParams->srcFormat];
+    uint32_t blendCoeff = ((sizeParams->srcHeight-1) << 21) / sizeParams->dstHeight;
+    uint32_t blendIndex = blendCoeff >> 1;
+    uint16_t srcPitch = sizeParams->srcPitch * kFormatBytes[sizeParams->srcFormat];
+    uint32_t srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+    uint32_t srcPtr1 = srcPtr + srcPitch;
+    uint32_t dstPtr = tmpBuf;
+    uint32_t fccr = sizeParams->srcFormat | ((blendIndex >> 13) << 24);
+    uint16_t dstPitch = kFormatBytes[tmpFormat];
+
+    DMA2D->BGPFCCR = 0xff000000 | sizeParams->srcFormat;
+    DMA2D->OPFCCR = tmpFormat;
+    //DMA2D->NLR = (sizeParams->srcWidth << 16) | 1;
+    DMA2D->NLR = 0x10000 | sizeParams->srcWidth;
+    DMA2D->FGOR = 0;
+    DMA2D->BGOR = 0;
+    DMA2D->OOR = sizeParams->dstHeight - 1;
+    for (int i = 0; i < sizeParams->dstHeight; i++) {
+      //{{{  loop lines, src -> tmp
+      DMA2D->BGMAR = srcPtr;
+      DMA2D->FGMAR = srcPtr1;
+      DMA2D->OMAR = dstPtr;
+      DMA2D->FGPFCCR = fccr;
+
+      DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
+      blendIndex += blendCoeff;
+      fccr = sizeParams->srcFormat | ((blendIndex >> 13) << 24);
+      srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+      srcPtr1 = srcPtr + srcPitch;
+      dstPtr += dstPitch;
+
+      while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
+      DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
+                     DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+      }
+      //}}}
+
+    // second pass
+    srcBase = tmpBuf;
+    blendCoeff = ((sizeParams->srcWidth-1) << 21) / sizeParams->dstWidth;
+    blendIndex = blendCoeff >> 1;
+    srcPitch = sizeParams->dstHeight * kFormatBytes[tmpFormat];
+    srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+    srcPtr1 = srcPtr + srcPitch;
+    dstPtr = sizeParams->dstBase +
+             ((sizeParams->dstY * sizeParams->dstPitch) + sizeParams->dstX) * kFormatBytes[sizeParams->dstFormat];
+    fccr = tmpFormat | ((blendIndex >> 13) << 24);
+    dstPitch = sizeParams->dstPitch * kFormatBytes[sizeParams->dstFormat];
+
+    DMA2D->BGPFCCR = 0xff000000 | tmpFormat;
+    DMA2D->OPFCCR  = sizeParams->dstFormat;
+    DMA2D->NLR = 0x10000 | sizeParams->dstHeight;
+    DMA2D->FGOR = 0;
+    DMA2D->BGOR = 0;
+    DMA2D->OOR = 0;
+    for (int i = 0; i < sizeParams->dstWidth; i++) {
+      //{{{  loop columns, tmp -> dst
+      DMA2D->BGMAR = srcPtr;
+      DMA2D->FGMAR = srcPtr1;
+      DMA2D->OMAR = dstPtr;
+      DMA2D->FGPFCCR = fccr;
+      DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
+      blendIndex += blendCoeff;
+      fccr = tmpFormat | ((blendIndex >> 13) << 24);
+      srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+      srcPtr1 = srcPtr + srcPitch;
+      dstPtr += dstPitch;
+
+      while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
+      DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
+                     DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+      }
+      //}}}
+
+    vPortFree ((void*)tmpBuf);
+    }
+  //}}}
+  //{{{
   void sizeOrig (tSizeParams* sizeParams) {
 
     const uint16_t kFormatBytes[6] = {4,3,2,2,2,1};
@@ -3576,7 +3664,7 @@ int main() {
     cLcd::tSizeParams sizeParams = {
       (uint32_t)out, width >> scaleShift, DMA2D_INPUT_RGB888, 0, 0, width >> scaleShift, height >> scaleShift,
       (uint32_t)SDRAM_BANK2_ADDR, 800, DMA2D_RGB565, 0, 0, 800, 1024 };
-    lcd->size (&sizeParams);
+    lcd->sizeRotate (&sizeParams);
     vPortFree (out);
     }
 
