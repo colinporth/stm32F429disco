@@ -1,4 +1,8 @@
-/sources.mk
+/HAL_Driver/
+/freetype/
 /makefile
-/subdir.mk
 /objects.list
+/objects.mk
+/sources.mk
+/startup/
+/subdir.mk

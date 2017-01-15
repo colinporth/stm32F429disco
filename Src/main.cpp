@@ -111,37 +111,37 @@
 //{{{  ITM_Type       0xE0000000
 typedef struct {
 __OM  union {
-		__OM  uint8_t    u8;                 /*!< Offset: 0x000 ( /W)  ITM Stimulus Port 8-bit */
-		__OM  uint16_t   u16;                /*!< Offset: 0x000 ( /W)  ITM Stimulus Port 16-bit */
-		__OM  uint32_t   u32;                /*!< Offset: 0x000 ( /W)  ITM Stimulus Port 32-bit */
-	}  PORT [32U];                         /*!< Offset: 0x000 ( /W)  ITM Stimulus Port Registers */
+    __OM  uint8_t    u8;                 /*!< Offset: 0x000 ( /W)  ITM Stimulus Port 8-bit */
+    __OM  uint16_t   u16;                /*!< Offset: 0x000 ( /W)  ITM Stimulus Port 16-bit */
+    __OM  uint32_t   u32;                /*!< Offset: 0x000 ( /W)  ITM Stimulus Port 32-bit */
+  }  PORT [32U];                         /*!< Offset: 0x000 ( /W)  ITM Stimulus Port Registers */
 
-				uint32_t RESERVED0[864U];
-	__IOM uint32_t TER;                    /*!< Offset: 0xE00 (R/W)  ITM Trace Enable Register */
-				uint32_t RESERVED1[15U];
-	__IOM uint32_t TPR;                    /*!< Offset: 0xE40 (R/W)  ITM Trace Privilege Register */
-				uint32_t RESERVED2[15U];
-	__IOM uint32_t TCR;                    /*!< Offset: 0xE80 (R/W)  ITM Trace Control Register */
-				uint32_t RESERVED3[29U];
-	__OM  uint32_t IWR;                    /*!< Offset: 0xEF8 ( /W)  ITM Integration Write Register */
-	__IM  uint32_t IRR;                    /*!< Offset: 0xEFC (R/ )  ITM Integration Read Register */
-	__IOM uint32_t IMCR;                   /*!< Offset: 0xF00 (R/W)  ITM Integration Mode Control Register */
-				uint32_t RESERVED4[43U];
-	__OM  uint32_t LAR;                    /*!< Offset: 0xFB0 ( /W)  ITM Lock Access Register */
-	__IM  uint32_t LSR;                    /*!< Offset: 0xFB4 (R/ )  ITM Lock Status Register */
-				uint32_t RESERVED5[6U];
-	__IM  uint32_t PID4;                   /*!< Offset: 0xFD0 (R/ )  ITM Peripheral Identification Register #4 */
-	__IM  uint32_t PID5;                   /*!< Offset: 0xFD4 (R/ )  ITM Peripheral Identification Register #5 */
-	__IM  uint32_t PID6;                   /*!< Offset: 0xFD8 (R/ )  ITM Peripheral Identification Register #6 */
-	__IM  uint32_t PID7;                   /*!< Offset: 0xFDC (R/ )  ITM Peripheral Identification Register #7 */
-	__IM  uint32_t PID0;                   /*!< Offset: 0xFE0 (R/ )  ITM Peripheral Identification Register #0 */
-	__IM  uint32_t PID1;                   /*!< Offset: 0xFE4 (R/ )  ITM Peripheral Identification Register #1 */
-	__IM  uint32_t PID2;                   /*!< Offset: 0xFE8 (R/ )  ITM Peripheral Identification Register #2 */
-	__IM  uint32_t PID3;                   /*!< Offset: 0xFEC (R/ )  ITM Peripheral Identification Register #3 */
-	__IM  uint32_t CID0;                   /*!< Offset: 0xFF0 (R/ )  ITM Component  Identification Register #0 */
-	__IM  uint32_t CID1;                   /*!< Offset: 0xFF4 (R/ )  ITM Component  Identification Register #1 */
-	__IM  uint32_t CID2;                   /*!< Offset: 0xFF8 (R/ )  ITM Component  Identification Register #2 */
-	__IM  uint32_t CID3;                   /*!< Offset: 0xFFC (R/ )  ITM Component  Identification Register #3 */
+        uint32_t RESERVED0[864U];
+  __IOM uint32_t TER;                    /*!< Offset: 0xE00 (R/W)  ITM Trace Enable Register */
+        uint32_t RESERVED1[15U];
+  __IOM uint32_t TPR;                    /*!< Offset: 0xE40 (R/W)  ITM Trace Privilege Register */
+        uint32_t RESERVED2[15U];
+  __IOM uint32_t TCR;                    /*!< Offset: 0xE80 (R/W)  ITM Trace Control Register */
+        uint32_t RESERVED3[29U];
+  __OM  uint32_t IWR;                    /*!< Offset: 0xEF8 ( /W)  ITM Integration Write Register */
+  __IM  uint32_t IRR;                    /*!< Offset: 0xEFC (R/ )  ITM Integration Read Register */
+  __IOM uint32_t IMCR;                   /*!< Offset: 0xF00 (R/W)  ITM Integration Mode Control Register */
+        uint32_t RESERVED4[43U];
+  __OM  uint32_t LAR;                    /*!< Offset: 0xFB0 ( /W)  ITM Lock Access Register */
+  __IM  uint32_t LSR;                    /*!< Offset: 0xFB4 (R/ )  ITM Lock Status Register */
+        uint32_t RESERVED5[6U];
+  __IM  uint32_t PID4;                   /*!< Offset: 0xFD0 (R/ )  ITM Peripheral Identification Register #4 */
+  __IM  uint32_t PID5;                   /*!< Offset: 0xFD4 (R/ )  ITM Peripheral Identification Register #5 */
+  __IM  uint32_t PID6;                   /*!< Offset: 0xFD8 (R/ )  ITM Peripheral Identification Register #6 */
+  __IM  uint32_t PID7;                   /*!< Offset: 0xFDC (R/ )  ITM Peripheral Identification Register #7 */
+  __IM  uint32_t PID0;                   /*!< Offset: 0xFE0 (R/ )  ITM Peripheral Identification Register #0 */
+  __IM  uint32_t PID1;                   /*!< Offset: 0xFE4 (R/ )  ITM Peripheral Identification Register #1 */
+  __IM  uint32_t PID2;                   /*!< Offset: 0xFE8 (R/ )  ITM Peripheral Identification Register #2 */
+  __IM  uint32_t PID3;                   /*!< Offset: 0xFEC (R/ )  ITM Peripheral Identification Register #3 */
+  __IM  uint32_t CID0;                   /*!< Offset: 0xFF0 (R/ )  ITM Component  Identification Register #0 */
+  __IM  uint32_t CID1;                   /*!< Offset: 0xFF4 (R/ )  ITM Component  Identification Register #1 */
+  __IM  uint32_t CID2;                   /*!< Offset: 0xFF8 (R/ )  ITM Component  Identification Register #2 */
+  __IM  uint32_t CID3;                   /*!< Offset: 0xFFC (R/ )  ITM Component  Identification Register #3 */
 } ITM1_Type1;
 
 #define ITM1_BASE       (0xE0000000UL)                            /*!< ITM Base Address */
@@ -257,30 +257,30 @@ __OM  union {
 //}}}
 //{{{  DWT_Type       0xE0001000
 typedef struct {
-	__IOM uint32_t CTRL;                   /*!< Offset: 0x000 (R/W)  Control Register */
-	__IOM uint32_t CYCCNT;                 /*!< Offset: 0x004 (R/W)  Cycle Count Register */
-	__IOM uint32_t CPICNT;                 /*!< Offset: 0x008 (R/W)  CPI Count Register */
-	__IOM uint32_t EXCCNT;                 /*!< Offset: 0x00C (R/W)  Exception Overhead Count Register */
-	__IOM uint32_t SLEEPCNT;               /*!< Offset: 0x010 (R/W)  Sleep Count Register */
-	__IOM uint32_t LSUCNT;                 /*!< Offset: 0x014 (R/W)  LSU Count Register */
-	__IOM uint32_t FOLDCNT;                /*!< Offset: 0x018 (R/W)  Folded-instruction Count Register */
-	__IM  uint32_t PCSR;                   /*!< Offset: 0x01C (R/ )  Program Counter Sample Register */
-	__IOM uint32_t COMP0;                  /*!< Offset: 0x020 (R/W)  Comparator Register 0 */
-	__IOM uint32_t MASK0;                  /*!< Offset: 0x024 (R/W)  Mask Register 0 */
-	__IOM uint32_t FUNCTION0;              /*!< Offset: 0x028 (R/W)  Function Register 0 */
-				uint32_t RESERVED0[1U];
-	__IOM uint32_t COMP1;                  /*!< Offset: 0x030 (R/W)  Comparator Register 1 */
-	__IOM uint32_t MASK1;                  /*!< Offset: 0x034 (R/W)  Mask Register 1 */
-	__IOM uint32_t FUNCTION1;              /*!< Offset: 0x038 (R/W)  Function Register 1 */
-				uint32_t RESERVED1[1U];
-	__IOM uint32_t COMP2;                  /*!< Offset: 0x040 (R/W)  Comparator Register 2 */
-	__IOM uint32_t MASK2;                  /*!< Offset: 0x044 (R/W)  Mask Register 2 */
-	__IOM uint32_t FUNCTION2;              /*!< Offset: 0x048 (R/W)  Function Register 2 */
-				uint32_t RESERVED2[1U];
-	__IOM uint32_t COMP3;                  /*!< Offset: 0x050 (R/W)  Comparator Register 3 */
-	__IOM uint32_t MASK3;                  /*!< Offset: 0x054 (R/W)  Mask Register 3 */
-	__IOM uint32_t FUNCTION3;              /*!< Offset: 0x058 (R/W)  Function Register 3 */
-	} DWt1_Type1;
+  __IOM uint32_t CTRL;                   /*!< Offset: 0x000 (R/W)  Control Register */
+  __IOM uint32_t CYCCNT;                 /*!< Offset: 0x004 (R/W)  Cycle Count Register */
+  __IOM uint32_t CPICNT;                 /*!< Offset: 0x008 (R/W)  CPI Count Register */
+  __IOM uint32_t EXCCNT;                 /*!< Offset: 0x00C (R/W)  Exception Overhead Count Register */
+  __IOM uint32_t SLEEPCNT;               /*!< Offset: 0x010 (R/W)  Sleep Count Register */
+  __IOM uint32_t LSUCNT;                 /*!< Offset: 0x014 (R/W)  LSU Count Register */
+  __IOM uint32_t FOLDCNT;                /*!< Offset: 0x018 (R/W)  Folded-instruction Count Register */
+  __IM  uint32_t PCSR;                   /*!< Offset: 0x01C (R/ )  Program Counter Sample Register */
+  __IOM uint32_t COMP0;                  /*!< Offset: 0x020 (R/W)  Comparator Register 0 */
+  __IOM uint32_t MASK0;                  /*!< Offset: 0x024 (R/W)  Mask Register 0 */
+  __IOM uint32_t FUNCTION0;              /*!< Offset: 0x028 (R/W)  Function Register 0 */
+        uint32_t RESERVED0[1U];
+  __IOM uint32_t COMP1;                  /*!< Offset: 0x030 (R/W)  Comparator Register 1 */
+  __IOM uint32_t MASK1;                  /*!< Offset: 0x034 (R/W)  Mask Register 1 */
+  __IOM uint32_t FUNCTION1;              /*!< Offset: 0x038 (R/W)  Function Register 1 */
+        uint32_t RESERVED1[1U];
+  __IOM uint32_t COMP2;                  /*!< Offset: 0x040 (R/W)  Comparator Register 2 */
+  __IOM uint32_t MASK2;                  /*!< Offset: 0x044 (R/W)  Mask Register 2 */
+  __IOM uint32_t FUNCTION2;              /*!< Offset: 0x048 (R/W)  Function Register 2 */
+        uint32_t RESERVED2[1U];
+  __IOM uint32_t COMP3;                  /*!< Offset: 0x050 (R/W)  Comparator Register 3 */
+  __IOM uint32_t MASK3;                  /*!< Offset: 0x054 (R/W)  Mask Register 3 */
+  __IOM uint32_t FUNCTION3;              /*!< Offset: 0x058 (R/W)  Function Register 3 */
+  } DWt1_Type1;
 
 #define DWt1_BASE       (0xE0001000UL)                            /*!< DWT Base Address */
 #define DWT1            ((DWt1_Type*)       DWt1_BASE)   /*!< DWT configuration struct */
@@ -372,11 +372,11 @@ typedef struct {
 //}}}
 //{{{  CoreDebug_Type 0xE000EDF0
 typedef struct {
-	__IOM uint32_t DHCSR;                  /*!< Offset: 0x000 (R/W)  Debug Halting Control and Status Register */
-	__OM  uint32_t DCRSR;                  /*!< Offset: 0x004 ( /W)  Debug Core Register Selector Register */
-	__IOM uint32_t DCRDR;                  /*!< Offset: 0x008 (R/W)  Debug Core Register Data Register */
-	__IOM uint32_t DEMCR;                  /*!< Offset: 0x00C (R/W)  Debug Exception and Monitor Control Register */
-	} CoreDebug_Type1;
+  __IOM uint32_t DHCSR;                  /*!< Offset: 0x000 (R/W)  Debug Halting Control and Status Register */
+  __OM  uint32_t DCRSR;                  /*!< Offset: 0x004 ( /W)  Debug Core Register Selector Register */
+  __IOM uint32_t DCRDR;                  /*!< Offset: 0x008 (R/W)  Debug Core Register Data Register */
+  __IOM uint32_t DEMCR;                  /*!< Offset: 0x00C (R/W)  Debug Exception and Monitor Control Register */
+  } CoreDebug_Type1;
 
 #define CoreDebug1_BASE (0xE000EDF0UL)                            /*!< Core Debug Base Address */
 #define CoreDebug1      ((CoreDebug1_Type*) CoreDebug_BASE)   /*!< Core Debug configuration struct */
@@ -498,31 +498,31 @@ typedef struct {
 //}}}
 //{{{  TPI1_Type      0xE0040000
 typedef struct {
-	__IOM uint32_t SSPSR;                  /*!< Offset: 0x000 (R/ )  Supported Parallel Port Size Register */
-	__IOM uint32_t CSPSR;                  /*!< Offset: 0x004 (R/W)  Current Parallel Port Size Register */
-				uint32_t RESERVED0[2U];
-	__IOM uint32_t ACPR;                   /*!< Offset: 0x010 (R/W)  Asynchronous Clock Prescaler Register */
-				uint32_t RESERVED1[55U];
-	__IOM uint32_t SPPR;                   /*!< Offset: 0x0F0 (R/W)  Selected Pin Protocol Register */
-				uint32_t RESERVED2[131U];
-	__IM  uint32_t FFSR;                   /*!< Offset: 0x300 (R/ )  Formatter and Flush Status Register */
-	__IOM uint32_t FFCR;                   /*!< Offset: 0x304 (R/W)  Formatter and Flush Control Register */
-	__IM  uint32_t FSCR;                   /*!< Offset: 0x308 (R/ )  Formatter Synchronization Counter Register */
-				uint32_t RESERVED3[759U];
-	__IM  uint32_t TRIGGER;                /*!< Offset: 0xEE8 (R/ )  TRIGGER */
-	__IM  uint32_t FIFO0;                  /*!< Offset: 0xEEC (R/ )  Integration ETM Data */
-	__IM  uint32_t ITATBCTR2;              /*!< Offset: 0xEF0 (R/ )  ITATBCTR2 */
-				uint32_t RESERVED4[1U];
-	__IM  uint32_t ITATBCTR0;              /*!< Offset: 0xEF8 (R/ )  ITATBCTR0 */
-	__IM  uint32_t FIFO1;                  /*!< Offset: 0xEFC (R/ )  Integration ITM Data */
-	__IOM uint32_t ITCTRL;                 /*!< Offset: 0xF00 (R/W)  Integration Mode Control */
-				uint32_t RESERVED5[39U];
-	__IOM uint32_t CLAIMSET;               /*!< Offset: 0xFA0 (R/W)  Claim tag set */
-	__IOM uint32_t CLAIMCLR;               /*!< Offset: 0xFA4 (R/W)  Claim tag clear */
-				uint32_t RESERVED7[8U];
-	__IM  uint32_t DEVID;                  /*!< Offset: 0xFC8 (R/ )  TPIU_DEVID */
-	__IM  uint32_t DEVTYPE;                /*!< Offset: 0xFCC (R/ )  TPIU_DEVTYPE */
-	} TPI1_Type1;
+  __IOM uint32_t SSPSR;                  /*!< Offset: 0x000 (R/ )  Supported Parallel Port Size Register */
+  __IOM uint32_t CSPSR;                  /*!< Offset: 0x004 (R/W)  Current Parallel Port Size Register */
+        uint32_t RESERVED0[2U];
+  __IOM uint32_t ACPR;                   /*!< Offset: 0x010 (R/W)  Asynchronous Clock Prescaler Register */
+        uint32_t RESERVED1[55U];
+  __IOM uint32_t SPPR;                   /*!< Offset: 0x0F0 (R/W)  Selected Pin Protocol Register */
+        uint32_t RESERVED2[131U];
+  __IM  uint32_t FFSR;                   /*!< Offset: 0x300 (R/ )  Formatter and Flush Status Register */
+  __IOM uint32_t FFCR;                   /*!< Offset: 0x304 (R/W)  Formatter and Flush Control Register */
+  __IM  uint32_t FSCR;                   /*!< Offset: 0x308 (R/ )  Formatter Synchronization Counter Register */
+        uint32_t RESERVED3[759U];
+  __IM  uint32_t TRIGGER;                /*!< Offset: 0xEE8 (R/ )  TRIGGER */
+  __IM  uint32_t FIFO0;                  /*!< Offset: 0xEEC (R/ )  Integration ETM Data */
+  __IM  uint32_t ITATBCTR2;              /*!< Offset: 0xEF0 (R/ )  ITATBCTR2 */
+        uint32_t RESERVED4[1U];
+  __IM  uint32_t ITATBCTR0;              /*!< Offset: 0xEF8 (R/ )  ITATBCTR0 */
+  __IM  uint32_t FIFO1;                  /*!< Offset: 0xEFC (R/ )  Integration ITM Data */
+  __IOM uint32_t ITCTRL;                 /*!< Offset: 0xF00 (R/W)  Integration Mode Control */
+        uint32_t RESERVED5[39U];
+  __IOM uint32_t CLAIMSET;               /*!< Offset: 0xFA0 (R/W)  Claim tag set */
+  __IOM uint32_t CLAIMCLR;               /*!< Offset: 0xFA4 (R/W)  Claim tag clear */
+        uint32_t RESERVED7[8U];
+  __IM  uint32_t DEVID;                  /*!< Offset: 0xFC8 (R/ )  TPIU_DEVID */
+  __IM  uint32_t DEVTYPE;                /*!< Offset: 0xFCC (R/ )  TPIU_DEVTYPE */
+  } TPI1_Type1;
 
 #define TPI1_BASE       (0xE0040000UL)                            /*!< TPI Base Address */
 #define TPI1            ((TPI1_Type*)       TPI_BASE)   /*!< TPI configuration struct */
@@ -589,82 +589,82 @@ typedef struct {
 // - TEEVR      Select event for trace enable
 
 typedef struct {
-		__IO uint32_t CR;           /* Main Control Register */
-		__IO uint32_t CCR;          /* Configuration Code Register */
-		__IO uint32_t TRIGGER;      /* Trigger Event */
-		__IO uint32_t ASICCR;       /* ASIC Control Register */
-		__IO uint32_t SR;           /* ETM Status Register */
-		__IO uint32_t SCR;          /* System Configuration Register */
-		__IO uint32_t TSSCR;        /* TraceEnable Start/Stop Control Register */
-		__IO uint32_t TECR2;        /* TraceEnable Control 2 */
-		__IO uint32_t TEEVR;        /* TraceEnable Event Register */
-		__IO uint32_t TECR1;        /* TraceEnable Control 1 */
-		__IO uint32_t FFRR;         /* FIFOFULL Region Register */
-		__IO uint32_t FFLR;         /* FIFOFULL Level Register */
-		__IO uint32_t VDEVR;        /* ViewData Event Register */
-		__IO uint32_t VDCR1;        /* ViewData Control 1 */
-		__IO uint32_t VDCR2;        /* ViewData Control 2 */
-		__IO uint32_t VDCR3;        /* ViewData Control 3 */
-		__IO uint32_t ACVR[16];     /* Address Comparator Value Registers */
-		__IO uint32_t ACTR[16];     /* Address Comparator Access Type Registers */
-		__IO uint32_t DCVR[16];     /* Data Comparator Value Registers */
-		__IO uint32_t DCMR[16];     /* Data Comparator Mask Registers */
-		__IO uint32_t CNTRLDVR[4];  /* Counter Reload Value Registers */
-		__IO uint32_t CNTENR[4];    /* Counter Enable Registers */
-		__IO uint32_t CNTRLDEVR[4]; /* Counter Reload Event Registers */
-		__IO uint32_t CNTVR[4];     /* Counter Value Registers */
-		__IO uint32_t SQabEVR[6];   /* Sequencer State Transition Event Registers */
-		__IO uint32_t RESERVED0;
-		__IO uint32_t SQR;          /* Current Sequencer State Register */
-		__IO uint32_t EXTOUTEVR[4]; /* External Output Event Registers */
-		__IO uint32_t CIDCVR[3];    /* Context ID Comparator Value Registers */
-		__IO uint32_t CIDCMR;       /* Context ID Comparator Mask Register */
-		__IO uint32_t IMPL[8];      /* Implementation specific registers */
-		__IO uint32_t SYNCFR;       /* Synchronization Frequency Register */
-		__IO uint32_t IDR;          /* ETM ID Register */
-		__IO uint32_t CCER;         /* Configuration Code Extension Register */
-		__IO uint32_t EXTINSELR;    /* Extended External Input Selection Register */
-		__IO uint32_t TESSEICR;     /* TraceEnable Start/Stop EmbeddedICE Control Register */
-		__IO uint32_t EIBCR;        /* EmbeddedICE Behavior Control Register */
-		__IO uint32_t TSEVR;        /* Timestamp Event Register, ETMv3.5 */
-		__IO uint32_t AUXCR;        /* Auxiliary Control Register, ETMv3.5 */
-		__IO uint32_t TRACEIDR;     /* CoreSight Trace ID Register */
-		__IO uint32_t RESERVED1;
-		__IO uint32_t IDR2;         /* ETM ID Register 2 */
-		__IO uint32_t RESERVED2[13];
-		__IO uint32_t VMIDCVR;      /* VMID Comparator Value Register, ETMv3.5 */
-		__IO uint32_t RESERVED3[47];
-		__IO uint32_t OSLAR;        /* OS Lock Access Register */
-		__IO uint32_t OSLSR;        /* OS Lock Status Register */
-		__IO uint32_t OSSRR;        /* OS Save and Restore Register */
-		__IO uint32_t RESERVED4;
-		__IO uint32_t PDCR;         /* Power Down Control Register, ETMv3.5 */
-		__IO uint32_t PDSR;         /* Device Power-Down Status Register */
-		__IO uint32_t RESERVED5[762];
-		__IO uint32_t ITCTRL;       /* Integration Mode Control Register */
-		__IO uint32_t RESERVED6[39];
-		__IO uint32_t CLAIMSET;     /* Claim Tag Set Register */
-		__IO uint32_t CLAIMCLR;     /* Claim Tag Clear Register */
-		__IO uint32_t RESERVED7[2];
-		__IO uint32_t LAR;          /* Lock Access Register */
-		__IO uint32_t LSR;          /* Lock Status Register */
-		__IO uint32_t AUTHSTATUS;   /* Authentication Status Register */
-		__IO uint32_t RESERVED8[3];
-		__IO uint32_t DEVID;        /* CoreSight Device Configuration Register */
-		__IO uint32_t DEVTYPE;      /* CoreSight Device Type Register */
-		__IO uint32_t PIDR4;        /* Peripheral ID4 */
-		__IO uint32_t PIDR5;        /* Peripheral ID5 */
-		__IO uint32_t PIDR6;        /* Peripheral ID6 */
-		__IO uint32_t PIDR7;        /* Peripheral ID7 */
-		__IO uint32_t PIDR0;        /* Peripheral ID0 */
-		__IO uint32_t PIDR1;        /* Peripheral ID1 */
-		__IO uint32_t PIDR2;        /* Peripheral ID2 */
-		__IO uint32_t PIDR3;        /* Peripheral ID3 */
-		__IO uint32_t CIDR0;        /* Component ID0 */
-		__IO uint32_t CIDR1;        /* Component ID1 */
-		__IO uint32_t CIDR2;        /* Component ID2 */
-		__IO uint32_t CIDR3;        /* Component ID3 */
-	} ETM_Type;
+    __IO uint32_t CR;           /* Main Control Register */
+    __IO uint32_t CCR;          /* Configuration Code Register */
+    __IO uint32_t TRIGGER;      /* Trigger Event */
+    __IO uint32_t ASICCR;       /* ASIC Control Register */
+    __IO uint32_t SR;           /* ETM Status Register */
+    __IO uint32_t SCR;          /* System Configuration Register */
+    __IO uint32_t TSSCR;        /* TraceEnable Start/Stop Control Register */
+    __IO uint32_t TECR2;        /* TraceEnable Control 2 */
+    __IO uint32_t TEEVR;        /* TraceEnable Event Register */
+    __IO uint32_t TECR1;        /* TraceEnable Control 1 */
+    __IO uint32_t FFRR;         /* FIFOFULL Region Register */
+    __IO uint32_t FFLR;         /* FIFOFULL Level Register */
+    __IO uint32_t VDEVR;        /* ViewData Event Register */
+    __IO uint32_t VDCR1;        /* ViewData Control 1 */
+    __IO uint32_t VDCR2;        /* ViewData Control 2 */
+    __IO uint32_t VDCR3;        /* ViewData Control 3 */
+    __IO uint32_t ACVR[16];     /* Address Comparator Value Registers */
+    __IO uint32_t ACTR[16];     /* Address Comparator Access Type Registers */
+    __IO uint32_t DCVR[16];     /* Data Comparator Value Registers */
+    __IO uint32_t DCMR[16];     /* Data Comparator Mask Registers */
+    __IO uint32_t CNTRLDVR[4];  /* Counter Reload Value Registers */
+    __IO uint32_t CNTENR[4];    /* Counter Enable Registers */
+    __IO uint32_t CNTRLDEVR[4]; /* Counter Reload Event Registers */
+    __IO uint32_t CNTVR[4];     /* Counter Value Registers */
+    __IO uint32_t SQabEVR[6];   /* Sequencer State Transition Event Registers */
+    __IO uint32_t RESERVED0;
+    __IO uint32_t SQR;          /* Current Sequencer State Register */
+    __IO uint32_t EXTOUTEVR[4]; /* External Output Event Registers */
+    __IO uint32_t CIDCVR[3];    /* Context ID Comparator Value Registers */
+    __IO uint32_t CIDCMR;       /* Context ID Comparator Mask Register */
+    __IO uint32_t IMPL[8];      /* Implementation specific registers */
+    __IO uint32_t SYNCFR;       /* Synchronization Frequency Register */
+    __IO uint32_t IDR;          /* ETM ID Register */
+    __IO uint32_t CCER;         /* Configuration Code Extension Register */
+    __IO uint32_t EXTINSELR;    /* Extended External Input Selection Register */
+    __IO uint32_t TESSEICR;     /* TraceEnable Start/Stop EmbeddedICE Control Register */
+    __IO uint32_t EIBCR;        /* EmbeddedICE Behavior Control Register */
+    __IO uint32_t TSEVR;        /* Timestamp Event Register, ETMv3.5 */
+    __IO uint32_t AUXCR;        /* Auxiliary Control Register, ETMv3.5 */
+    __IO uint32_t TRACEIDR;     /* CoreSight Trace ID Register */
+    __IO uint32_t RESERVED1;
+    __IO uint32_t IDR2;         /* ETM ID Register 2 */
+    __IO uint32_t RESERVED2[13];
+    __IO uint32_t VMIDCVR;      /* VMID Comparator Value Register, ETMv3.5 */
+    __IO uint32_t RESERVED3[47];
+    __IO uint32_t OSLAR;        /* OS Lock Access Register */
+    __IO uint32_t OSLSR;        /* OS Lock Status Register */
+    __IO uint32_t OSSRR;        /* OS Save and Restore Register */
+    __IO uint32_t RESERVED4;
+    __IO uint32_t PDCR;         /* Power Down Control Register, ETMv3.5 */
+    __IO uint32_t PDSR;         /* Device Power-Down Status Register */
+    __IO uint32_t RESERVED5[762];
+    __IO uint32_t ITCTRL;       /* Integration Mode Control Register */
+    __IO uint32_t RESERVED6[39];
+    __IO uint32_t CLAIMSET;     /* Claim Tag Set Register */
+    __IO uint32_t CLAIMCLR;     /* Claim Tag Clear Register */
+    __IO uint32_t RESERVED7[2];
+    __IO uint32_t LAR;          /* Lock Access Register */
+    __IO uint32_t LSR;          /* Lock Status Register */
+    __IO uint32_t AUTHSTATUS;   /* Authentication Status Register */
+    __IO uint32_t RESERVED8[3];
+    __IO uint32_t DEVID;        /* CoreSight Device Configuration Register */
+    __IO uint32_t DEVTYPE;      /* CoreSight Device Type Register */
+    __IO uint32_t PIDR4;        /* Peripheral ID4 */
+    __IO uint32_t PIDR5;        /* Peripheral ID5 */
+    __IO uint32_t PIDR6;        /* Peripheral ID6 */
+    __IO uint32_t PIDR7;        /* Peripheral ID7 */
+    __IO uint32_t PIDR0;        /* Peripheral ID0 */
+    __IO uint32_t PIDR1;        /* Peripheral ID1 */
+    __IO uint32_t PIDR2;        /* Peripheral ID2 */
+    __IO uint32_t PIDR3;        /* Peripheral ID3 */
+    __IO uint32_t CIDR0;        /* Component ID0 */
+    __IO uint32_t CIDR1;        /* Component ID1 */
+    __IO uint32_t CIDR2;        /* Component ID2 */
+    __IO uint32_t CIDR3;        /* Component ID3 */
+  } ETM_Type;
 
 #define ETM_BASE 0xE0041000
 #define ETM ((ETM_Type*)ETM_BASE)
@@ -774,64 +774,64 @@ typedef struct {
 #define DBGMCU1_BASE        0xE0042000U
 #define DBGMCU1              ((DBGMCU1_TypeDef *) DBGMCU_BASE)
 typedef struct {
-	__IO uint32_t IDCODE;  /*!< MCU device ID code,               Address offset: 0x00 */
-	__IO uint32_t CR;      /*!< Debug MCU configuration register, Address offset: 0x04 */
-	__IO uint32_t APB1FZ;  /*!< Debug MCU APB1 freeze register,   Address offset: 0x08 */
-	__IO uint32_t APB2FZ;  /*!< Debug MCU APB2 freeze register,   Address offset: 0x0C */
-	}DBGMCU1_TypeDef;
+  __IO uint32_t IDCODE;  /*!< MCU device ID code,               Address offset: 0x00 */
+  __IO uint32_t CR;      /*!< Debug MCU configuration register, Address offset: 0x04 */
+  __IO uint32_t APB1FZ;  /*!< Debug MCU APB1 freeze register,   Address offset: 0x08 */
+  __IO uint32_t APB2FZ;  /*!< Debug MCU APB2 freeze register,   Address offset: 0x0C */
+  }DBGMCU1_TypeDef;
 //}}}
 //}}}
 
 //{{{
 template <typename T> std::string hex (T value, uint16_t width = 0) {
 
-	std::ostringstream os;
-	os << std::hex << std::setfill ('0') << std::setw (width) << value;
-	return os.str();
-	}
+  std::ostringstream os;
+  os << std::hex << std::setfill ('0') << std::setw (width) << value;
+  return os.str();
+  }
 //}}}
 //{{{
 template <typename T> std::string dec (T value, uint16_t width = 0, char fill = ' ') {
 
-	std::ostringstream os;
-	os << std::setfill (fill) << std::setw (width) << value;
-	return os.str();
-	}
+  std::ostringstream os;
+  os << std::setfill (fill) << std::setw (width) << value;
+  return os.str();
+  }
 //}}}
 
 UART_HandleTypeDef DebugUartHandle;
 //{{{
 void initDebugUart() {
 
-	__HAL_RCC_USART1_FORCE_RESET();
-	__HAL_RCC_USART1_RELEASE_RESET();
-	__HAL_RCC_GPIOA_CLK_ENABLE();
-	__HAL_RCC_USART1_CLK_ENABLE();
+  __HAL_RCC_USART1_FORCE_RESET();
+  __HAL_RCC_USART1_RELEASE_RESET();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_USART1_CLK_ENABLE();
 
-	// PA9 - USART1 tx pin configuration
-	GPIO_InitTypeDef  GPIO_InitStruct;
-	GPIO_InitStruct.Pin       = GPIO_PIN_9;
-	GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
-	GPIO_InitStruct.Pull      = GPIO_PULLUP;
-	GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
-	GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
-	HAL_GPIO_Init (GPIOA, &GPIO_InitStruct);
+  // PA9 - USART1 tx pin configuration
+  GPIO_InitTypeDef  GPIO_InitStruct;
+  GPIO_InitStruct.Pin       = GPIO_PIN_9;
+  GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull      = GPIO_PULLUP;
+  GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
+  HAL_GPIO_Init (GPIOA, &GPIO_InitStruct);
 
-	// PA10 - USART1 rx pin configuration
-	//GPIO_InitStruct.Pin = GPIO_PIN_10;
-	//HAL_GPIO_Init (GPIOA, &GPIO_InitStruct);
+  // PA10 - USART1 rx pin configuration
+  //GPIO_InitStruct.Pin = GPIO_PIN_10;
+  //HAL_GPIO_Init (GPIOA, &GPIO_InitStruct);
 
-	// 8 Bits, One Stop bit, Parity = None, RTS,CTS flow control
-	DebugUartHandle.Instance   = USART1;
-	DebugUartHandle.Init.BaudRate   = 230400;
-	DebugUartHandle.Init.WordLength = UART_WORDLENGTH_8B;
-	DebugUartHandle.Init.StopBits   = UART_STOPBITS_1;
-	DebugUartHandle.Init.Parity     = UART_PARITY_NONE;
-	DebugUartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
-	DebugUartHandle.Init.Mode       = UART_MODE_TX;
-	//DebugUartHandle.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-	HAL_UART_Init (&DebugUartHandle);
-	}
+  // 8 Bits, One Stop bit, Parity = None, RTS,CTS flow control
+  DebugUartHandle.Instance   = USART1;
+  DebugUartHandle.Init.BaudRate   = 230400;
+  DebugUartHandle.Init.WordLength = UART_WORDLENGTH_8B;
+  DebugUartHandle.Init.StopBits   = UART_STOPBITS_1;
+  DebugUartHandle.Init.Parity     = UART_PARITY_NONE;
+  DebugUartHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;
+  DebugUartHandle.Init.Mode       = UART_MODE_TX;
+  //DebugUartHandle.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  HAL_UART_Init (&DebugUartHandle);
+  }
 //}}}
 
 //{{{  sys
@@ -842,157 +842,157 @@ int globalCounter = 0;
 //{{{
 void configureSWO() {
 
-	DBGMCU->CR |= DBGMCU_CR_TRACE_IOEN; // Enable IO trace pins
-	if (!(DBGMCU->CR & DBGMCU_CR_TRACE_IOEN))
-		return;
+  DBGMCU->CR |= DBGMCU_CR_TRACE_IOEN; // Enable IO trace pins
+  if (!(DBGMCU->CR & DBGMCU_CR_TRACE_IOEN))
+    return;
 
-	// default 64k baud rate
-	// SWOSpeed in Hz, note that cpuCoreFreqHz is expected to be match the CPU core clock
-	//uint32_t SWOSpeed = 64000;
-	uint32_t SWOSpeed = 2000000;
-	uint32_t cpuCoreFreqHz = 180000000;
-	uint32_t SWOPrescaler = (cpuCoreFreqHz / SWOSpeed) - 1;
+  // default 64k baud rate
+  // SWOSpeed in Hz, note that cpuCoreFreqHz is expected to be match the CPU core clock
+  //uint32_t SWOSpeed = 64000;
+  uint32_t SWOSpeed = 2000000;
+  uint32_t cpuCoreFreqHz = 180000000;
+  uint32_t SWOPrescaler = (cpuCoreFreqHz / SWOSpeed) - 1;
 
-	// enable trace in core debug
-	CoreDebug->DEMCR = CoreDebug_DEMCR_TRCENA_Msk;
+  // enable trace in core debug
+  CoreDebug->DEMCR = CoreDebug_DEMCR_TRCENA_Msk;
 
-	// TPI SPPR - Selected PIN Protocol Register =  protocol for trace output 2: SWO NRZ, 1: SWO Manchester encoding
-	TPI->SPPR = 0x00000002;
+  // TPI SPPR - Selected PIN Protocol Register =  protocol for trace output 2: SWO NRZ, 1: SWO Manchester encoding
+  TPI->SPPR = 0x00000002;
 
-	// TPI Async Clock Prescaler Register =  Scale the baud rate of the asynchronous output
-	TPI->ACPR = SWOPrescaler;
+  // TPI Async Clock Prescaler Register =  Scale the baud rate of the asynchronous output
+  TPI->ACPR = SWOPrescaler;
 
-	// ITM Lock Access Register = ITM_LAR_KEY = C5ACCE55 enables write access to Control Register 0xE00 :: 0xFFC
-	ITM->LAR = ITM_LAR_KEY;
+  // ITM Lock Access Register = ITM_LAR_KEY = C5ACCE55 enables write access to Control Register 0xE00 :: 0xFFC
+  ITM->LAR = ITM_LAR_KEY;
 
-	// ITM Trace Control Register
-	ITM->TCR = ITM_TCR_TraceBusID_Msk | ITM_TCR_SWOENA_Msk | ITM_TCR_SYNCENA_Msk | ITM_TCR_ITMENA_Msk;
+  // ITM Trace Control Register
+  ITM->TCR = ITM_TCR_TraceBusID_Msk | ITM_TCR_SWOENA_Msk | ITM_TCR_SYNCENA_Msk | ITM_TCR_ITMENA_Msk;
 
-	// ITM Trace Privilege Register =
-	ITM->TPR = ITM_TPR_PRIVMASK_Msk;
+  // ITM Trace Privilege Register =
+  ITM->TPR = ITM_TPR_PRIVMASK_Msk;
 
-	// ITM Trace Enable Register =  Enabled tracing on stimulus ports. One bit per stimulus port
-	ITM->TER = 0xFFFFFFFF;
+  // ITM Trace Enable Register =  Enabled tracing on stimulus ports. One bit per stimulus port
+  ITM->TER = 0xFFFFFFFF;
 
-	// DWT Control Register =
-	//*((volatile unsigned*)(ITM_BASE + 0x01000)) = 0x400003FE;
-	DWT->CTRL = 0x400003FE;
+  // DWT Control Register =
+  //*((volatile unsigned*)(ITM_BASE + 0x01000)) = 0x400003FE;
+  DWT->CTRL = 0x400003FE;
 
-	// TPI Formatter and Flush Control Register =
-	//*((volatile unsigned*)(ITM_BASE + 0x40304)) = 0x00000100;
-	TPI->FFCR = 0x00000100;
-	}
+  // TPI Formatter and Flush Control Register =
+  //*((volatile unsigned*)(ITM_BASE + 0x40304)) = 0x00000100;
+  TPI->FFCR = 0x00000100;
+  }
 //}}}
 //{{{
 void configureDtrace1() {
 
-	__HAL_RCC_GPIOE_CLK_ENABLE();
-	//*((uint32_t*)(0x40023830)) |= 0x00000010;
-	*((uint32_t*)(0x40021000)) = 0x00002AA0;    // GPIOE_MODER:   PE2..PE6 = Alternate function mode
-	*((uint32_t*)(0x40021008)) = 0x00003FF0;    // GPIOE_OSPEEDR: PE2..PE6 = 100 MHz speed
-	*((uint32_t*)(0x4002100C)) = 0x00000000;    // GPIOE_PUPDR:   PE2..PE6 = No Pull-up/Pull-down
-	*((uint32_t*)(0x40021020)) = 0x00000000;    // GPIOE_AFRL:    PE2..PE6 = AF0
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  //*((uint32_t*)(0x40023830)) |= 0x00000010;
+  *((uint32_t*)(0x40021000)) = 0x00002AA0;    // GPIOE_MODER:   PE2..PE6 = Alternate function mode
+  *((uint32_t*)(0x40021008)) = 0x00003FF0;    // GPIOE_OSPEEDR: PE2..PE6 = 100 MHz speed
+  *((uint32_t*)(0x4002100C)) = 0x00000000;    // GPIOE_PUPDR:   PE2..PE6 = No Pull-up/Pull-down
+  *((uint32_t*)(0x40021020)) = 0x00000000;    // GPIOE_AFRL:    PE2..PE6 = AF0
 
-	//DBGMCU->CR = DBGMCU_CR_TRACE_IOEN | DBGMCU1_CR_TRACE_MODE_0 | DBGMCU1_CR_TRACE_MODE_1; // Enable IO trace pins
-	//DBGMCU->CR = 0xE0;
-	DBGMCU->CR = 0x60;
-	if (!(DBGMCU->CR & DBGMCU_CR_TRACE_IOEN))
-		return;
+  //DBGMCU->CR = DBGMCU_CR_TRACE_IOEN | DBGMCU1_CR_TRACE_MODE_0 | DBGMCU1_CR_TRACE_MODE_1; // Enable IO trace pins
+  //DBGMCU->CR = 0xE0;
+  DBGMCU->CR = 0x60;
+  if (!(DBGMCU->CR & DBGMCU_CR_TRACE_IOEN))
+    return;
 
-	// default 64k baud rate
-	// SWOSpeed in Hz, note that cpuCoreFreqHz is expected to be match the CPU core clock
-	//uint32_t SWOSpeed = 64000;
-	uint32_t SWOSpeed = 2000000;
-	uint32_t cpuCoreFreqHz = 168000000;
-	uint32_t SWOPrescaler = (cpuCoreFreqHz / SWOSpeed) - 1;
+  // default 64k baud rate
+  // SWOSpeed in Hz, note that cpuCoreFreqHz is expected to be match the CPU core clock
+  //uint32_t SWOSpeed = 64000;
+  uint32_t SWOSpeed = 2000000;
+  uint32_t cpuCoreFreqHz = 168000000;
+  uint32_t SWOPrescaler = (cpuCoreFreqHz / SWOSpeed) - 1;
 
-	// enable trace in core debug
-	CoreDebug->DEMCR = CoreDebug_DEMCR_TRCENA_Msk;
+  // enable trace in core debug
+  CoreDebug->DEMCR = CoreDebug_DEMCR_TRCENA_Msk;
 
-	// TPI SPPR - Selected PIN Protocol Register =  protocol for trace output 2: SWO NRZ, 1: SWO Manchester encoding
-	//TPI->SPPR = 0x00000002;
-	TPI->SPPR = 0x00000000;  // sync
-	//TPI->CSPSR = 0x08;       // 4 pins TRACED[0..3], PE2 clk, PE3,4,5,6 data
-	TPI->CSPSR = 0x01;       // 4 pins TRACED[0..3], PE2 clk, PE3,4,5,6 data
+  // TPI SPPR - Selected PIN Protocol Register =  protocol for trace output 2: SWO NRZ, 1: SWO Manchester encoding
+  //TPI->SPPR = 0x00000002;
+  TPI->SPPR = 0x00000000;  // sync
+  //TPI->CSPSR = 0x08;       // 4 pins TRACED[0..3], PE2 clk, PE3,4,5,6 data
+  TPI->CSPSR = 0x01;       // 4 pins TRACED[0..3], PE2 clk, PE3,4,5,6 data
 
-	// TPI Async Clock Prescaler Register =  Scale the baud rate of the asynchronous output
-	TPI->ACPR = SWOPrescaler;
+  // TPI Async Clock Prescaler Register =  Scale the baud rate of the asynchronous output
+  TPI->ACPR = SWOPrescaler;
 
-	// ITM Lock Access Register = ITM_LAR_KEY = C5ACCE55 enables write access to Control Register 0xE00 :: 0xFFC
-	ITM->LAR = ITM_LAR_KEY;
+  // ITM Lock Access Register = ITM_LAR_KEY = C5ACCE55 enables write access to Control Register 0xE00 :: 0xFFC
+  ITM->LAR = ITM_LAR_KEY;
 
-	// ITM Trace Control Register
-	ITM->TCR = ITM_TCR_TraceBusID_Msk | ITM_TCR_SWOENA_Msk | ITM_TCR_SYNCENA_Msk | ITM_TCR_ITMENA_Msk;
+  // ITM Trace Control Register
+  ITM->TCR = ITM_TCR_TraceBusID_Msk | ITM_TCR_SWOENA_Msk | ITM_TCR_SYNCENA_Msk | ITM_TCR_ITMENA_Msk;
 
-	// ITM Trace Privilege Register =
-	ITM->TPR = ITM_TPR_PRIVMASK_Msk;
+  // ITM Trace Privilege Register =
+  ITM->TPR = ITM_TPR_PRIVMASK_Msk;
 
-	// ITM Trace Enable Register =  Enabled tracing on stimulus ports. One bit per stimulus port
-	ITM->TER = 0xFFFFFFFF;
+  // ITM Trace Enable Register =  Enabled tracing on stimulus ports. One bit per stimulus port
+  ITM->TER = 0xFFFFFFFF;
 
-	// DWT Control Register =
-	//*((volatile unsigned*)(ITM_BASE + 0x01000)) = 0x400003FE;
-	DWT->CTRL = 0x400003FE;
+  // DWT Control Register =
+  //*((volatile unsigned*)(ITM_BASE + 0x01000)) = 0x400003FE;
+  DWT->CTRL = 0x400003FE;
 
-	// TPI Formatter and Flush Control Register =
-	//*((volatile unsigned*)(ITM_BASE + 0x40304)) = 0x00000100;
-	TPI->FFCR = 0x00000102;
+  // TPI Formatter and Flush Control Register =
+  //*((volatile unsigned*)(ITM_BASE + 0x40304)) = 0x00000100;
+  TPI->FFCR = 0x00000102;
 }
 //}}}
 //{{{
 void configureDtrace4() {
 
-	__HAL_RCC_GPIOE_CLK_ENABLE();
-	//*((uint32_t*)(0x40023830)) |= 0x00000010;
-	*((uint32_t*)(0x40021000)) = 0x00002AA0;    // GPIOE_MODER:   PE2..PE6 = Alternate function mode
-	*((uint32_t*)(0x40021008)) = 0x00003FF0;    // GPIOE_OSPEEDR: PE2..PE6 = 100 MHz speed
-	*((uint32_t*)(0x4002100C)) = 0x00000000;    // GPIOE_PUPDR:   PE2..PE6 = No Pull-up/Pull-down
-	*((uint32_t*)(0x40021020)) = 0x00000000;    // GPIOE_AFRL:    PE2..PE6 = AF0
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  //*((uint32_t*)(0x40023830)) |= 0x00000010;
+  *((uint32_t*)(0x40021000)) = 0x00002AA0;    // GPIOE_MODER:   PE2..PE6 = Alternate function mode
+  *((uint32_t*)(0x40021008)) = 0x00003FF0;    // GPIOE_OSPEEDR: PE2..PE6 = 100 MHz speed
+  *((uint32_t*)(0x4002100C)) = 0x00000000;    // GPIOE_PUPDR:   PE2..PE6 = No Pull-up/Pull-down
+  *((uint32_t*)(0x40021020)) = 0x00000000;    // GPIOE_AFRL:    PE2..PE6 = AF0
 
-	//DBGMCU->CR = DBGMCU_CR_TRACE_IOEN | DBGMCU1_CR_TRACE_MODE_0 | DBGMCU1_CR_TRACE_MODE_1; // Enable IO trace pins
-	DBGMCU->CR = 0xE0;
-	//DBGMCU->CR = 0x60;
-	if (!(DBGMCU->CR & DBGMCU_CR_TRACE_IOEN))
-		return;
+  //DBGMCU->CR = DBGMCU_CR_TRACE_IOEN | DBGMCU1_CR_TRACE_MODE_0 | DBGMCU1_CR_TRACE_MODE_1; // Enable IO trace pins
+  DBGMCU->CR = 0xE0;
+  //DBGMCU->CR = 0x60;
+  if (!(DBGMCU->CR & DBGMCU_CR_TRACE_IOEN))
+    return;
 
-	// default 64k baud rate
-	// SWOSpeed in Hz, note that cpuCoreFreqHz is expected to be match the CPU core clock
-	//uint32_t SWOSpeed = 64000;
-	uint32_t SWOSpeed = 2000000;
-	uint32_t cpuCoreFreqHz = 180000000;
-	uint32_t SWOPrescaler = (cpuCoreFreqHz / SWOSpeed) - 1;
+  // default 64k baud rate
+  // SWOSpeed in Hz, note that cpuCoreFreqHz is expected to be match the CPU core clock
+  //uint32_t SWOSpeed = 64000;
+  uint32_t SWOSpeed = 2000000;
+  uint32_t cpuCoreFreqHz = 180000000;
+  uint32_t SWOPrescaler = (cpuCoreFreqHz / SWOSpeed) - 1;
 
-	// enable trace in core debug
-	CoreDebug->DEMCR = CoreDebug_DEMCR_TRCENA_Msk;
+  // enable trace in core debug
+  CoreDebug->DEMCR = CoreDebug_DEMCR_TRCENA_Msk;
 
-	// TPI SPPR - Selected PIN Protocol Register =  protocol for trace output 2: SWO NRZ, 1: SWO Manchester encoding
-	//TPI->SPPR = 0x00000002;
-	TPI->SPPR = 0x00000000;  // sync
-	TPI->CSPSR = 0x08;       // 4 pins TRACED[0..3], PE2 clk, PE3,4,5,6 data
-	//TPI->CSPSR = 0x01;       // 4 pins TRACED[0..3], PE2 clk, PE3,4,5,6 data
+  // TPI SPPR - Selected PIN Protocol Register =  protocol for trace output 2: SWO NRZ, 1: SWO Manchester encoding
+  //TPI->SPPR = 0x00000002;
+  TPI->SPPR = 0x00000000;  // sync
+  TPI->CSPSR = 0x08;       // 4 pins TRACED[0..3], PE2 clk, PE3,4,5,6 data
+  //TPI->CSPSR = 0x01;       // 4 pins TRACED[0..3], PE2 clk, PE3,4,5,6 data
 
-	// TPI Async Clock Prescaler Register =  Scale the baud rate of the asynchronous output
-	TPI->ACPR = SWOPrescaler;
+  // TPI Async Clock Prescaler Register =  Scale the baud rate of the asynchronous output
+  TPI->ACPR = SWOPrescaler;
 
-	// ITM Lock Access Register = ITM_LAR_KEY = C5ACCE55 enables write access to Control Register 0xE00 :: 0xFFC
-	ITM->LAR = ITM_LAR_KEY;
+  // ITM Lock Access Register = ITM_LAR_KEY = C5ACCE55 enables write access to Control Register 0xE00 :: 0xFFC
+  ITM->LAR = ITM_LAR_KEY;
 
-	// ITM Trace Control Register
-	ITM->TCR = ITM_TCR_TraceBusID_Msk | ITM_TCR_SWOENA_Msk | ITM_TCR_SYNCENA_Msk | ITM_TCR_ITMENA_Msk;
+  // ITM Trace Control Register
+  ITM->TCR = ITM_TCR_TraceBusID_Msk | ITM_TCR_SWOENA_Msk | ITM_TCR_SYNCENA_Msk | ITM_TCR_ITMENA_Msk;
 
-	// ITM Trace Privilege Register =
-	ITM->TPR = ITM_TPR_PRIVMASK_Msk;
+  // ITM Trace Privilege Register =
+  ITM->TPR = ITM_TPR_PRIVMASK_Msk;
 
-	// ITM Trace Enable Register =  Enabled tracing on stimulus ports. One bit per stimulus port
-	ITM->TER = 0xFFFFFFFF;
+  // ITM Trace Enable Register =  Enabled tracing on stimulus ports. One bit per stimulus port
+  ITM->TER = 0xFFFFFFFF;
 
-	// DWT Control Register =
-	//*((volatile unsigned*)(ITM_BASE + 0x01000)) = 0x400003FE;
-	DWT->CTRL = 0x400003FE;
+  // DWT Control Register =
+  //*((volatile unsigned*)(ITM_BASE + 0x01000)) = 0x400003FE;
+  DWT->CTRL = 0x400003FE;
 
-	// TPI Formatter and Flush Control Register =
-	//*((volatile unsigned*)(ITM_BASE + 0x40304)) = 0x00000100;
-	TPI->FFCR = 0x00000102;
+  // TPI Formatter and Flush Control Register =
+  //*((volatile unsigned*)(ITM_BASE + 0x40304)) = 0x00000100;
+  TPI->FFCR = 0x00000102;
 }
 //}}}
 //{{{
@@ -1000,80 +1000,80 @@ void configureTracing() {
 //#define ETM_TraceMode() ETM->CR &= ~ETM_CR_PROGRAMMING
 //#define ETM_SetupMode() ETM->CR |= ETM_CR_PROGRAMMING
 
-	DBGMCU->CR |= DBGMCU_CR_TRACE_IOEN; // Enable IO trace pins
-	if (!(DBGMCU->CR & DBGMCU_CR_TRACE_IOEN))
-		return;
+  DBGMCU->CR |= DBGMCU_CR_TRACE_IOEN; // Enable IO trace pins
+  if (!(DBGMCU->CR & DBGMCU_CR_TRACE_IOEN))
+    return;
 
-	// default 64k baud rate
-	// SWOSpeed in Hz, note that cpuCoreFreqHz is expected to be match the CPU core clock
-	//uint32_t SWOSpeed = 64000;
-	uint32_t SWOSpeed = 8000000;
-	uint32_t cpuCoreFreqHz = 168000000;
-	uint32_t SWOPrescaler = (cpuCoreFreqHz / SWOSpeed) - 1;
+  // default 64k baud rate
+  // SWOSpeed in Hz, note that cpuCoreFreqHz is expected to be match the CPU core clock
+  //uint32_t SWOSpeed = 64000;
+  uint32_t SWOSpeed = 8000000;
+  uint32_t cpuCoreFreqHz = 168000000;
+  uint32_t SWOPrescaler = (cpuCoreFreqHz / SWOSpeed) - 1;
 
-	// Configure Trace Port Interface Unit */
-	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk; // Enable access to registers
-	TPI->ACPR = SWOPrescaler;
-	TPI->SPPR = 2;     // Pin protocol = NRZ/USART
-	TPI->FFCR = 0x102; // TPIU packet framing enabled when bit 2 set,  0x100 only DWT/ITM and not ETM.
+  // Configure Trace Port Interface Unit */
+  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk; // Enable access to registers
+  TPI->ACPR = SWOPrescaler;
+  TPI->SPPR = 2;     // Pin protocol = NRZ/USART
+  TPI->FFCR = 0x102; // TPIU packet framing enabled when bit 2 set,  0x100 only DWT/ITM and not ETM.
 
-	// Configure PC sampling and exception trace
-	DWT->CTRL = (1 << DWT_CTRL_CYCTAP_Pos) |     // Prescaler for PC sampling, 0 = x32, 1 = x512
-							(0 << DWT_CTRL_POSTPRESET_Pos) | // Postscaler for PC sampling, Divider = value + 1
-							(1 << DWT_CTRL_PCSAMPLENA_Pos) | // Enable PC sampling
-							(2 << DWT_CTRL_SYNCTAP_Pos) |    // Sync packet interval 0=Off, 1=2^23 cycles, 2=2^25, 3=2^27
-							(1 << DWT_CTRL_EXCTRCENA_Pos) |  // Enable exception trace
-							(1 << DWT_CTRL_CYCCNTENA_Pos);   // Enable cycle counter
+  // Configure PC sampling and exception trace
+  DWT->CTRL = (1 << DWT_CTRL_CYCTAP_Pos) |     // Prescaler for PC sampling, 0 = x32, 1 = x512
+              (0 << DWT_CTRL_POSTPRESET_Pos) | // Postscaler for PC sampling, Divider = value + 1
+              (1 << DWT_CTRL_PCSAMPLENA_Pos) | // Enable PC sampling
+              (2 << DWT_CTRL_SYNCTAP_Pos) |    // Sync packet interval 0=Off, 1=2^23 cycles, 2=2^25, 3=2^27
+              (1 << DWT_CTRL_EXCTRCENA_Pos) |  // Enable exception trace
+              (1 << DWT_CTRL_CYCCNTENA_Pos);   // Enable cycle counter
 
-	// Configure instrumentation trace macroblock
-	ITM->LAR = 0xC5ACCE55;
-	ITM->TCR = (1 << ITM_TCR_TraceBusID_Pos) | // Trace bus ID for TPIU
-						 (1 << ITM_TCR_DWTENA_Pos) |     // Enable events from DWT
-						 (1 << ITM_TCR_SYNCENA_Pos) |    // Enable sync packets
-						 (1 << ITM_TCR_ITMENA_Pos);      // Main enable for ITM
-	ITM->TER = 0xFFFFFFFF; // Enable all stimulus ports
+  // Configure instrumentation trace macroblock
+  ITM->LAR = 0xC5ACCE55;
+  ITM->TCR = (1 << ITM_TCR_TraceBusID_Pos) | // Trace bus ID for TPIU
+             (1 << ITM_TCR_DWTENA_Pos) |     // Enable events from DWT
+             (1 << ITM_TCR_SYNCENA_Pos) |    // Enable sync packets
+             (1 << ITM_TCR_ITMENA_Pos);      // Main enable for ITM
+  ITM->TER = 0xFFFFFFFF; // Enable all stimulus ports
 
-	// Configure embedded trace macroblock
-	ETM->LAR = 0xC5ACCE55;
-	ETM_SetupMode();
-	ETM->CR = ETM_CR_ETMEN |           // Enable ETM output port
-						ETM_CR_STALL_PROCESSOR | // Stall processor when fifo is full
-						ETM_CR_BRANCH_OUTPUT;    // Report all branches
-	ETM->TRACEIDR = 2;                 // Trace bus ID for TPIU
-	ETM->TECR1 = ETM_TECR1_EXCLUDE;    // Trace always enabled
-	ETM->FFRR = ETM_FFRR_EXCLUDE;      // Stalling always enabled
-	ETM->FFLR = 24;                    // Stall <N bytes free FIFO (1..24), larger less latency, but more stalls
-																		 // Note: we do not enable ETM trace yet, only for specific parts of code.
-	}
+  // Configure embedded trace macroblock
+  ETM->LAR = 0xC5ACCE55;
+  ETM_SetupMode();
+  ETM->CR = ETM_CR_ETMEN |           // Enable ETM output port
+            ETM_CR_STALL_PROCESSOR | // Stall processor when fifo is full
+            ETM_CR_BRANCH_OUTPUT;    // Report all branches
+  ETM->TRACEIDR = 2;                 // Trace bus ID for TPIU
+  ETM->TECR1 = ETM_TECR1_EXCLUDE;    // Trace always enabled
+  ETM->FFRR = ETM_FFRR_EXCLUDE;      // Stalling always enabled
+  ETM->FFLR = 24;                    // Stall <N bytes free FIFO (1..24), larger less latency, but more stalls
+                                     // Note: we do not enable ETM trace yet, only for specific parts of code.
+  }
 //}}}
 //{{{
 void configureWatchpoint() {
 // how to configure DWT to monitor a watchpoint, data value reported when watchpoint hit
 
-	// Monitor all accesses to GPIOC (range length 32 bytes)
-	DWT->COMP0 = (uint32_t)GPIOD;
-	DWT->MASK0 = 5;
-	DWT->FUNCTION0 = (2 << DWT_FUNCTION_FUNCTION_Pos) | // Report data and addr on watchpoint hit
-									 (1 << DWT_FUNCTION_EMITRANGE_Pos);
+  // Monitor all accesses to GPIOC (range length 32 bytes)
+  DWT->COMP0 = (uint32_t)GPIOD;
+  DWT->MASK0 = 5;
+  DWT->FUNCTION0 = (2 << DWT_FUNCTION_FUNCTION_Pos) | // Report data and addr on watchpoint hit
+                   (1 << DWT_FUNCTION_EMITRANGE_Pos);
 
-	// Monitor all accesses to globalCounter (range length 4 bytes)
-	DWT->COMP1 = (uint32_t)&globalCounter;
-	DWT->MASK1 = 2;
-	DWT->FUNCTION1 = (3 << DWT_FUNCTION_FUNCTION_Pos); // Report data and PC on watchpoint hit
-	}
+  // Monitor all accesses to globalCounter (range length 4 bytes)
+  DWT->COMP1 = (uint32_t)&globalCounter;
+  DWT->MASK1 = 2;
+  DWT->FUNCTION1 = (3 << DWT_FUNCTION_FUNCTION_Pos); // Report data and PC on watchpoint hit
+  }
 //}}}
 //{{{
 uint32_t my_ITM_SendChar (uint32_t port, uint32_t ch) {
 
-	// if ITM enabled && ITM Port #0 enabled
-	if (((ITM->TCR & ITM_TCR_ITMENA_Msk) != 0UL) && ((ITM->TER & 1UL) != 0UL)) {
-		while (ITM->PORT[port].u32 == 0UL) {
-			__NOP();
-			}
-		ITM->PORT[port].u8 = (uint8_t)ch;
-		}
-	return (ch);
-	}
+  // if ITM enabled && ITM Port #0 enabled
+  if (((ITM->TCR & ITM_TCR_ITMENA_Msk) != 0UL) && ((ITM->TER & 1UL) != 0UL)) {
+    while (ITM->PORT[port].u32 == 0UL) {
+      __NOP();
+      }
+    ITM->PORT[port].u8 = (uint8_t)ch;
+    }
+  return (ch);
+  }
 //}}}
 
 //{{{
@@ -1088,254 +1088,254 @@ void SDRAMgpioInit() {
 // PE07..15 <-> FMC_D04..12    PG00..01 <-> FMC_A10..11    PG15 <-> FMC_NCAS
 // PD08..10 <-> FMC_D13..15                                PF11 <-> FMC_NRAS
 
-	__HAL_RCC_GPIOB_CLK_ENABLE();
-	__HAL_RCC_GPIOC_CLK_ENABLE();
-	__HAL_RCC_GPIOD_CLK_ENABLE();
-	__HAL_RCC_GPIOE_CLK_ENABLE();
-	__HAL_RCC_GPIOF_CLK_ENABLE();
-	__HAL_RCC_GPIOG_CLK_ENABLE();
-	__HAL_RCC_FMC_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOF_CLK_ENABLE();
+  __HAL_RCC_GPIOG_CLK_ENABLE();
+  __HAL_RCC_FMC_CLK_ENABLE();
 
-	GPIO_InitTypeDef GPIO_Init_Structure;
-	GPIO_Init_Structure.Mode = GPIO_MODE_AF_PP;
-	GPIO_Init_Structure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	GPIO_Init_Structure.Pull = GPIO_NOPULL;
-	GPIO_Init_Structure.Alternate = GPIO_AF12_FMC;
+  GPIO_InitTypeDef GPIO_Init_Structure;
+  GPIO_Init_Structure.Mode = GPIO_MODE_AF_PP;
+  GPIO_Init_Structure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_Init_Structure.Pull = GPIO_NOPULL;
+  GPIO_Init_Structure.Alternate = GPIO_AF12_FMC;
 
-	GPIO_Init_Structure.Pin = GPIO_PIN_5 | GPIO_PIN_6;
-	HAL_GPIO_Init (GPIOB, &GPIO_Init_Structure);
+  GPIO_Init_Structure.Pin = GPIO_PIN_5 | GPIO_PIN_6;
+  HAL_GPIO_Init (GPIOB, &GPIO_Init_Structure);
 
-	GPIO_Init_Structure.Pin = GPIO_PIN_0 | GPIO_PIN_2 | GPIO_PIN_3;
-	HAL_GPIO_Init (GPIOC, &GPIO_Init_Structure);
+  GPIO_Init_Structure.Pin = GPIO_PIN_0 | GPIO_PIN_2 | GPIO_PIN_3;
+  HAL_GPIO_Init (GPIOC, &GPIO_Init_Structure);
 
-	GPIO_Init_Structure.Pin = GPIO_PIN_0 | GPIO_PIN_1  | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 |
-														GPIO_PIN_14 | GPIO_PIN_15;
-	HAL_GPIO_Init (GPIOD, &GPIO_Init_Structure);
+  GPIO_Init_Structure.Pin = GPIO_PIN_0 | GPIO_PIN_1  | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 |
+                            GPIO_PIN_14 | GPIO_PIN_15;
+  HAL_GPIO_Init (GPIOD, &GPIO_Init_Structure);
 
-	GPIO_Init_Structure.Pin = GPIO_PIN_0  | GPIO_PIN_1  | GPIO_PIN_7 | GPIO_PIN_8  | GPIO_PIN_9  |
-														GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
-	HAL_GPIO_Init (GPIOE, &GPIO_Init_Structure);
+  GPIO_Init_Structure.Pin = GPIO_PIN_0  | GPIO_PIN_1  | GPIO_PIN_7 | GPIO_PIN_8  | GPIO_PIN_9  |
+                            GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
+  HAL_GPIO_Init (GPIOE, &GPIO_Init_Structure);
 
-	GPIO_Init_Structure.Pin = GPIO_PIN_0  | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3  | GPIO_PIN_4 | GPIO_PIN_5 |
-														GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
-	HAL_GPIO_Init (GPIOF, &GPIO_Init_Structure);
+  GPIO_Init_Structure.Pin = GPIO_PIN_0  | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3  | GPIO_PIN_4 | GPIO_PIN_5 |
+                            GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
+  HAL_GPIO_Init (GPIOF, &GPIO_Init_Structure);
 
-	GPIO_Init_Structure.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_8 | GPIO_PIN_15;
-	HAL_GPIO_Init (GPIOG, &GPIO_Init_Structure);
-	}
+  GPIO_Init_Structure.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_8 | GPIO_PIN_15;
+  HAL_GPIO_Init (GPIOG, &GPIO_Init_Structure);
+  }
 //}}}
 //{{{
 void SDRAMbank1Init() {
 // Micron MT48LC8M16A2 – 2m x 16bits x 4banks
 // PC2, PC3 - bank 1 - 0xC0000000 : 0xC10000000 - len 0x1000000
 
-	SDRAM_HandleTypeDef hsdram;
-	hsdram.Instance = FMC_SDRAM_DEVICE;
-	hsdram.Init.SDBank             = FMC_SDRAM_BANK1;
-	hsdram.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_9; // 8,9,10,11
-	hsdram.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_12;   // 11,12,13
-	hsdram.Init.MemoryDataWidth    = FMC_SDRAM_MEM_BUS_WIDTH_16;  // 8,16,32
-	hsdram.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
-	hsdram.Init.CASLatency         = FMC_SDRAM_CAS_LATENCY_3;
-	hsdram.Init.WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
-	hsdram.Init.SDClockPeriod      = FMC_SDRAM_CLOCK_PERIOD_3;
-	//hsdram.Init.ReadBurst          = FMC_SDRAM_RBURST_DISABLE;
-	hsdram.Init.ReadBurst          = FMC_SDRAM_RBURST_ENABLE;
-	hsdram.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_1;
+  SDRAM_HandleTypeDef hsdram;
+  hsdram.Instance = FMC_SDRAM_DEVICE;
+  hsdram.Init.SDBank             = FMC_SDRAM_BANK1;
+  hsdram.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_9; // 8,9,10,11
+  hsdram.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_12;   // 11,12,13
+  hsdram.Init.MemoryDataWidth    = FMC_SDRAM_MEM_BUS_WIDTH_16;  // 8,16,32
+  hsdram.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
+  hsdram.Init.CASLatency         = FMC_SDRAM_CAS_LATENCY_3;
+  hsdram.Init.WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
+  hsdram.Init.SDClockPeriod      = FMC_SDRAM_CLOCK_PERIOD_3;
+  //hsdram.Init.ReadBurst          = FMC_SDRAM_RBURST_DISABLE;
+  hsdram.Init.ReadBurst          = FMC_SDRAM_RBURST_ENABLE;
+  hsdram.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_1;
 
-	FMC_SDRAM_TimingTypeDef SDRAM_Timing;
-	SDRAM_Timing.LoadToActiveDelay    = 2; // TMRD: 2 Clock cycles
-	SDRAM_Timing.ExitSelfRefreshDelay = 7; // TXSR: min = 70ns (6 x 11.90ns)
-	SDRAM_Timing.SelfRefreshTime      = 4; // TRAS: min = 42ns (4 x 11.90ns) max=120k (ns)
-	SDRAM_Timing.RowCycleDelay        = 7; // TRC:  min = 63 (6 x 11.90ns)
-	SDRAM_Timing.WriteRecoveryTime    = 2; // TWR:  2 Clock cycles
-	SDRAM_Timing.RPDelay              = 2; // TRP:  15ns => 2 x 11.90ns
-	SDRAM_Timing.RCDDelay             = 2; // TRCD: 15ns => 2 x 11.90ns
+  FMC_SDRAM_TimingTypeDef SDRAM_Timing;
+  SDRAM_Timing.LoadToActiveDelay    = 2; // TMRD: 2 Clock cycles
+  SDRAM_Timing.ExitSelfRefreshDelay = 7; // TXSR: min = 70ns (6 x 11.90ns)
+  SDRAM_Timing.SelfRefreshTime      = 4; // TRAS: min = 42ns (4 x 11.90ns) max=120k (ns)
+  SDRAM_Timing.RowCycleDelay        = 7; // TRC:  min = 63 (6 x 11.90ns)
+  SDRAM_Timing.WriteRecoveryTime    = 2; // TWR:  2 Clock cycles
+  SDRAM_Timing.RPDelay              = 2; // TRP:  15ns => 2 x 11.90ns
+  SDRAM_Timing.RCDDelay             = 2; // TRCD: 15ns => 2 x 11.90ns
 
-	if (HAL_SDRAM_Init (&hsdram, &SDRAM_Timing) != HAL_OK) {
-		printf ("HAL_SDRAM_Init error\n");
-		while (1) {}
-		}
+  if (HAL_SDRAM_Init (&hsdram, &SDRAM_Timing) != HAL_OK) {
+    printf ("HAL_SDRAM_Init error\n");
+    while (1) {}
+    }
 
-	// Configure clock configuration enable command
-	FMC_SDRAM_CommandTypeDef Command;
-	Command.CommandMode = FMC_SDRAM_CMD_CLK_ENABLE;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
-	Command.AutoRefreshNumber = 1;
-	Command.ModeRegisterDefinition = 0;
-	HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
+  // Configure clock configuration enable command
+  FMC_SDRAM_CommandTypeDef Command;
+  Command.CommandMode = FMC_SDRAM_CMD_CLK_ENABLE;
+  Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
+  Command.AutoRefreshNumber = 1;
+  Command.ModeRegisterDefinition = 0;
+  HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
 
-	// Insert 100 ms delay
-	HAL_Delay (100);
+  // Insert 100 ms delay
+  HAL_Delay (100);
 
-	// Configure PALL (precharge all) command
-	Command.CommandMode = FMC_SDRAM_CMD_PALL;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
-	Command.AutoRefreshNumber = 1;
-	Command.ModeRegisterDefinition = 0;
-	HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
+  // Configure PALL (precharge all) command
+  Command.CommandMode = FMC_SDRAM_CMD_PALL;
+  Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
+  Command.AutoRefreshNumber = 1;
+  Command.ModeRegisterDefinition = 0;
+  HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
 
-	// Configure Auto-Refresh command
-	Command.CommandMode = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
-	Command.AutoRefreshNumber = 4;
-	Command.ModeRegisterDefinition = 0;
-	HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
+  // Configure Auto-Refresh command
+  Command.CommandMode = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
+  Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
+  Command.AutoRefreshNumber = 4;
+  Command.ModeRegisterDefinition = 0;
+  HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
 
-	Command.CommandMode = FMC_SDRAM_CMD_LOAD_MODE;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
-	Command.AutoRefreshNumber = 1;
-	Command.ModeRegisterDefinition =
-		SDRAM_MODEREG_BURST_LENGTH_2 | SDRAM_MODEREG_CAS_LATENCY_3 | SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;
-	HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
+  Command.CommandMode = FMC_SDRAM_CMD_LOAD_MODE;
+  Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK1;
+  Command.AutoRefreshNumber = 1;
+  Command.ModeRegisterDefinition =
+    SDRAM_MODEREG_BURST_LENGTH_2 | SDRAM_MODEREG_CAS_LATENCY_3 | SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;
+  HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
 
-	// Set refresh rate counter //* (15.62 us x Freq) - 20 - SDRAM refresh counter (90MHz SD clock)
-	HAL_SDRAM_ProgramRefreshRate (&hsdram, 0x1386);
-	//HAL_SDRAM_ProgramRefreshRate (&hsdram, 0x0569);
-	}
+  // Set refresh rate counter //* (15.62 us x Freq) - 20 - SDRAM refresh counter (90MHz SD clock)
+  HAL_SDRAM_ProgramRefreshRate (&hsdram, 0x1386);
+  //HAL_SDRAM_ProgramRefreshRate (&hsdram, 0x0569);
+  }
 //}}}
 //{{{
 void SDRAMbank2Init() {
 // PB6, PB5 - Bank2 - 0xD0000000 : 0xD0800000 len 0x800000
-	SDRAM_HandleTypeDef hsdram;
-	hsdram.Instance = FMC_SDRAM_DEVICE;
-	hsdram.Init.SDBank             = FMC_SDRAM_BANK2;
-	hsdram.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_8;  // 8,9,10,11
-	hsdram.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_12;    // 11,12,13
-	hsdram.Init.MemoryDataWidth    = FMC_SDRAM_MEM_BUS_WIDTH_16;   // 8,16,32
-	hsdram.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
-	hsdram.Init.CASLatency         = FMC_SDRAM_CAS_LATENCY_3;
-	hsdram.Init.WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
-	hsdram.Init.SDClockPeriod      = FMC_SDRAM_CLOCK_PERIOD_3;
-	//hsdram.Init.ReadBurst          = FMC_SDRAM_RBURST_DISABLE;
-	hsdram.Init.ReadBurst          = FMC_SDRAM_RBURST_ENABLE;
-	hsdram.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_1;
+  SDRAM_HandleTypeDef hsdram;
+  hsdram.Instance = FMC_SDRAM_DEVICE;
+  hsdram.Init.SDBank             = FMC_SDRAM_BANK2;
+  hsdram.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_8;  // 8,9,10,11
+  hsdram.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_12;    // 11,12,13
+  hsdram.Init.MemoryDataWidth    = FMC_SDRAM_MEM_BUS_WIDTH_16;   // 8,16,32
+  hsdram.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
+  hsdram.Init.CASLatency         = FMC_SDRAM_CAS_LATENCY_3;
+  hsdram.Init.WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
+  hsdram.Init.SDClockPeriod      = FMC_SDRAM_CLOCK_PERIOD_3;
+  //hsdram.Init.ReadBurst          = FMC_SDRAM_RBURST_DISABLE;
+  hsdram.Init.ReadBurst          = FMC_SDRAM_RBURST_ENABLE;
+  hsdram.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_1;
 
-	FMC_SDRAM_TimingTypeDef SDRAM_Timing;
-	SDRAM_Timing.LoadToActiveDelay    = 2; // TMRD: 2 Clock cycles
-	SDRAM_Timing.ExitSelfRefreshDelay = 7; // TXSR: min = 70ns (6 x 11.90ns)
-	SDRAM_Timing.SelfRefreshTime      = 4; // TRAS: min = 42ns (4 x 11.90ns) max=120k (ns)
-	SDRAM_Timing.RowCycleDelay        = 7; // TRC:  min = 63 (6 x 11.90ns)
-	SDRAM_Timing.WriteRecoveryTime    = 2; // TWR:  2 Clock cycles
-	SDRAM_Timing.RPDelay              = 2; // TRP:  15ns => 2 x 11.90ns
-	SDRAM_Timing.RCDDelay             = 2; // TRCD: 15ns => 2 x 11.90ns
+  FMC_SDRAM_TimingTypeDef SDRAM_Timing;
+  SDRAM_Timing.LoadToActiveDelay    = 2; // TMRD: 2 Clock cycles
+  SDRAM_Timing.ExitSelfRefreshDelay = 7; // TXSR: min = 70ns (6 x 11.90ns)
+  SDRAM_Timing.SelfRefreshTime      = 4; // TRAS: min = 42ns (4 x 11.90ns) max=120k (ns)
+  SDRAM_Timing.RowCycleDelay        = 7; // TRC:  min = 63 (6 x 11.90ns)
+  SDRAM_Timing.WriteRecoveryTime    = 2; // TWR:  2 Clock cycles
+  SDRAM_Timing.RPDelay              = 2; // TRP:  15ns => 2 x 11.90ns
+  SDRAM_Timing.RCDDelay             = 2; // TRCD: 15ns => 2 x 11.90ns
 
-	if (HAL_SDRAM_Init (&hsdram, &SDRAM_Timing) != HAL_OK) {
-		printf ("HAL_SDRAM_Init error\n");
-		while (1) {}
-		}
+  if (HAL_SDRAM_Init (&hsdram, &SDRAM_Timing) != HAL_OK) {
+    printf ("HAL_SDRAM_Init error\n");
+    while (1) {}
+    }
 
-	// Configure clock configuration enable command
-	FMC_SDRAM_CommandTypeDef Command;
-	Command.CommandMode = FMC_SDRAM_CMD_CLK_ENABLE;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
-	Command.AutoRefreshNumber = 1;
-	Command.ModeRegisterDefinition = 0;
-	HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
+  // Configure clock configuration enable command
+  FMC_SDRAM_CommandTypeDef Command;
+  Command.CommandMode = FMC_SDRAM_CMD_CLK_ENABLE;
+  Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+  Command.AutoRefreshNumber = 1;
+  Command.ModeRegisterDefinition = 0;
+  HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
 
-	// Insert 100 ms delay
-	HAL_Delay (100);
+  // Insert 100 ms delay
+  HAL_Delay (100);
 
-	// Configure PALL (precharge all) command
-	Command.CommandMode = FMC_SDRAM_CMD_PALL;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
-	Command.AutoRefreshNumber = 1;
-	Command.ModeRegisterDefinition = 0;
-	HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
+  // Configure PALL (precharge all) command
+  Command.CommandMode = FMC_SDRAM_CMD_PALL;
+  Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+  Command.AutoRefreshNumber = 1;
+  Command.ModeRegisterDefinition = 0;
+  HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
 
-	// Configure Auto-Refresh command
-	Command.CommandMode = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
-	Command.AutoRefreshNumber = 4;
-	Command.ModeRegisterDefinition = 0;
-	HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
+  // Configure Auto-Refresh command
+  Command.CommandMode = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
+  Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+  Command.AutoRefreshNumber = 4;
+  Command.ModeRegisterDefinition = 0;
+  HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
 
-	// Program external memory mode register
-	Command.CommandMode = FMC_SDRAM_CMD_LOAD_MODE;
-	Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
-	Command.AutoRefreshNumber = 1;
-	Command.ModeRegisterDefinition = // burstSequential, operatingModeNormal
-		SDRAM_MODEREG_WRITEBURST_MODE_SINGLE | SDRAM_MODEREG_CAS_LATENCY_3 | SDRAM_MODEREG_BURST_LENGTH_4;
-	HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
+  // Program external memory mode register
+  Command.CommandMode = FMC_SDRAM_CMD_LOAD_MODE;
+  Command.CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+  Command.AutoRefreshNumber = 1;
+  Command.ModeRegisterDefinition = // burstSequential, operatingModeNormal
+    SDRAM_MODEREG_WRITEBURST_MODE_SINGLE | SDRAM_MODEREG_CAS_LATENCY_3 | SDRAM_MODEREG_BURST_LENGTH_4;
+  HAL_SDRAM_SendCommand (&hsdram, &Command, 0x1000);
 
-	// Set refresh rate counter //* (15.62 us x Freq) - 20 - SDRAM refresh counter (90MHz SD clock)
-	HAL_SDRAM_ProgramRefreshRate  (&hsdram, 0x0569);
-	}
+  // Set refresh rate counter //* (15.62 us x Freq) - 20 - SDRAM refresh counter (90MHz SD clock)
+  HAL_SDRAM_ProgramRefreshRate  (&hsdram, 0x0569);
+  }
 //}}}
 
 //{{{
 void SystemCoreClockUpdate() {
 
-	uint32_t tmp = 0, pllvco = 0, pllp = 2, pllsource = 0, pllm = 2;
+  uint32_t tmp = 0, pllvco = 0, pllp = 2, pllsource = 0, pllm = 2;
 
-	/* Get SYSCLK source -------------------------------------------------------*/
-	tmp = RCC->CFGR & RCC_CFGR_SWS;
-	switch (tmp) {
-		case 0x00:  /* HSI used as system clock source */
-			SystemCoreClock = HSI_VALUE;
-			break;
+  /* Get SYSCLK source -------------------------------------------------------*/
+  tmp = RCC->CFGR & RCC_CFGR_SWS;
+  switch (tmp) {
+    case 0x00:  /* HSI used as system clock source */
+      SystemCoreClock = HSI_VALUE;
+      break;
 
-		case 0x04:  /* HSE used as system clock source */
-			SystemCoreClock = HSE_VALUE;
-			break;
+    case 0x04:  /* HSE used as system clock source */
+      SystemCoreClock = HSE_VALUE;
+      break;
 
-		case 0x08:  /* PLL used as system clock source */
-			/* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N SYSCLK = PLL_VCO / PLL_P */
-			pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC) >> 22;
-			pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
+    case 0x08:  /* PLL used as system clock source */
+      /* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N SYSCLK = PLL_VCO / PLL_P */
+      pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC) >> 22;
+      pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
 
-			if (pllsource != 0) /* HSE used as PLL clock source */
-				pllvco = (HSE_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
-			else /* HSI used as PLL clock source */
-				pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+      if (pllsource != 0) /* HSE used as PLL clock source */
+        pllvco = (HSE_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+      else /* HSI used as PLL clock source */
+        pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
 
-			pllp = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLP) >>16) + 1 ) *2;
-			SystemCoreClock = pllvco/pllp;
-			break;
+      pllp = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLP) >>16) + 1 ) *2;
+      SystemCoreClock = pllvco/pllp;
+      break;
 
-		default:
-			SystemCoreClock = HSI_VALUE;
-			break;
-		}
+    default:
+      SystemCoreClock = HSI_VALUE;
+      break;
+    }
 
-	/* Compute HCLK frequency --------------------------------------------------*/
-	/* Get HCLK prescaler */
-	tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> 4)];
+  /* Compute HCLK frequency --------------------------------------------------*/
+  /* Get HCLK prescaler */
+  tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> 4)];
 
-	/* HCLK frequency */
-	SystemCoreClock >>= tmp;
-	}
+  /* HCLK frequency */
+  SystemCoreClock >>= tmp;
+  }
 //}}}
 //{{{
 void SystemInit() {
 
-	// FPU settings
-	SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));  // set CP10 and CP11 Full Access
+  // FPU settings
+  SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));  // set CP10 and CP11 Full Access
 
-	// Reset the RCC clock configuration to the default reset state
-	// Set HSION bit
-	RCC->CR |= (uint32_t)0x00000001;
+  // Reset the RCC clock configuration to the default reset state
+  // Set HSION bit
+  RCC->CR |= (uint32_t)0x00000001;
 
-	// Reset CFGR register
-	RCC->CFGR = 0x00000000;
+  // Reset CFGR register
+  RCC->CFGR = 0x00000000;
 
-	// Reset HSEON, CSSON and PLLON bits
-	RCC->CR &= (uint32_t)0xFEF6FFFF;
+  // Reset HSEON, CSSON and PLLON bits
+  RCC->CR &= (uint32_t)0xFEF6FFFF;
 
-	// Reset PLLCFGR register
-	RCC->PLLCFGR = 0x24003010;
+  // Reset PLLCFGR register
+  RCC->PLLCFGR = 0x24003010;
 
-	// Reset HSEBYP bit
-	RCC->CR &= (uint32_t)0xFFFBFFFF;
+  // Reset HSEBYP bit
+  RCC->CR &= (uint32_t)0xFFFBFFFF;
 
-	// Disable all interrupts
-	RCC->CIR = 0x00000000;
+  // Disable all interrupts
+  RCC->CIR = 0x00000000;
 
-	// Configure the Vector Table location add offset address
+  // Configure the Vector Table location add offset address
 #ifdef VECT_TAB_SRAM
-	SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; // Vector Table Relocation in Internal SRAM
+  SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; // Vector Table Relocation in Internal SRAM
 #else
-	SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; // Vector Table Relocation in Internal FLASH
+  SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; // Vector Table Relocation in Internal FLASH
 #endif
 }
 //}}}
@@ -1357,101 +1357,101 @@ void SystemClockConfig180() {
 //    Main regulator output voltage  = Scale1 mode
 //    Flash Latency(WS)              = 5
 
-	// Enable Power Control clock
-	__HAL_RCC_PWR_CLK_ENABLE();
+  // Enable Power Control clock
+  __HAL_RCC_PWR_CLK_ENABLE();
 
-	// The voltage scaling allows optimizing the power consumption when the device is
-	// clocked below the maximum system frequency, to update the voltage scaling value
-	// regarding system frequency refer to product datasheet.
-	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+  // The voltage scaling allows optimizing the power consumption when the device is
+  // clocked below the maximum system frequency, to update the voltage scaling value
+  // regarding system frequency refer to product datasheet.
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-	// Enable HSE Oscillator and activate PLL with HSE as source
-	RCC_OscInitTypeDef RCC_OscInitStruct;
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-	RCC_OscInitStruct.PLL.PLLM = 8;
-	RCC_OscInitStruct.PLL.PLLN = 360;
-	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-	RCC_OscInitStruct.PLL.PLLQ = 7;
-	HAL_RCC_OscConfig (&RCC_OscInitStruct);
+  // Enable HSE Oscillator and activate PLL with HSE as source
+  RCC_OscInitTypeDef RCC_OscInitStruct;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 8;
+  RCC_OscInitStruct.PLL.PLLN = 360;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = 7;
+  HAL_RCC_OscConfig (&RCC_OscInitStruct);
 
-	// Activate the Over-Drive mode
-	HAL_PWREx_EnableOverDrive();
+  // Activate the Over-Drive mode
+  HAL_PWREx_EnableOverDrive();
 
-	// PLLSAI_VCO Input  = HSE_VALUE / PLL_M = 1mhz
-	// PLLSAI_VCO Output = PLLSAI_VCO Input * PLLSAIN     = 130mhz
-	// PLLLCDCLK         = PLLSAI_VCO Output / PLLSAIR    = 130/2 = 65mhz
-	// LTDC clock        = PLLLCDCLK / LTDC_PLLSAI_DIVR_2 = 65/2  = 32.5mhz
-	RCC_PeriphCLKInitTypeDef rccPeriphClkInit;
-	rccPeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
-	rccPeriphClkInit.PLLSAI.PLLSAIN = 130;  // hclk = 192mhz, 138/4 = 34.5mhz
-	rccPeriphClkInit.PLLSAI.PLLSAIR = 2;
-	rccPeriphClkInit.PLLSAIDivR = RCC_PLLSAIDIVR_2;
-	HAL_RCCEx_PeriphCLKConfig (&rccPeriphClkInit);
+  // PLLSAI_VCO Input  = HSE_VALUE / PLL_M = 1mhz
+  // PLLSAI_VCO Output = PLLSAI_VCO Input * PLLSAIN     = 130mhz
+  // PLLLCDCLK         = PLLSAI_VCO Output / PLLSAIR    = 130/2 = 65mhz
+  // LTDC clock        = PLLLCDCLK / LTDC_PLLSAI_DIVR_2 = 65/2  = 32.5mhz
+  RCC_PeriphCLKInitTypeDef rccPeriphClkInit;
+  rccPeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
+  rccPeriphClkInit.PLLSAI.PLLSAIN = 130;  // hclk = 192mhz, 138/4 = 34.5mhz
+  rccPeriphClkInit.PLLSAI.PLLSAIR = 2;
+  rccPeriphClkInit.PLLSAIDivR = RCC_PLLSAIDIVR_2;
+  HAL_RCCEx_PeriphCLKConfig (&rccPeriphClkInit);
 
-	//rccPeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_SDIO | RCC_PERIPHCLK_CK48;
-	//rccPeriphClkInit.SdioClockSelection = RCC_SDIOCLKSOURCE_CK48;
-	//rccPeriphClkInit.Clk48ClockSelection = RCC_CK48CLKSOURCE_PLLSAIP;
-	//rccPeriphClkInit.PLLSAI.PLLSAIN = 384;
-	//rccPeriphClkInit.PLLSAI.PLLSAIP = RCC_PLLSAIP_DIV8;
-	//HAL_RCCEx_PeriphCLKConfig (&rccPeriphClkInit);
+  //rccPeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_SDIO | RCC_PERIPHCLK_CK48;
+  //rccPeriphClkInit.SdioClockSelection = RCC_SDIOCLKSOURCE_CK48;
+  //rccPeriphClkInit.Clk48ClockSelection = RCC_CK48CLKSOURCE_PLLSAIP;
+  //rccPeriphClkInit.PLLSAI.PLLSAIN = 384;
+  //rccPeriphClkInit.PLLSAI.PLLSAIP = RCC_PLLSAIP_DIV8;
+  //HAL_RCCEx_PeriphCLKConfig (&rccPeriphClkInit);
 
-	// Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2 clocks dividers
-	RCC_ClkInitTypeDef RCC_ClkInitStruct;
-	RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
-	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
-	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
-	HAL_RCC_ClockConfig (&RCC_ClkInitStruct, FLASH_LATENCY_5);
-	}
+  // Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2 clocks dividers
+  RCC_ClkInitTypeDef RCC_ClkInitStruct;
+  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+  HAL_RCC_ClockConfig (&RCC_ClkInitStruct, FLASH_LATENCY_5);
+  }
 //}}}
 //{{{
 void memoryTest() {
 
-	uint32_t readAddress = SDRAM_BANK1_ADDR;
-	uint32_t phase = 0;
-	while (1) {
-		uint32_t len = (readAddress == SDRAM_BANK1_ADDR) ? SDRAM_BANK1_LEN : SDRAM_BANK2_LEN;
-		uint32_t reportMask = 0xFFFFF;
+  uint32_t readAddress = SDRAM_BANK1_ADDR;
+  uint32_t phase = 0;
+  while (1) {
+    uint32_t len = (readAddress == SDRAM_BANK1_ADDR) ? SDRAM_BANK1_LEN : SDRAM_BANK2_LEN;
+    uint32_t reportMask = 0xFFFFF;
 
-		//  write
-		for (uint32_t i = readAddress; i < readAddress + len; i++)
-			*(uint8_t*)readAddress = (i+phase) & 0xFF;
+    //  write
+    for (uint32_t i = readAddress; i < readAddress + len; i++)
+      *(uint8_t*)readAddress = (i+phase) & 0xFF;
 
-		// read
-		uint8_t readErr = 0;
-		for (uint32_t i = readAddress; i < readAddress + len; i++) {
-			uint8_t read = *(uint8_t*)readAddress;
-			if (read != ((i+phase) & 0xFF)) {
-				readErr++;
-				//printf ("add:%x exp:%x got:%x\n", i, (i+phase) & 0xFF, read);
-				}
+    // read
+    uint8_t readErr = 0;
+    for (uint32_t i = readAddress; i < readAddress + len; i++) {
+      uint8_t read = *(uint8_t*)readAddress;
+      if (read != ((i+phase) & 0xFF)) {
+        readErr++;
+        //printf ("add:%x exp:%x got:%x\n", i, (i+phase) & 0xFF, read);
+        }
 
-			if ((i & reportMask) == reportMask) {
-				if (readErr)
-					printf ("add:%x err:%x rate:%d\n", (unsigned int)i, (unsigned int)readErr, (int)((readErr * 100) / reportMask));
-				else
-					printf ("add:%lx ok\n", i);
+      if ((i & reportMask) == reportMask) {
+        if (readErr)
+          printf ("add:%x err:%x rate:%d\n", (unsigned int)i, (unsigned int)readErr, (int)((readErr * 100) / reportMask));
+        else
+          printf ("add:%lx ok\n", i);
 
-				if (readErr) { // red
-					//BSP_LED_Off (LED3);
-					//BSP_LED_On (LED4);
-					readErr = 0;
-					}
-				else { // green
-					//BSP_LED_Off (LED4);
-					//BSP_LED_On (LED3);
-					}
-				}
-			}
+        if (readErr) { // red
+          //BSP_LED_Off (LED3);
+          //BSP_LED_On (LED4);
+          readErr = 0;
+          }
+        else { // green
+          //BSP_LED_Off (LED4);
+          //BSP_LED_On (LED3);
+          }
+        }
+      }
 
-		phase++;
-		readAddress = (readAddress == SDRAM_BANK1_ADDR) ? SDRAM_BANK2_ADDR : SDRAM_BANK1_ADDR;
-		}
-	}
+    phase++;
+    readAddress = (readAddress == SDRAM_BANK1_ADDR) ? SDRAM_BANK2_ADDR : SDRAM_BANK1_ADDR;
+    }
+  }
 //}}}
 //}}}
 //{{{  Lcd
@@ -1506,15 +1506,15 @@ cLcd* lcd = nullptr;
 
 //{{{  struct tLTDC
 typedef struct {
-	//SemaphoreHandle_t sem;
-	uint32_t timeouts;
-	uint32_t lineIrq;
-	uint32_t fifoUnderunIrq;
-	uint32_t transferErrorIrq;
-	uint32_t lastTicks;
-	uint32_t lineTicks;
-	uint32_t frameWait;
-	} tLTDC;
+  //SemaphoreHandle_t sem;
+  uint32_t timeouts;
+  uint32_t lineIrq;
+  uint32_t fifoUnderunIrq;
+  uint32_t transferErrorIrq;
+  uint32_t lastTicks;
+  uint32_t lineTicks;
+  uint32_t frameWait;
+  } tLTDC;
 //}}}
 tLTDC ltdc;
 
@@ -1532,929 +1532,1128 @@ uint16_t getBoxHeight() { return 30; }
 //{{{
 void LCD_DMA2D_IRQHandler() {
 
-	// clear interrupts
-	DMA2D->IFCR = DMA2D_ISR_TCIF | DMA2D_ISR_TEIF | DMA2D_ISR_CEIF;
+  // clear interrupts
+  DMA2D->IFCR = DMA2D_ISR_TCIF | DMA2D_ISR_TEIF | DMA2D_ISR_CEIF;
 
-	while (true) {
-		uint32_t opcode = *mDma2dIsrBuf++;
-		switch (opcode) {
-			case kEnd: {
-				DMA2D->CR = 0;
-				mDma2dIsrBuf = mDma2dBuf;
-				return;
-				}
+  while (true) {
+    uint32_t opcode = *mDma2dIsrBuf++;
+    switch (opcode) {
+      case kEnd: {
+        DMA2D->CR = 0;
+        mDma2dIsrBuf = mDma2dBuf;
+        return;
+        }
 
-			case kStamp:
-				DMA2D->FGPFCCR = DMA2D_INPUT_A8;  // fgnd PFC
-				DMA2D->BGPFCCR = DMA2D_INPUT_RGB565;
-				DMA2D->OPFCCR  = DMA2D_INPUT_RGB565;
-				DMA2D->OMAR    = *mDma2dIsrBuf;   // output start address
-				DMA2D->BGMAR   = *mDma2dIsrBuf++; // - repeated to bgnd start addres
-				DMA2D->OOR     = *mDma2dIsrBuf;   // output stride
-				DMA2D->BGOR    = *mDma2dIsrBuf++; // - repeated to bgnd stride
-				DMA2D->NLR     = *mDma2dIsrBuf++; // width:height
-				DMA2D->FGMAR   = *mDma2dIsrBuf++; // fgnd start address
-				DMA2D->FGOR    = 0;               // fgnd stride
-				DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-				while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
-				DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
-											 DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
-				break;
+      case kStamp:
+        DMA2D->FGPFCCR = DMA2D_INPUT_A8;  // fgnd PFC
+        DMA2D->BGPFCCR = DMA2D_INPUT_RGB565;
+        DMA2D->OPFCCR  = DMA2D_INPUT_RGB565;
+        DMA2D->OMAR    = *mDma2dIsrBuf;   // output start address
+        DMA2D->BGMAR   = *mDma2dIsrBuf++; // - repeated to bgnd start addres
+        DMA2D->OOR     = *mDma2dIsrBuf;   // output stride
+        DMA2D->BGOR    = *mDma2dIsrBuf++; // - repeated to bgnd stride
+        DMA2D->NLR     = *mDma2dIsrBuf++; // width:height
+        DMA2D->FGMAR   = *mDma2dIsrBuf++; // fgnd start address
+        DMA2D->FGOR    = 0;               // fgnd stride
+        DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
+        while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
+        DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
+                       DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+        break;
 
-			default: // opcode==address : value
-				*(uint32_t*)opcode = *mDma2dIsrBuf++;
-				if (opcode == (uint32_t)DMA2D) { // address of CR
-					while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
-					DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
-												 DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
-				 break;
-				 }
-			}
-		}
-	}
+      default: // opcode==address : value
+        *(uint32_t*)opcode = *mDma2dIsrBuf++;
+        if (opcode == (uint32_t)DMA2D) { // address of CR
+          while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
+          DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
+                         DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+         break;
+         }
+      }
+    }
+  }
 //}}}
 
 class cLcd {
 public:
-	//{{{
-	cLcd (uint32_t buffer0, uint32_t buffer1)  {
-
-		mBuffer[false] = buffer0;
-		mBuffer[true] = buffer1;
-		updateNumDrawLines();
-		}
-	//}}}
-	~cLcd() {}
-	//{{{
-	void init (std::string title) {
-
-		mDrawBuffer = !mDrawBuffer;
-		ltdcInit (mBuffer[mDrawBuffer]);
-
-		// zero out first opcode, point past it
-		mDma2dBuf = (uint32_t*)DMA2D_BUFFER;
-		mDma2dIsrBuf = mDma2dBuf;
-		mDma2dCurBuf = mDma2dBuf;
-		*mDma2dCurBuf = kEnd;
-
-		// dma2d IRQ init
-		//HAL_NVIC_SetPriority (DMA2D_IRQn, 0x0F, 0);
-		//HAL_NVIC_EnableIRQ (DMA2D_IRQn);
-
-		// font init
-		FT_Init_FreeType (&FTlibrary);
-		FT_New_Memory_Face (FTlibrary, (FT_Byte*)freeSansBold, sizeof (freeSansBold), 0, &FTface);
-		FTglyphSlot = FTface->glyph;
-
-		// preload fontChars
-		for (char ch = 0x20; ch <= 0x7F; ch++)
-			loadChar (getFontHeight(), ch);
-		//for (char ch = 0x21; ch <= 0x3F; ch++)
-		//  loadChar (getBigFontHeight(), ch);
-		//for (char ch = 0x21; ch <= 0x3F; ch++)
-		//  loadChar (getSmallFontHeight(), ch);
-
-		FT_Done_Face (FTface);
-		//FT_Done_FreeType (FTlibrary);
-
-		mTitle = title;
-		updateNumDrawLines();
-		}
-	//}}}
-
-	uint16_t getLcdWidthPix() { return 800; }
-	uint16_t getLcdHeightPix() { return 1280; }
-
-	//{{{
-	void setShowDebug (bool title, bool info, bool lcdStats, bool footer) {
-
-		mShowTitle = title;
-		mShowInfo = info;
-		mShowLcdStats = lcdStats;
-		mShowFooter = footer;
-
-		updateNumDrawLines();
-		}
-	//}}}
-	//{{{
-	void debug (std::string str) {
-		info (COL_WHITE, str);
-		render();
-		}
-	//}}}
-	//{{{
-	void info (std::string str) {
-		info (COL_WHITE, str);
-		}
-	//}}}
-	//{{{
-	void info (uint16_t colour, std::string str) {
-
-		bool tailing = mLastLine == (int)mFirstLine + mNumDrawLines - 1;
-
-		auto line = (mLastLine < mMaxLine-1) ? mLastLine+1 : mLastLine;
-		mLines[line].mTime = HAL_GetTick(); //xTaskGetTickCount();
-		mLines[line].mColour = colour;
-		mLines[line].mString = str;
-		mLastLine = line;
-
-		if (tailing)
-			mFirstLine = mLastLine - mNumDrawLines + 1;
-		}
-	//}}}
-
-	//{{{
-	void press (int pressCount, int16_t x, int16_t y, uint16_t z, int16_t xinc, int16_t yinc) {
-
-		if ((pressCount > 30) && (x <= mStringPos) && (y <= getBoxHeight()))
-			reset();
-		else if (pressCount == 0) {
-			if (x <= mStringPos) {
-				// set displayFirstLine
-				if (y < 2 * getBoxHeight())
-					displayTop();
-				else if (y > getLcdHeightPix() - 2 * getBoxHeight())
-					displayTail();
-				}
-			}
-		else {
-			// inc firstLine
-			float value = mFirstLine - ((2.0f * yinc) / getBoxHeight());
-
-			if (value < 0)
-				mFirstLine = 0;
-			else if (mLastLine <= (int)mNumDrawLines-1)
-				mFirstLine = 0;
-			else if (value > mLastLine - mNumDrawLines + 1)
-				mFirstLine = mLastLine - mNumDrawLines + 1;
-			else
-				mFirstLine = value;
-			}
-		}
-	//}}}
-	//{{{
-	void startRender() {
-
-		mDrawBuffer = !mDrawBuffer;
-		setLayer (0, mBuffer[mDrawBuffer]);
-
-		// frameSync;
-		//ltdc.frameWait = 1;
-		//if (xSemaphoreTake (ltdc.sem, 100) == pdFALSE)
-		//  ltdc.timeouts++;
-
-		mDrawStartTime = HAL_GetTick();
-		}
-	//}}}
-	//{{{
-	void renderCursor (uint16_t colour, int16_t x, int16_t y, int16_t z) {
-		ellipse (colour, x, y, z, z);
-		}
-	//}}}
-	//{{{
-	void endRender (bool forceInfo) {
-
-		auto y = 0;
-		if ((mShowTitle || forceInfo) && !mTitle.empty()) {
-			//{{{  draw title
-			text (COL_YELLOW, getFontHeight(), mTitle, 0, y, getLcdWidthPix(), getBoxHeight());
-			y += getBoxHeight();
-			}
-			//}}}
-		if (mShowInfo || forceInfo) {
-			//{{{  draw info lines
-			if (mLastLine >= 0) {
-				// draw scroll bar
-				auto yorg = getBoxHeight() + ((int)mFirstLine * mNumDrawLines * getBoxHeight() / (mLastLine + 1));
-				auto height = mNumDrawLines * mNumDrawLines * getBoxHeight() / (mLastLine + 1);
-				rectClipped (COL_YELLOW, 0, yorg, 8, height);
-				}
-
-			auto lastLine = (int)mFirstLine + mNumDrawLines - 1;
-			if (lastLine > mLastLine)
-				lastLine = mLastLine;
-
-			for (auto lineIndex = (int)mFirstLine; lineIndex <= lastLine; lineIndex++) {
-				auto x = 0;
-				auto xinc = text (COL_GREEN, getFontHeight(),
-													dec ((mLines[lineIndex].mTime-mStartTime) / 1000) + "." +
-													dec ((mLines[lineIndex].mTime-mStartTime) % 1000, 3, '0'),
-													x, y, getLcdWidthPix(), getBoxHeight());
-				x += xinc + 3;
-
-				text (mLines[lineIndex].mColour, getFontHeight(), mLines[lineIndex].mString,
-							x, y, getLcdWidthPix()-x, getLcdHeightPix());
-
-				y += getBoxHeight();
-				}
-			}
-			//}}}
-		if (mShowLcdStats) {
-			//{{{  draw lcdStats
-			std::string str = dec (ltdc.lineIrq) + ":f " +
-												dec (ltdc.lineTicks) + "ms " +
-												dec (mDma2dTimeouts) + " " +
-												dec (ltdc.transferErrorIrq) + " " +
-												dec (ltdc.fifoUnderunIrq);
-			text (COL_WHITE, getFontHeight(), str, 0, getLcdHeightPix() - 2 * getBoxHeight(), getLcdWidthPix(), 24);
-			}
-			//}}}
-		if (mShowFooter || forceInfo)
-			//{{{  draw footer
-			text (COL_WHITE, getFontHeight(),
-						//dec (xPortGetFreeHeapSize()) + " " +
-						//dec (xPortGetMinimumEverFreeHeapSize()) + " " +
-						//dec (osGetCPUUsage()) + "% " +
-					dec (mDrawTime) + "ms " + dec (mDma2dCurBuf - mDma2dBuf),
-						0, -getFontHeight() + getLcdHeightPix(), getLcdWidthPix(), getFontHeight());
-			//}}}
-
-		// terminate opCode buffer
-		*mDma2dCurBuf = kEnd;
-
-		// send opCode buffer
-		LCD_DMA2D_IRQHandler();
-		showLayer (0, mBuffer[mDrawBuffer], 255);
-
-		// reset opcode buffer
-		mDma2dCurBuf = mDma2dBuf;
-		*mDma2dCurBuf = kEnd;
-
-		mDrawTime = HAL_GetTick() - mDrawStartTime;
-		}
-	//}}}
-
-	//{{{
-	void render() {
-		startRender();
-		clear (COL_BLACK);
-		endRender (true);
-		}
-	//}}}
-	//{{{
-	void displayOn() {
-		GPIOD->BSRR = GPIO_PIN_13;   // ADJ hi
-		}
-	//}}}
-	//{{{
-	void displayOff() {
-		GPIOD->BSRR = GPIO_PIN_13 << 16;   // ADJ lo
-		}
-	//}}}
-
-	//{{{
-	void pixel (uint16_t colour, int16_t x, int16_t y) {
-
-		rect (colour, x, y, 1, 1);
-		}
-	//}}}
-	//{{{
-	void rect (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height) {
-
-		// often same colour
-		if (colour != mCurDstColour) {
-			*mDma2dCurBuf++ = (uint32_t)&(DMA2D->OCOLR); // OCOLR - output colour
-			*mDma2dCurBuf++ = colour;
-			mCurDstColour = colour;
-			}
-
-		// quite often same stride
-		if (uint32_t(getLcdWidthPix() - width) != mDstStride) {
-			*mDma2dCurBuf++ = (uint32_t)&(DMA2D->OOR); // OOR - output stride
-			mDstStride = getLcdWidthPix() - width;
-			*mDma2dCurBuf++ = mDstStride;
-			}
-
-		*mDma2dCurBuf++ = (uint32_t)&(DMA2D->OMAR); // OMAR - output start address 3c
-		*mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * dstComponents;
-
-		*mDma2dCurBuf++ = (uint32_t)&(DMA2D->NLR);
-		*mDma2dCurBuf++ = (width << 16) | height;
-
-		*mDma2dCurBuf++ = (uint32_t)DMA2D; // CR
-		*mDma2dCurBuf++ = DMA2D_R2M | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-		}
-	//}}}
-	//{{{
-	void stamp (uint16_t colour, uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height) {
-
-		// often same colour
-		if (colour != mCurSrcColour) {
-			uint32_t fullColour = ((colour & 0xF800) << 8) | ((colour & 0x07E0) << 5) | ((colour & 0x001F) << 3);
-			*mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGCOLR); // FGCOLR - fgnd colour
-			*mDma2dCurBuf++ = fullColour;
-			mCurSrcColour = colour;
-			}
-
-		*mDma2dCurBuf++ = kStamp;
-		*mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * dstComponents; // output start address
-		mDstStride = getLcdWidthPix() - width;
-		*mDma2dCurBuf++ = mDstStride;                                          // stride
-		*mDma2dCurBuf++ = (width << 16) | height;                              // width:height
-		*mDma2dCurBuf++ = (uint32_t)src;                                       // fgnd start address
-		}
-	//}}}
-	//{{{
-	int text (uint16_t colour, uint16_t fontHeight, std::string str, int16_t x, int16_t y, uint16_t width, uint16_t height) {
-
-		auto xend = x + width;
-		for (uint16_t i = 0; i < str.size(); i++) {
-			if ((str[i] >= 0x20) && (str[i] <= 0x7F)) {
-				auto fontCharIt = mFontCharMap.find (fontHeight<<8 | str[i]);
-				if (fontCharIt != mFontCharMap.end()) {
-					auto fontChar = fontCharIt->second;
-					if (x + fontChar->left + fontChar->pitch >= xend)
-						break;
-					else if (fontChar->bitmap)
-						stampClipped (colour, fontChar->bitmap, x + fontChar->left, y + fontHeight - fontChar->top, fontChar->pitch, fontChar->rows);
-
-					x += fontChar->advance;
-					}
-				}
-			}
-
-		return x;
-		}
-	//}}}
-	//{{{
-	void copy (uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height) {
-	// copy
-
-		// output
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x3C; // OMAR - output start address
-		*mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * dstComponents;
-
-		mDstStride = getLcdWidthPix() - width;
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x40; // OOR - output stride
-		*mDma2dCurBuf++ = mDstStride;
-
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x44; // NLR - width:height
-		*mDma2dCurBuf++ = (width << 16) | height;
-
-		// src - fgnd
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x1C; // FGPFCCR - fgnd PFC
-		//*mDma2dCurBuf++ = DMA2D_INPUT_RGB565;
-		*mDma2dCurBuf++ = DMA2D_INPUT_RGB888;
-
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x0C; // FGMAR - fgnd address
-		*mDma2dCurBuf++ = (uint32_t)src;
-
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x10; // FGOR - fgnd stride
-		*mDma2dCurBuf++ = 0;
-
-		*mDma2dCurBuf++ = (uint32_t)DMA2D;        // CR
-		*mDma2dCurBuf++ = DMA2D_M2M_PFC | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-		}
-	//}}}
-	//{{{
-	void copy (uint8_t* src, int16_t srcx, int16_t srcy, uint16_t srcWidth, uint16_t srcHeight,
-									 int16_t dstx, int16_t dsty, uint16_t dstWidth, uint16_t dstHeight) {
-	// copy src to dst
-	// - some corner cases missing, not enough src for dst needs padding
-
-		// output
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x3C; // OMAR - output start address
-		*mDma2dCurBuf++ = mCurFrameBufferAddress + ((dsty * getLcdWidthPix()) + dstx) * dstComponents;
-
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x40; // OOR - output stride
-		mDstStride = getLcdWidthPix() - dstWidth;
-		*mDma2dCurBuf++ = mDstStride;
-
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x44; // NLR - width:height
-		*mDma2dCurBuf++ = (dstWidth << 16) | dstHeight;
-
-		// src - fgnd
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x1C; // FGPFCCR - fgnd PFC
-		*mDma2dCurBuf++ = DMA2D_INPUT_RGB888;
-
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x0C; // FGMAR - fgnd address
-		*mDma2dCurBuf++ = (uint32_t)(src + ((srcy * srcWidth) + srcx) * dstComponents);
-
-		*mDma2dCurBuf++ = (uint32_t)DMA2D + 0x10; // FGOR - fgnd stride
-		*mDma2dCurBuf++ = srcWidth - dstWidth;
-
-		// CR
-		*mDma2dCurBuf++ = (uint32_t)DMA2D;        // CR
-		*mDma2dCurBuf++ = DMA2D_M2M_PFC | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-		}
-	//}}}
-
-	//{{{
-	void pixelClipped (uint16_t colour, int16_t x, int16_t y) {
-
-			rectClipped (colour, x, y, 1, 1);
-		}
-	//}}}
-	//{{{
-	void stampClipped (uint16_t colour, uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height) {
-
-		if (!width || !height || x < 0)
-			return;
-
-		if (y < 0) {
-			// top clip
-			if (y + height <= 0)
-				return;
-			height += y;
-			src += -y * width;
-			y = 0;
-			}
-
-		if (y + height > getLcdHeightPix()) {
-			// bottom yclip
-			if (y >= getLcdHeightPix())
-				return;
-			height = getLcdHeightPix() - y;
-			}
-
-		stamp (colour, src, x, y, width, height);
-		}
-	//}}}
-	//{{{
-	void rectClipped (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height) {
-
-		if (x >= getLcdWidthPix())
-			return;
-		if (y >= getLcdHeightPix())
-			return;
-
-		int xend = x + width;
-		if (xend <= 0)
-			return;
-
-		int yend = y + height;
-		if (yend <= 0)
-			return;
-
-		if (x < 0)
-			x = 0;
-		if (xend > getLcdWidthPix())
-			xend = getLcdWidthPix();
-
-		if (y < 0)
-			y = 0;
-		if (yend > getLcdHeightPix())
-			yend = getLcdHeightPix();
-
-		if (!width)
-			return;
-		if (!height)
-			return;
-
-		rect (colour, x, y, xend - x, yend - y);
-		}
-	//}}}
-	//{{{
-	void rectOutline (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height, uint8_t thickness) {
-
-		rectClipped (colour, x, y, width, thickness);
-		rectClipped (colour, x + width-thickness, y, thickness, height);
-		rectClipped (colour, x, y + height-thickness, width, thickness);
-		rectClipped (colour, x, y, thickness, height);
-		}
-	//}}}
-	//{{{
-	void clear (uint16_t colour) {
-
-		rect (colour, 0, 0, getLcdWidthPix(), getLcdHeightPix());
-		}
-	//}}}
-	//{{{
-	void ellipse (uint16_t colour, int16_t x, int16_t y, uint16_t xradius, uint16_t yradius) {
-
-		if (!xradius)
-			return;
-		if (!yradius)
-			return;
-
-		int x1 = 0;
-		int y1 = -yradius;
-		int err = 2 - 2*xradius;
-		float k = (float)yradius / xradius;
-
-		do {
-			rectClipped (colour, (x-(uint16_t)(x1 / k)), y + y1, (2*(uint16_t)(x1 / k) + 1), 1);
-			rectClipped (colour, (x-(uint16_t)(x1 / k)), y - y1, (2*(uint16_t)(x1 / k) + 1), 1);
-
-			int e2 = err;
-			if (e2 <= x1) {
-				err += ++x1 * 2 + 1;
-				if (-y1 == x && e2 <= y1)
-					e2 = 0;
-				}
-			if (e2 > y1)
-				err += ++y1*2 + 1;
-			} while (y1 <= 0);
-		}
-	//}}}
-	//{{{
-	void ellipseOutline (uint16_t colour, int16_t x, int16_t y, uint16_t xradius, uint16_t yradius) {
-
-		if (xradius && yradius) {
-			int x1 = 0;
-			int y1 = -yradius;
-			int err = 2 - 2*xradius;
-			float k = (float)yradius / xradius;
-
-			do {
-				rectClipped (colour, x - (uint16_t)(x1 / k), y + y1, 1, 1);
-				rectClipped (colour, x + (uint16_t)(x1 / k), y + y1, 1, 1);
-				rectClipped (colour, x + (uint16_t)(x1 / k), y - y1, 1, 1);
-				rectClipped (colour, x - (uint16_t)(x1 / k), y - y1, 1, 1);
-
-				int e2 = err;
-				if (e2 <= x1) {
-					err += ++x1*2 + 1;
-					if (-y1 == x1 && e2 <= y1)
-						e2 = 0;
-					}
-				if (e2 > y1)
-					err += ++y1*2 + 1;
-				} while (y1 <= 0);
-			}
-		}
-	//}}}
-	//{{{
-	void line (uint16_t colour, int16_t x1, int16_t y1, int16_t x2, int16_t y2) {
-
-		int16_t deltax = (x2 - x1) > 0 ? (x2 - x1) : -(x2 - x1);        /* The difference between the x's */
-		int16_t deltay = (y2 - y1) > 0 ? (y2 - y1) : -(y2 - y1);        /* The difference between the y's */
-		int16_t x = x1;                       /* Start x off at the first pixel */
-		int16_t y = y1;                       /* Start y off at the first pixel */
-
-		int16_t xinc1;
-		int16_t xinc2;
-		if (x2 >= x1) {               /* The x-values are increasing */
-			xinc1 = 1;
-			xinc2 = 1;
-			}
-		else {                         /* The x-values are decreasing */
-			xinc1 = -1;
-			xinc2 = -1;
-			}
-
-		int yinc1;
-		int yinc2;
-		if (y2 >= y1) {                 /* The y-values are increasing */
-			yinc1 = 1;
-			yinc2 = 1;
-			}
-		else {                         /* The y-values are decreasing */
-			yinc1 = -1;
-			yinc2 = -1;
-			}
-
-		int den = 0;
-		int num = 0;
-		int num_add = 0;
-		int num_pixels = 0;
-		if (deltax >= deltay) {        /* There is at least one x-value for every y-value */
-			xinc1 = 0;                  /* Don't change the x when numerator >= denominator */
-			yinc2 = 0;                  /* Don't change the y for every iteration */
-			den = deltax;
-			num = deltax / 2;
-			num_add = deltay;
-			num_pixels = deltax;         /* There are more x-values than y-values */
-			}
-		else {                         /* There is at least one y-value for every x-value */
-			xinc2 = 0;                  /* Don't change the x for every iteration */
-			yinc1 = 0;                  /* Don't change the y when numerator >= denominator */
-			den = deltay;
-			num = deltay / 2;
-			num_add = deltax;
-			num_pixels = deltay;         /* There are more y-values than x-values */
-		}
-
-		for (int curpixel = 0; curpixel <= num_pixels; curpixel++) {
-			rectClipped (colour, x, y, 1, 1);   /* Draw the current pixel */
-			num += num_add;                            /* Increase the numerator by the top of the fraction */
-			if (num >= den) {                          /* Check if numerator >= denominator */
-				num -= den;                             /* Calculate the new numerator value */
-				x += xinc1;                             /* Change the x as appropriate */
-				y += yinc1;                             /* Change the y as appropriate */
-				}
-			x += xinc2;                               /* Change the x as appropriate */
-			y += yinc2;                               /* Change the y as appropriate */
-			}
-		}
-	//}}}
+  //{{{  struct tSizeParams
+  // The work buffer area (in the ARGB_8888 format for alignment purpose) must have at
+  // least ( srcWidth * OutHeight ) word avaliable.
+  // The src bitmap can be in any DMA2D input color format, the alfa channel of related
+  // color mode is currently ignored. CM_L4 bitmap parameter must be byte aligned.
+  typedef struct {
+    uint32_t srcBase;
+    uint16_t srcPitch;
+    uint16_t srcFormat;
+    uint16_t srcX;
+    uint16_t srcY;
+    uint16_t srcWidth;
+    uint16_t srcHeight;
+
+    uint32_t dstBase;
+    uint16_t dstPitch;
+    uint16_t dstFormat;
+    uint16_t dstX;
+    uint16_t dstY;
+    uint16_t dstWidth;
+    uint16_t dstHeight;
+    } tSizeParams;
+  //}}}
+  //{{{
+  cLcd (uint32_t buffer0, uint32_t buffer1)  {
+
+    mBuffer[false] = buffer0;
+    mBuffer[true] = buffer1;
+    updateNumDrawLines();
+    }
+  //}}}
+  ~cLcd() {}
+  //{{{
+  void init (std::string title) {
+
+    mDrawBuffer = !mDrawBuffer;
+    ltdcInit (mBuffer[mDrawBuffer]);
+
+    // zero out first opcode, point past it
+    mDma2dBuf = (uint32_t*)DMA2D_BUFFER;
+    mDma2dIsrBuf = mDma2dBuf;
+    mDma2dCurBuf = mDma2dBuf;
+    *mDma2dCurBuf = kEnd;
+
+    // dma2d IRQ init
+    //HAL_NVIC_SetPriority (DMA2D_IRQn, 0x0F, 0);
+    //HAL_NVIC_EnableIRQ (DMA2D_IRQn);
+
+    // font init
+    FT_Init_FreeType (&FTlibrary);
+    FT_New_Memory_Face (FTlibrary, (FT_Byte*)freeSansBold, sizeof (freeSansBold), 0, &FTface);
+    FTglyphSlot = FTface->glyph;
+
+    // preload fontChars
+    for (char ch = 0x20; ch <= 0x7F; ch++)
+      loadChar (getFontHeight(), ch);
+    //for (char ch = 0x21; ch <= 0x3F; ch++)
+    //  loadChar (getBigFontHeight(), ch);
+    //for (char ch = 0x21; ch <= 0x3F; ch++)
+    //  loadChar (getSmallFontHeight(), ch);
+
+    FT_Done_Face (FTface);
+    //FT_Done_FreeType (FTlibrary);
+
+    mTitle = title;
+    updateNumDrawLines();
+    }
+  //}}}
+
+  uint16_t getLcdWidthPix() { return 800; }
+  uint16_t getLcdHeightPix() { return 1280; }
+
+  //{{{
+  void setShowDebug (bool title, bool info, bool lcdStats, bool footer) {
+
+    mShowTitle = title;
+    mShowInfo = info;
+    mShowLcdStats = lcdStats;
+    mShowFooter = footer;
+
+    updateNumDrawLines();
+    }
+  //}}}
+  //{{{
+  void debug (std::string str) {
+    info (COL_WHITE, str);
+    render();
+    }
+  //}}}
+  //{{{
+  void info (std::string str) {
+    info (COL_WHITE, str);
+    }
+  //}}}
+  //{{{
+  void info (uint16_t colour, std::string str) {
+
+    bool tailing = mLastLine == (int)mFirstLine + mNumDrawLines - 1;
+
+    auto line = (mLastLine < mMaxLine-1) ? mLastLine+1 : mLastLine;
+    mLines[line].mTime = HAL_GetTick(); //xTaskGetTickCount();
+    mLines[line].mColour = colour;
+    mLines[line].mString = str;
+    mLastLine = line;
+
+    if (tailing)
+      mFirstLine = mLastLine - mNumDrawLines + 1;
+    }
+  //}}}
+
+  //{{{
+  void press (int pressCount, int16_t x, int16_t y, uint16_t z, int16_t xinc, int16_t yinc) {
+
+    if ((pressCount > 30) && (x <= mStringPos) && (y <= getBoxHeight()))
+      reset();
+    else if (pressCount == 0) {
+      if (x <= mStringPos) {
+        // set displayFirstLine
+        if (y < 2 * getBoxHeight())
+          displayTop();
+        else if (y > getLcdHeightPix() - 2 * getBoxHeight())
+          displayTail();
+        }
+      }
+    else {
+      // inc firstLine
+      float value = mFirstLine - ((2.0f * yinc) / getBoxHeight());
+
+      if (value < 0)
+        mFirstLine = 0;
+      else if (mLastLine <= (int)mNumDrawLines-1)
+        mFirstLine = 0;
+      else if (value > mLastLine - mNumDrawLines + 1)
+        mFirstLine = mLastLine - mNumDrawLines + 1;
+      else
+        mFirstLine = value;
+      }
+    }
+  //}}}
+  //{{{
+  void startRender() {
+
+    mDrawBuffer = !mDrawBuffer;
+    setLayer (0, mBuffer[mDrawBuffer]);
+
+    // frameSync;
+    //ltdc.frameWait = 1;
+    //if (xSemaphoreTake (ltdc.sem, 100) == pdFALSE)
+    //  ltdc.timeouts++;
+
+    mDrawStartTime = HAL_GetTick();
+    }
+  //}}}
+  //{{{
+  void renderCursor (uint16_t colour, int16_t x, int16_t y, int16_t z) {
+    ellipse (colour, x, y, z, z);
+    }
+  //}}}
+  //{{{
+  void endRender (bool forceInfo) {
+
+    auto y = 0;
+    if ((mShowTitle || forceInfo) && !mTitle.empty()) {
+      //{{{  draw title
+      text (COL_YELLOW, getFontHeight(), mTitle, 0, y, getLcdWidthPix(), getBoxHeight());
+      y += getBoxHeight();
+      }
+      //}}}
+    if (mShowInfo || forceInfo) {
+      //{{{  draw info lines
+      if (mLastLine >= 0) {
+        // draw scroll bar
+        auto yorg = getBoxHeight() + ((int)mFirstLine * mNumDrawLines * getBoxHeight() / (mLastLine + 1));
+        auto height = mNumDrawLines * mNumDrawLines * getBoxHeight() / (mLastLine + 1);
+        rectClipped (COL_YELLOW, 0, yorg, 8, height);
+        }
+
+      auto lastLine = (int)mFirstLine + mNumDrawLines - 1;
+      if (lastLine > mLastLine)
+        lastLine = mLastLine;
+
+      for (auto lineIndex = (int)mFirstLine; lineIndex <= lastLine; lineIndex++) {
+        auto x = 0;
+        auto xinc = text (COL_GREEN, getFontHeight(),
+                          dec ((mLines[lineIndex].mTime-mStartTime) / 1000) + "." +
+                          dec ((mLines[lineIndex].mTime-mStartTime) % 1000, 3, '0'),
+                          x, y, getLcdWidthPix(), getBoxHeight());
+        x += xinc + 3;
+
+        text (mLines[lineIndex].mColour, getFontHeight(), mLines[lineIndex].mString,
+              x, y, getLcdWidthPix()-x, getLcdHeightPix());
+
+        y += getBoxHeight();
+        }
+      }
+      //}}}
+    if (mShowLcdStats) {
+      //{{{  draw lcdStats
+      std::string str = dec (ltdc.lineIrq) + ":f " +
+                        dec (ltdc.lineTicks) + "ms " +
+                        dec (mDma2dTimeouts) + " " +
+                        dec (ltdc.transferErrorIrq) + " " +
+                        dec (ltdc.fifoUnderunIrq);
+      text (COL_WHITE, getFontHeight(), str, 0, getLcdHeightPix() - 2 * getBoxHeight(), getLcdWidthPix(), 24);
+      }
+      //}}}
+    if (mShowFooter || forceInfo)
+      //{{{  draw footer
+      text (COL_WHITE, getFontHeight(),
+            //dec (xPortGetFreeHeapSize()) + " " +
+            //dec (xPortGetMinimumEverFreeHeapSize()) + " " +
+            //dec (osGetCPUUsage()) + "% " +
+          dec (mDrawTime) + "ms " + dec (mDma2dCurBuf - mDma2dBuf),
+            0, -getFontHeight() + getLcdHeightPix(), getLcdWidthPix(), getFontHeight());
+      //}}}
+
+    // terminate opCode buffer
+    *mDma2dCurBuf = kEnd;
+
+    // send opCode buffer
+    LCD_DMA2D_IRQHandler();
+    showLayer (0, mBuffer[mDrawBuffer], 255);
+
+    // reset opcode buffer
+    mDma2dCurBuf = mDma2dBuf;
+    *mDma2dCurBuf = kEnd;
+
+    mDrawTime = HAL_GetTick() - mDrawStartTime;
+    }
+  //}}}
+
+  //{{{
+  void render() {
+    startRender();
+    clear (COL_BLACK);
+    endRender (true);
+    }
+  //}}}
+  //{{{
+  void displayOn() {
+    GPIOD->BSRR = GPIO_PIN_13;   // ADJ hi
+    }
+  //}}}
+  //{{{
+  void displayOff() {
+    GPIOD->BSRR = GPIO_PIN_13 << 16;   // ADJ lo
+    }
+  //}}}
+
+  //{{{
+  void pixel (uint16_t colour, int16_t x, int16_t y) {
+
+    rect (colour, x, y, 1, 1);
+    }
+  //}}}
+  //{{{
+  void rect (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+
+    // often same colour
+    if (colour != mCurDstColour) {
+      *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OCOLR); // OCOLR - output colour
+      *mDma2dCurBuf++ = colour;
+      mCurDstColour = colour;
+      }
+
+    // quite often same stride
+    if (uint32_t(getLcdWidthPix() - width) != mDstStride) {
+      *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OOR); // OOR - output stride
+      mDstStride = getLcdWidthPix() - width;
+      *mDma2dCurBuf++ = mDstStride;
+      }
+
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OMAR); // OMAR - output start address 3c
+    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * dstComponents;
+
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->NLR);
+    *mDma2dCurBuf++ = (width << 16) | height;
+
+    *mDma2dCurBuf++ = (uint32_t)DMA2D; // CR
+    *mDma2dCurBuf++ = DMA2D_R2M | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
+    }
+  //}}}
+  //{{{
+  void stamp (uint16_t colour, uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+
+    // often same colour
+    if (colour != mCurSrcColour) {
+      uint32_t fullColour = ((colour & 0xF800) << 8) | ((colour & 0x07E0) << 5) | ((colour & 0x001F) << 3);
+      *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGCOLR); // FGCOLR - fgnd colour
+      *mDma2dCurBuf++ = fullColour;
+      mCurSrcColour = colour;
+      }
+
+    *mDma2dCurBuf++ = kStamp;
+    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * dstComponents; // output start address
+    mDstStride = getLcdWidthPix() - width;
+    *mDma2dCurBuf++ = mDstStride;                                          // stride
+    *mDma2dCurBuf++ = (width << 16) | height;                              // width:height
+    *mDma2dCurBuf++ = (uint32_t)src;                                       // fgnd start address
+    }
+  //}}}
+  //{{{
+  int text (uint16_t colour, uint16_t fontHeight, std::string str, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+
+    auto xend = x + width;
+    for (uint16_t i = 0; i < str.size(); i++) {
+      if ((str[i] >= 0x20) && (str[i] <= 0x7F)) {
+        auto fontCharIt = mFontCharMap.find (fontHeight<<8 | str[i]);
+        if (fontCharIt != mFontCharMap.end()) {
+          auto fontChar = fontCharIt->second;
+          if (x + fontChar->left + fontChar->pitch >= xend)
+            break;
+          else if (fontChar->bitmap)
+            stampClipped (colour, fontChar->bitmap, x + fontChar->left, y + fontHeight - fontChar->top, fontChar->pitch, fontChar->rows);
+
+          x += fontChar->advance;
+          }
+        }
+      }
+
+    return x;
+    }
+  //}}}
+  //{{{
+  void copy (uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+  // copy
+
+    // output
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x3C; // OMAR - output start address
+    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * dstComponents;
+
+    mDstStride = getLcdWidthPix() - width;
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x40; // OOR - output stride
+    *mDma2dCurBuf++ = mDstStride;
+
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x44; // NLR - width:height
+    *mDma2dCurBuf++ = (width << 16) | height;
+
+    // src - fgnd
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x1C; // FGPFCCR - fgnd PFC
+    //*mDma2dCurBuf++ = DMA2D_INPUT_RGB565;
+    *mDma2dCurBuf++ = DMA2D_INPUT_RGB888;
+
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x0C; // FGMAR - fgnd address
+    *mDma2dCurBuf++ = (uint32_t)src;
+
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x10; // FGOR - fgnd stride
+    *mDma2dCurBuf++ = 0;
+
+    *mDma2dCurBuf++ = (uint32_t)DMA2D;        // CR
+    *mDma2dCurBuf++ = DMA2D_M2M_PFC | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
+    }
+  //}}}
+  //{{{
+  void copy (uint8_t* src, int16_t srcx, int16_t srcy, uint16_t srcWidth, uint16_t srcHeight,
+                   int16_t dstx, int16_t dsty, uint16_t dstWidth, uint16_t dstHeight) {
+  // copy src to dst
+  // - some corner cases missing, not enough src for dst needs padding
+
+    // output
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x3C; // OMAR - output start address
+    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((dsty * getLcdWidthPix()) + dstx) * dstComponents;
+
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x40; // OOR - output stride
+    mDstStride = getLcdWidthPix() - dstWidth;
+    *mDma2dCurBuf++ = mDstStride;
+
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x44; // NLR - width:height
+    *mDma2dCurBuf++ = (dstWidth << 16) | dstHeight;
+
+    // src - fgnd
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x1C; // FGPFCCR - fgnd PFC
+    *mDma2dCurBuf++ = DMA2D_INPUT_RGB888;
+
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x0C; // FGMAR - fgnd address
+    *mDma2dCurBuf++ = (uint32_t)(src + ((srcy * srcWidth) + srcx) * dstComponents);
+
+    *mDma2dCurBuf++ = (uint32_t)DMA2D + 0x10; // FGOR - fgnd stride
+    *mDma2dCurBuf++ = srcWidth - dstWidth;
+
+    // CR
+    *mDma2dCurBuf++ = (uint32_t)DMA2D;        // CR
+    *mDma2dCurBuf++ = DMA2D_M2M_PFC | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
+    }
+  //}}}
+
+  //{{{
+  void pixelClipped (uint16_t colour, int16_t x, int16_t y) {
+
+      rectClipped (colour, x, y, 1, 1);
+    }
+  //}}}
+  //{{{
+  void stampClipped (uint16_t colour, uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+
+    if (!width || !height || x < 0)
+      return;
+
+    if (y < 0) {
+      // top clip
+      if (y + height <= 0)
+        return;
+      height += y;
+      src += -y * width;
+      y = 0;
+      }
+
+    if (y + height > getLcdHeightPix()) {
+      // bottom yclip
+      if (y >= getLcdHeightPix())
+        return;
+      height = getLcdHeightPix() - y;
+      }
+
+    stamp (colour, src, x, y, width, height);
+    }
+  //}}}
+  //{{{
+  void rectClipped (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+
+    if (x >= getLcdWidthPix())
+      return;
+    if (y >= getLcdHeightPix())
+      return;
+
+    int xend = x + width;
+    if (xend <= 0)
+      return;
+
+    int yend = y + height;
+    if (yend <= 0)
+      return;
+
+    if (x < 0)
+      x = 0;
+    if (xend > getLcdWidthPix())
+      xend = getLcdWidthPix();
+
+    if (y < 0)
+      y = 0;
+    if (yend > getLcdHeightPix())
+      yend = getLcdHeightPix();
+
+    if (!width)
+      return;
+    if (!height)
+      return;
+
+    rect (colour, x, y, xend - x, yend - y);
+    }
+  //}}}
+  //{{{
+  void rectOutline (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height, uint8_t thickness) {
+
+    rectClipped (colour, x, y, width, thickness);
+    rectClipped (colour, x + width-thickness, y, thickness, height);
+    rectClipped (colour, x, y + height-thickness, width, thickness);
+    rectClipped (colour, x, y, thickness, height);
+    }
+  //}}}
+  //{{{
+  void clear (uint16_t colour) {
+
+    rect (colour, 0, 0, getLcdWidthPix(), getLcdHeightPix());
+    }
+  //}}}
+  //{{{
+  void ellipse (uint16_t colour, int16_t x, int16_t y, uint16_t xradius, uint16_t yradius) {
+
+    if (!xradius)
+      return;
+    if (!yradius)
+      return;
+
+    int x1 = 0;
+    int y1 = -yradius;
+    int err = 2 - 2*xradius;
+    float k = (float)yradius / xradius;
+
+    do {
+      rectClipped (colour, (x-(uint16_t)(x1 / k)), y + y1, (2*(uint16_t)(x1 / k) + 1), 1);
+      rectClipped (colour, (x-(uint16_t)(x1 / k)), y - y1, (2*(uint16_t)(x1 / k) + 1), 1);
+
+      int e2 = err;
+      if (e2 <= x1) {
+        err += ++x1 * 2 + 1;
+        if (-y1 == x && e2 <= y1)
+          e2 = 0;
+        }
+      if (e2 > y1)
+        err += ++y1*2 + 1;
+      } while (y1 <= 0);
+    }
+  //}}}
+  //{{{
+  void ellipseOutline (uint16_t colour, int16_t x, int16_t y, uint16_t xradius, uint16_t yradius) {
+
+    if (xradius && yradius) {
+      int x1 = 0;
+      int y1 = -yradius;
+      int err = 2 - 2*xradius;
+      float k = (float)yradius / xradius;
+
+      do {
+        rectClipped (colour, x - (uint16_t)(x1 / k), y + y1, 1, 1);
+        rectClipped (colour, x + (uint16_t)(x1 / k), y + y1, 1, 1);
+        rectClipped (colour, x + (uint16_t)(x1 / k), y - y1, 1, 1);
+        rectClipped (colour, x - (uint16_t)(x1 / k), y - y1, 1, 1);
+
+        int e2 = err;
+        if (e2 <= x1) {
+          err += ++x1*2 + 1;
+          if (-y1 == x1 && e2 <= y1)
+            e2 = 0;
+          }
+        if (e2 > y1)
+          err += ++y1*2 + 1;
+        } while (y1 <= 0);
+      }
+    }
+  //}}}
+  //{{{
+  void line (uint16_t colour, int16_t x1, int16_t y1, int16_t x2, int16_t y2) {
+
+    int16_t deltax = (x2 - x1) > 0 ? (x2 - x1) : -(x2 - x1);        /* The difference between the x's */
+    int16_t deltay = (y2 - y1) > 0 ? (y2 - y1) : -(y2 - y1);        /* The difference between the y's */
+    int16_t x = x1;                       /* Start x off at the first pixel */
+    int16_t y = y1;                       /* Start y off at the first pixel */
+
+    int16_t xinc1;
+    int16_t xinc2;
+    if (x2 >= x1) {               /* The x-values are increasing */
+      xinc1 = 1;
+      xinc2 = 1;
+      }
+    else {                         /* The x-values are decreasing */
+      xinc1 = -1;
+      xinc2 = -1;
+      }
+
+    int yinc1;
+    int yinc2;
+    if (y2 >= y1) {                 /* The y-values are increasing */
+      yinc1 = 1;
+      yinc2 = 1;
+      }
+    else {                         /* The y-values are decreasing */
+      yinc1 = -1;
+      yinc2 = -1;
+      }
+
+    int den = 0;
+    int num = 0;
+    int num_add = 0;
+    int num_pixels = 0;
+    if (deltax >= deltay) {        /* There is at least one x-value for every y-value */
+      xinc1 = 0;                  /* Don't change the x when numerator >= denominator */
+      yinc2 = 0;                  /* Don't change the y for every iteration */
+      den = deltax;
+      num = deltax / 2;
+      num_add = deltay;
+      num_pixels = deltax;         /* There are more x-values than y-values */
+      }
+    else {                         /* There is at least one y-value for every x-value */
+      xinc2 = 0;                  /* Don't change the x for every iteration */
+      yinc1 = 0;                  /* Don't change the y when numerator >= denominator */
+      den = deltay;
+      num = deltay / 2;
+      num_add = deltax;
+      num_pixels = deltay;         /* There are more y-values than x-values */
+    }
+
+    for (int curpixel = 0; curpixel <= num_pixels; curpixel++) {
+      rectClipped (colour, x, y, 1, 1);   /* Draw the current pixel */
+      num += num_add;                            /* Increase the numerator by the top of the fraction */
+      if (num >= den) {                          /* Check if numerator >= denominator */
+        num -= den;                             /* Calculate the new numerator value */
+        x += xinc1;                             /* Change the x as appropriate */
+        y += yinc1;                             /* Change the y as appropriate */
+        }
+      x += xinc2;                               /* Change the x as appropriate */
+      y += yinc2;                               /* Change the y as appropriate */
+      }
+    }
+  //}}}
+
+  //{{{
+  void size (tSizeParams* sizeParams) {
+  // do size with 90 rotate
+
+    const uint16_t kFormatBytes[6] = {4,3,2,2,2,1};
+    //const uint32_t tmpFormat = DMA2D_ARGB8888;
+    const uint32_t tmpFormat = DMA2D_RGB565;
+    uint32_t tmpBuf = (uint32_t)pvPortMalloc (sizeParams->srcWidth * sizeParams->dstHeight * kFormatBytes[tmpFormat]);
+
+    // first pass
+    uint32_t srcBase = sizeParams->srcBase +
+                       ((sizeParams->srcY * sizeParams->srcPitch) + sizeParams->srcX) * kFormatBytes[sizeParams->srcFormat];
+    uint32_t blendCoeff = ((sizeParams->srcHeight-1) << 21) / sizeParams->dstHeight;
+    uint32_t blendIndex = blendCoeff >> 1;
+    uint16_t srcPitch = sizeParams->srcPitch * kFormatBytes[sizeParams->srcFormat];
+    uint32_t srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+    uint32_t srcPtr1 = srcPtr + srcPitch;
+    uint32_t dstPtr = tmpBuf;
+    uint32_t fccr = sizeParams->srcFormat | ((blendIndex >> 13) << 24);
+    uint16_t dstPitch = kFormatBytes[tmpFormat];
+
+    DMA2D->BGPFCCR = 0xff000000 | sizeParams->srcFormat;
+    DMA2D->OPFCCR = tmpFormat;
+    //DMA2D->NLR = (sizeParams->srcWidth << 16) | 1;
+    DMA2D->NLR = 0x10000 | sizeParams->srcWidth;
+    DMA2D->FGOR = 0;
+    DMA2D->BGOR = 0;
+    DMA2D->OOR = sizeParams->dstHeight - 1;
+    for (int i = 0; i < sizeParams->dstHeight; i++) {
+      //{{{  loop lines, src -> tmp
+      DMA2D->BGMAR = srcPtr;
+      DMA2D->FGMAR = srcPtr1;
+      DMA2D->OMAR = dstPtr;
+      DMA2D->FGPFCCR = fccr;
+
+      DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
+      blendIndex += blendCoeff;
+      fccr = sizeParams->srcFormat | ((blendIndex >> 13) << 24);
+      srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+      srcPtr1 = srcPtr + srcPitch;
+      dstPtr += dstPitch;
+
+      while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
+      DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
+                     DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+      }
+      //}}}
+
+    // second pass
+    srcBase = tmpBuf;
+    blendCoeff = ((sizeParams->srcWidth-1) << 21) / sizeParams->dstWidth;
+    blendIndex = blendCoeff >> 1;
+    srcPitch = sizeParams->dstHeight * kFormatBytes[tmpFormat];
+    srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+    srcPtr1 = srcPtr + srcPitch;
+    dstPtr = sizeParams->dstBase +
+             ((sizeParams->dstY * sizeParams->dstPitch) + sizeParams->dstX) * kFormatBytes[sizeParams->dstFormat];
+    fccr = tmpFormat | ((blendIndex >> 13) << 24);
+    dstPitch = kFormatBytes[sizeParams->dstFormat];
+
+    DMA2D->BGPFCCR = 0xff000000 | tmpFormat;
+    DMA2D->OPFCCR  = sizeParams->dstFormat;
+    DMA2D->NLR = 0x10000 | sizeParams->dstHeight;
+    DMA2D->FGOR = 0;
+    DMA2D->BGOR = 0;
+    DMA2D->OOR = sizeParams->dstWidth - 1;
+    for (int i = 0; i < sizeParams->dstWidth; i++) {
+      //{{{  loop columns, tmp -> dst
+      DMA2D->BGMAR = srcPtr;
+      DMA2D->FGMAR = srcPtr1;
+      DMA2D->OMAR = dstPtr;
+      DMA2D->FGPFCCR = fccr;
+      DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
+      blendIndex += blendCoeff;
+      fccr = tmpFormat | ((blendIndex >> 13) << 24);
+      srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+      srcPtr1 = srcPtr + srcPitch;
+      dstPtr += dstPitch;
+
+      while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
+      DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
+                     DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+      }
+      //}}}
+
+    vPortFree ((void*)tmpBuf);
+    }
+  //}}}
+  //{{{
+  void sizeOrig (tSizeParams* sizeParams) {
+
+    const uint16_t kFormatBytes[6] = {4,3,2,2,2,1};
+    //const uint32_t tmpFormat = DMA2D_ARGB8888;
+    const uint32_t tmpFormat = DMA2D_RGB565;
+    uint32_t tmpBuf = (uint32_t)pvPortMalloc (sizeParams->srcWidth * sizeParams->dstHeight * kFormatBytes[tmpFormat]);
+
+    // first pass
+    uint32_t srcBase = sizeParams->srcBase +
+                       ((sizeParams->srcY * sizeParams->srcPitch) + sizeParams->srcX) * kFormatBytes[sizeParams->srcFormat];
+    uint32_t blendCoeff = ((sizeParams->srcHeight-1) << 21) / sizeParams->dstHeight;
+    uint32_t blendIndex = blendCoeff >> 1;
+    uint16_t srcPitch = sizeParams->srcPitch * kFormatBytes[sizeParams->srcFormat];
+    uint32_t srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+    uint32_t srcPtr1 = srcPtr + srcPitch;
+    uint32_t dstPtr = tmpBuf;
+    uint32_t fccr = sizeParams->srcFormat | ((blendIndex >> 13) << 24);
+    uint16_t dstPitch = sizeParams->srcWidth * kFormatBytes[tmpFormat];
+
+    DMA2D->BGPFCCR = 0xff000000 | sizeParams->srcFormat;
+    DMA2D->OPFCCR = tmpFormat;
+    //DMA2D->NLR = (sizeParams->srcWidth << 16) | 1;
+    DMA2D->NLR = 0x10000 | sizeParams->srcWidth;
+    DMA2D->FGOR = 0;
+    DMA2D->BGOR = 0;
+    DMA2D->OOR = 0;
+    for (int i = 0; i < sizeParams->dstHeight; i++) {
+      //{{{  loop lines, src -> tmp
+      DMA2D->BGMAR = srcPtr;
+      DMA2D->FGMAR = srcPtr1;
+      DMA2D->OMAR = dstPtr;
+      DMA2D->FGPFCCR = fccr;
+
+      DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
+      blendIndex += blendCoeff;
+      fccr = sizeParams->srcFormat | ((blendIndex >> 13) << 24);
+      srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+      srcPtr1 = srcPtr + srcPitch;
+      dstPtr += dstPitch;
+
+      while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
+      DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
+                     DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+      }
+      //}}}
+
+    // second pass
+    srcBase = tmpBuf;
+    blendCoeff = ((sizeParams->srcWidth-1) << 21) / sizeParams->dstWidth;
+    blendIndex = blendCoeff >> 1;
+    srcPitch = kFormatBytes[tmpFormat];
+    srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+    srcPtr1 = srcPtr + srcPitch;
+    dstPtr = sizeParams->dstBase +
+             ((sizeParams->dstY * sizeParams->dstPitch) + sizeParams->dstX) * kFormatBytes[sizeParams->dstFormat];
+    fccr = tmpFormat | ((blendIndex >> 13) << 24);
+    dstPitch = kFormatBytes[sizeParams->dstFormat];
+
+    DMA2D->BGPFCCR = 0xff000000 | tmpFormat;
+    DMA2D->OPFCCR  = sizeParams->dstFormat;
+    DMA2D->NLR = 0x10000 | sizeParams->dstHeight;
+    DMA2D->FGOR = sizeParams->srcWidth - 1;
+    DMA2D->BGOR = sizeParams->srcWidth - 1;
+    DMA2D->OOR = sizeParams->dstPitch - 1;
+    for (int i = 0; i < sizeParams->dstWidth; i++) {
+      //{{{  loop columns, tmp -> dst
+      DMA2D->BGMAR = srcPtr;
+      DMA2D->FGMAR = srcPtr1;
+      DMA2D->OMAR = dstPtr;
+      DMA2D->FGPFCCR = fccr;
+      DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
+      blendIndex += blendCoeff;
+      fccr = tmpFormat | ((blendIndex >> 13) << 24);
+      srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
+      srcPtr1 = srcPtr + srcPitch;
+      dstPtr += dstPitch;
+
+      while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
+      DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
+                     DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+      }
+      //}}}
+
+    vPortFree ((void*)tmpBuf);
+    }
+  //}}}
 
 private:
-	const int dstComponents = 2;
-	//{{{
-	class cFontChar {
-	public:
-		uint8_t* bitmap;
-		int16_t left;
-		int16_t top;
-		int16_t pitch;
-		int16_t rows;
-		int16_t advance;
-		};
-	//}}}
-	typedef std::map<uint16_t, cFontChar*> cFontCharMap;
+  const int dstComponents = 2;
+  //{{{
+  class cFontChar {
+  public:
+    uint8_t* bitmap;
+    int16_t left;
+    int16_t top;
+    int16_t pitch;
+    int16_t rows;
+    int16_t advance;
+    };
+  //}}}
+  typedef std::map<uint16_t, cFontChar*> cFontCharMap;
 
-	//{{{
-	void ltdcInit (uint32_t frameBufferAddress) {
+  //{{{
+  void ltdcInit (uint32_t frameBufferAddress) {
 
-		//{{{  clocks
-		__HAL_RCC_GPIOA_CLK_ENABLE();
-		__HAL_RCC_GPIOB_CLK_ENABLE();
-		__HAL_RCC_GPIOC_CLK_ENABLE();
-		__HAL_RCC_GPIOD_CLK_ENABLE();
-		__HAL_RCC_GPIOF_CLK_ENABLE();
-		__HAL_RCC_GPIOG_CLK_ENABLE();
+    //{{{  clocks
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOD_CLK_ENABLE();
+    __HAL_RCC_GPIOF_CLK_ENABLE();
+    __HAL_RCC_GPIOG_CLK_ENABLE();
 
-		__HAL_RCC_DMA2D_CLK_ENABLE();
-		__HAL_RCC_LTDC_CLK_ENABLE();
-		//}}}
-		//{{{  gpio
-		//  CK <-> PG.07   DE <-> PF.10  ADJ <-> PD.13 - optional HS <-> PC.06, VS <-> PA.04
-		//  R2 <-> PC.10   G2 <-> PA.06   B2 <-> PD.06
-		//  R3 <-> PB.00   G3 <-> PG.10   B3 <-> PG.11
-		//  R4 <-> PA.11   G4 <-> PB.10   B4 <-> PG.12
-		//  R5 <-> PA.12   G5 <-> PB.11   B5 <-> PA.03
-		//  R6 <-> PB.01   G6 <-> PC.07   B6 <-> PB.08
-		//  R7 <-> PG.06   G7 <-> PD.03   B7 <-> PB.09
+    __HAL_RCC_DMA2D_CLK_ENABLE();
+    __HAL_RCC_LTDC_CLK_ENABLE();
+    //}}}
+    //{{{  gpio
+    //  CK <-> PG.07   DE <-> PF.10  ADJ <-> PD.13 - optional HS <-> PC.06, VS <-> PA.04
+    //  R2 <-> PC.10   G2 <-> PA.06   B2 <-> PD.06
+    //  R3 <-> PB.00   G3 <-> PG.10   B3 <-> PG.11
+    //  R4 <-> PA.11   G4 <-> PB.10   B4 <-> PG.12
+    //  R5 <-> PA.12   G5 <-> PB.11   B5 <-> PA.03
+    //  R6 <-> PB.01   G6 <-> PC.07   B6 <-> PB.08
+    //  R7 <-> PG.06   G7 <-> PD.03   B7 <-> PB.09
 
-		GPIO_InitTypeDef GPIO_InitStructure;
-		GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
-		//GPIO_InitStructure.Pull = GPIO_NOPULL;
-		GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
-		GPIO_InitStructure.Pin = GPIO_PIN_13;
-		HAL_GPIO_Init (GPIOD, &GPIO_InitStructure);
+    GPIO_InitTypeDef GPIO_InitStructure;
+    GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
+    //GPIO_InitStructure.Pull = GPIO_NOPULL;
+    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStructure.Pin = GPIO_PIN_13;
+    HAL_GPIO_Init (GPIOD, &GPIO_InitStructure);
 
-		GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
-		GPIO_InitStructure.Pull = GPIO_NOPULL;
-		GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
-		GPIO_InitStructure.Alternate = GPIO_AF14_LTDC;
+    GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStructure.Pull = GPIO_NOPULL;
+    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStructure.Alternate = GPIO_AF14_LTDC;
 
-		GPIO_InitStructure.Pin = GPIO_PIN_3 | GPIO_PIN_6 | GPIO_PIN_11 | GPIO_PIN_12; // GPIO_PIN_4
-		HAL_GPIO_Init (GPIOA, &GPIO_InitStructure);
+    GPIO_InitStructure.Pin = GPIO_PIN_3 | GPIO_PIN_6 | GPIO_PIN_11 | GPIO_PIN_12; // GPIO_PIN_4
+    HAL_GPIO_Init (GPIOA, &GPIO_InitStructure);
 
-		GPIO_InitStructure.Pin = GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11;
-		HAL_GPIO_Init (GPIOB, &GPIO_InitStructure);
+    GPIO_InitStructure.Pin = GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11;
+    HAL_GPIO_Init (GPIOB, &GPIO_InitStructure);
 
-		GPIO_InitStructure.Pin = GPIO_PIN_7;// ; | GPIO_PIN_10; // GPIO_PIN_6
-		HAL_GPIO_Init (GPIOC, &GPIO_InitStructure);
+    GPIO_InitStructure.Pin = GPIO_PIN_7;// ; | GPIO_PIN_10; // GPIO_PIN_6
+    HAL_GPIO_Init (GPIOC, &GPIO_InitStructure);
 
-		GPIO_InitStructure.Pin = GPIO_PIN_3 | GPIO_PIN_6;
-		HAL_GPIO_Init (GPIOD, &GPIO_InitStructure);
+    GPIO_InitStructure.Pin = GPIO_PIN_3 | GPIO_PIN_6;
+    HAL_GPIO_Init (GPIOD, &GPIO_InitStructure);
 
-		GPIO_InitStructure.Pin = GPIO_PIN_10;
-		HAL_GPIO_Init (GPIOF, &GPIO_InitStructure);
+    GPIO_InitStructure.Pin = GPIO_PIN_10;
+    HAL_GPIO_Init (GPIOF, &GPIO_InitStructure);
 
-		GPIO_InitStructure.Pin = GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_11;
-		HAL_GPIO_Init (GPIOG, &GPIO_InitStructure);
+    GPIO_InitStructure.Pin = GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_11;
+    HAL_GPIO_Init (GPIOG, &GPIO_InitStructure);
 
-		GPIO_InitStructure.Pin = GPIO_PIN_0 | GPIO_PIN_1;
-		GPIO_InitStructure.Alternate= GPIO_AF9_LTDC;
-		HAL_GPIO_Init (GPIOB, &GPIO_InitStructure);
+    GPIO_InitStructure.Pin = GPIO_PIN_0 | GPIO_PIN_1;
+    GPIO_InitStructure.Alternate= GPIO_AF9_LTDC;
+    HAL_GPIO_Init (GPIOB, &GPIO_InitStructure);
 
-		GPIO_InitStructure.Pin = GPIO_PIN_10 | GPIO_PIN_12;
-		HAL_GPIO_Init (GPIOG, &GPIO_InitStructure);
-		//}}}
+    GPIO_InitStructure.Pin = GPIO_PIN_10 | GPIO_PIN_12;
+    HAL_GPIO_Init (GPIOG, &GPIO_InitStructure);
+    //}}}
 
-		#define LCD_WIDTH   800  // min 39Mhz typ 45Mhz max 51.42Mhz
-		#define LCD_HEIGHT 1280
-		#define HORIZ_SYNC   64  // min  136  typ 176   max 216
-		#define VERT_SYNC     1  // min   12  typ  25   max  38
+    #define LCD_WIDTH   800  // min 39Mhz typ 45Mhz max 51.42Mhz
+    #define LCD_HEIGHT 1280
+    #define HORIZ_SYNC   64  // min  136  typ 176   max 216
+    #define VERT_SYNC     1  // min   12  typ  25   max  38
 
-		LtdcHandler.Instance = LTDC;
-		LtdcHandler.Init.HorizontalSync     = HORIZ_SYNC - 1;
-		LtdcHandler.Init.AccumulatedHBP     = HORIZ_SYNC - 1;
-		LtdcHandler.Init.AccumulatedActiveW = HORIZ_SYNC + LCD_WIDTH - 1;
-		LtdcHandler.Init.TotalWidth         = HORIZ_SYNC + LCD_WIDTH - 1;
-		LtdcHandler.Init.VerticalSync       = VERT_SYNC - 1;
-		LtdcHandler.Init.AccumulatedVBP     = VERT_SYNC - 1;
-		LtdcHandler.Init.AccumulatedActiveH = VERT_SYNC + LCD_HEIGHT - 1;
-		LtdcHandler.Init.TotalHeigh         = VERT_SYNC + LCD_HEIGHT - 1;
-		LtdcHandler.Init.HSPolarity = LTDC_HSPOLARITY_AL;
-		LtdcHandler.Init.VSPolarity = LTDC_VSPOLARITY_AL;
-		LtdcHandler.Init.DEPolarity = LTDC_DEPOLARITY_AL;
-		LtdcHandler.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
-		LtdcHandler.Init.Backcolor.Red = 0;
-		LtdcHandler.Init.Backcolor.Blue = 0;
-		LtdcHandler.Init.Backcolor.Green = 0;
-		HAL_LTDC_Init (&LtdcHandler);
+    LtdcHandler.Instance = LTDC;
+    LtdcHandler.Init.HorizontalSync     = HORIZ_SYNC - 1;
+    LtdcHandler.Init.AccumulatedHBP     = HORIZ_SYNC - 1;
+    LtdcHandler.Init.AccumulatedActiveW = HORIZ_SYNC + LCD_WIDTH - 1;
+    LtdcHandler.Init.TotalWidth         = HORIZ_SYNC + LCD_WIDTH - 1;
+    LtdcHandler.Init.VerticalSync       = VERT_SYNC - 1;
+    LtdcHandler.Init.AccumulatedVBP     = VERT_SYNC - 1;
+    LtdcHandler.Init.AccumulatedActiveH = VERT_SYNC + LCD_HEIGHT - 1;
+    LtdcHandler.Init.TotalHeigh         = VERT_SYNC + LCD_HEIGHT - 1;
+    LtdcHandler.Init.HSPolarity = LTDC_HSPOLARITY_AL;
+    LtdcHandler.Init.VSPolarity = LTDC_VSPOLARITY_AL;
+    LtdcHandler.Init.DEPolarity = LTDC_DEPOLARITY_AL;
+    LtdcHandler.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
+    LtdcHandler.Init.Backcolor.Red = 0;
+    LtdcHandler.Init.Backcolor.Blue = 0;
+    LtdcHandler.Init.Backcolor.Green = 0;
+    HAL_LTDC_Init (&LtdcHandler);
 
-		//DMA2D->AMTCR = 0x3F01;
+    //DMA2D->AMTCR = 0x3F01;
 
-		layerInit (0, frameBufferAddress);
-		mSetFrameBufferAddress[1] = frameBufferAddress;
-		showFrameBufferAddress[1] = frameBufferAddress;
-		showAlpha[1] = 0;
+    layerInit (0, frameBufferAddress);
+    mSetFrameBufferAddress[1] = frameBufferAddress;
+    showFrameBufferAddress[1] = frameBufferAddress;
+    showAlpha[1] = 0;
 
-		ltdc.timeouts = 0;
-		ltdc.lineIrq = 0;
-		ltdc.fifoUnderunIrq = 0;
-		ltdc.transferErrorIrq = 0;
-		ltdc.lastTicks = 0;
-		ltdc.lineTicks = 0;
-		ltdc.frameWait = 0;
+    ltdc.timeouts = 0;
+    ltdc.lineIrq = 0;
+    ltdc.fifoUnderunIrq = 0;
+    ltdc.transferErrorIrq = 0;
+    ltdc.lastTicks = 0;
+    ltdc.lineTicks = 0;
+    ltdc.frameWait = 0;
 
-		//vSemaphoreCreateBinary (ltdc.sem);
+    //vSemaphoreCreateBinary (ltdc.sem);
 
-	 // HAL_NVIC_SetPriority (LTDC_IRQn, 0xE, 0);
-	 // HAL_NVIC_EnableIRQ (LTDC_IRQn);
+   // HAL_NVIC_SetPriority (LTDC_IRQn, 0xE, 0);
+   // HAL_NVIC_EnableIRQ (LTDC_IRQn);
 
-		// set line interupt line number
-		//LTDC->LIPCR = 0;
+    // set line interupt line number
+    //LTDC->LIPCR = 0;
 
-		// enable line interrupt
-		//LTDC->IER |= LTDC_IT_LI;
-		}
-	//}}}
-	//{{{
-	void layerInit (uint8_t layer, uint32_t frameBufferAddress) {
+    // enable line interrupt
+    //LTDC->IER |= LTDC_IT_LI;
+    }
+  //}}}
+  //{{{
+  void layerInit (uint8_t layer, uint32_t frameBufferAddress) {
 
-		LTDC_LayerCfgTypeDef* curLayerCfg = &LtdcHandler.LayerCfg[layer];
+    LTDC_LayerCfgTypeDef* curLayerCfg = &LtdcHandler.LayerCfg[layer];
 
-		curLayerCfg->WindowX0 = 0;
-		curLayerCfg->WindowX1 = getLcdWidthPix();
-		curLayerCfg->WindowY0 = 0;
-		curLayerCfg->WindowY1 = getLcdHeightPix();
+    curLayerCfg->WindowX0 = 0;
+    curLayerCfg->WindowX1 = getLcdWidthPix();
+    curLayerCfg->WindowY0 = 0;
+    curLayerCfg->WindowY1 = getLcdHeightPix();
 
-		curLayerCfg->PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
+    curLayerCfg->PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
 
-		curLayerCfg->FBStartAdress = (uint32_t)frameBufferAddress;
+    curLayerCfg->FBStartAdress = (uint32_t)frameBufferAddress;
 
-		curLayerCfg->Alpha = 255;
-		curLayerCfg->Alpha0 = 0;
+    curLayerCfg->Alpha = 255;
+    curLayerCfg->Alpha0 = 0;
 
-		curLayerCfg->Backcolor.Blue = 0;
-		curLayerCfg->Backcolor.Green = 0;
-		curLayerCfg->Backcolor.Red = 0;
+    curLayerCfg->Backcolor.Blue = 0;
+    curLayerCfg->Backcolor.Green = 0;
+    curLayerCfg->Backcolor.Red = 0;
 
-		curLayerCfg->BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
-		curLayerCfg->BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
+    curLayerCfg->BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
+    curLayerCfg->BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
 
-		curLayerCfg->ImageWidth = getLcdWidthPix();
-		curLayerCfg->ImageHeight = getLcdHeightPix();
+    curLayerCfg->ImageWidth = getLcdWidthPix();
+    curLayerCfg->ImageHeight = getLcdHeightPix();
 
-		HAL_LTDC_ConfigLayer (&LtdcHandler, curLayerCfg, layer);
+    HAL_LTDC_ConfigLayer (&LtdcHandler, curLayerCfg, layer);
 
-		// local state
-		mCurFrameBufferAddress = frameBufferAddress;
-		mSetFrameBufferAddress[layer] = frameBufferAddress;
-		showFrameBufferAddress[layer] = frameBufferAddress;
-		showAlpha[layer] = 255;
-		}
-	//}}}
-	//{{{
-	void setLayer (uint8_t layer, uint32_t frameBufferAddress) {
+    // local state
+    mCurFrameBufferAddress = frameBufferAddress;
+    mSetFrameBufferAddress[layer] = frameBufferAddress;
+    showFrameBufferAddress[layer] = frameBufferAddress;
+    showAlpha[layer] = 255;
+    }
+  //}}}
+  //{{{
+  void setLayer (uint8_t layer, uint32_t frameBufferAddress) {
 
-		mCurFrameBufferAddress = frameBufferAddress;
-		mSetFrameBufferAddress[layer] = frameBufferAddress;
-		}
-	//}}}
-	//{{{
-	void showLayer (uint8_t layer, uint32_t frameBufferAddress, uint8_t alpha) {
+    mCurFrameBufferAddress = frameBufferAddress;
+    mSetFrameBufferAddress[layer] = frameBufferAddress;
+    }
+  //}}}
+  //{{{
+  void showLayer (uint8_t layer, uint32_t frameBufferAddress, uint8_t alpha) {
 
-		showFrameBufferAddress[layer] = frameBufferAddress;
-		showAlpha[layer] = alpha;
+    showFrameBufferAddress[layer] = frameBufferAddress;
+    showAlpha[layer] = alpha;
 
-		LTDC_Layer_TypeDef* ltdcLayer = (LTDC_Layer_TypeDef*)((uint32_t)LTDC + 0x84); // + (0x80*layer));
-		ltdcLayer->CFBAR = showFrameBufferAddress[0];
-		if (showAlpha[0]) {
-			ltdcLayer->CR |= LTDC_LxCR_LEN;
-			ltdcLayer->CACR &= ~LTDC_LxCACR_CONSTA;
-			ltdcLayer->CACR = showAlpha[0];
-			}
-		else
-			ltdcLayer->CR &= ~LTDC_LxCR_LEN;
-		LTDC->SRCR |= LTDC_SRCR_IMR;
-		}
-	//}}}
+    LTDC_Layer_TypeDef* ltdcLayer = (LTDC_Layer_TypeDef*)((uint32_t)LTDC + 0x84); // + (0x80*layer));
+    ltdcLayer->CFBAR = showFrameBufferAddress[0];
+    if (showAlpha[0]) {
+      ltdcLayer->CR |= LTDC_LxCR_LEN;
+      ltdcLayer->CACR &= ~LTDC_LxCACR_CONSTA;
+      ltdcLayer->CACR = showAlpha[0];
+      }
+    else
+      ltdcLayer->CR &= ~LTDC_LxCR_LEN;
+    LTDC->SRCR |= LTDC_SRCR_IMR;
+    }
+  //}}}
 
-	//{{{
-	cFontChar* loadChar (uint16_t fontHeight, char ch) {
+  //{{{
+  cFontChar* loadChar (uint16_t fontHeight, char ch) {
 
-		FT_Set_Pixel_Sizes (FTface, 0, fontHeight);
-		FT_Load_Char (FTface, ch, FT_LOAD_RENDER);
+    FT_Set_Pixel_Sizes (FTface, 0, fontHeight);
+    FT_Load_Char (FTface, ch, FT_LOAD_RENDER);
 
-		auto fontChar = new cFontChar();
-		fontChar->left = FTglyphSlot->bitmap_left;
-		fontChar->top = FTglyphSlot->bitmap_top;
-		fontChar->pitch = FTglyphSlot->bitmap.pitch;
-		fontChar->rows = FTglyphSlot->bitmap.rows;
-		fontChar->advance = FTglyphSlot->advance.x / 64;
-		fontChar->bitmap = nullptr;
+    auto fontChar = new cFontChar();
+    fontChar->left = FTglyphSlot->bitmap_left;
+    fontChar->top = FTglyphSlot->bitmap_top;
+    fontChar->pitch = FTglyphSlot->bitmap.pitch;
+    fontChar->rows = FTglyphSlot->bitmap.rows;
+    fontChar->advance = FTglyphSlot->advance.x / 64;
+    fontChar->bitmap = nullptr;
 
-		if (FTglyphSlot->bitmap.buffer) {
-			fontChar->bitmap = (uint8_t*)malloc (FTglyphSlot->bitmap.pitch * FTglyphSlot->bitmap.rows);
-			memcpy (fontChar->bitmap, FTglyphSlot->bitmap.buffer, FTglyphSlot->bitmap.pitch * FTglyphSlot->bitmap.rows);
-			}
+    if (FTglyphSlot->bitmap.buffer) {
+      fontChar->bitmap = (uint8_t*)malloc (FTglyphSlot->bitmap.pitch * FTglyphSlot->bitmap.rows);
+      memcpy (fontChar->bitmap, FTglyphSlot->bitmap.buffer, FTglyphSlot->bitmap.pitch * FTglyphSlot->bitmap.rows);
+      }
 
-		auto insertPair = mFontCharMap.insert (cFontCharMap::value_type (fontHeight<<8 | ch, fontChar));
-		auto fontCharIt = insertPair.first;
+    auto insertPair = mFontCharMap.insert (cFontCharMap::value_type (fontHeight<<8 | ch, fontChar));
+    auto fontCharIt = insertPair.first;
 
-		return fontCharIt->second;
-		}
-	//}}}
-	//{{{
-	void reset() {
+    return fontCharIt->second;
+    }
+  //}}}
+  //{{{
+  void reset() {
 
-		for (auto i = 0; i < mMaxLine; i++)
-			mLines[i].clear();
+    for (auto i = 0; i < mMaxLine; i++)
+      mLines[i].clear();
 
-		mStartTime = HAL_GetTick();
-		mLastLine = -1;
-		mFirstLine = 0;
-		}
-	//}}}
-	//{{{
-	void displayTop() {
-		mFirstLine = 0;
-		}
-	//}}}
-	//{{{
-	void displayTail() {
+    mStartTime = HAL_GetTick();
+    mLastLine = -1;
+    mFirstLine = 0;
+    }
+  //}}}
+  //{{{
+  void displayTop() {
+    mFirstLine = 0;
+    }
+  //}}}
+  //{{{
+  void displayTail() {
 
-		if (mLastLine > (int)mNumDrawLines-1)
-			mFirstLine = mLastLine - mNumDrawLines + 1;
-		else
-			mFirstLine = 0;
-		}
-	//}}}
-	//{{{
-	void updateNumDrawLines() {
+    if (mLastLine > (int)mNumDrawLines-1)
+      mFirstLine = mLastLine - mNumDrawLines + 1;
+    else
+      mFirstLine = 0;
+    }
+  //}}}
+  //{{{
+  void updateNumDrawLines() {
 
-		mStringPos = getBoxHeight()*3;
+    mStringPos = getBoxHeight()*3;
 
-		auto numDrawLines = getLcdHeightPix() / getBoxHeight();
-		if (mShowTitle && !mTitle.empty())
-			numDrawLines--;
-		if (mShowLcdStats)
-			numDrawLines--;
-		if (mShowFooter)
-			numDrawLines--;
+    auto numDrawLines = getLcdHeightPix() / getBoxHeight();
+    if (mShowTitle && !mTitle.empty())
+      numDrawLines--;
+    if (mShowLcdStats)
+      numDrawLines--;
+    if (mShowFooter)
+      numDrawLines--;
 
-		mNumDrawLines = numDrawLines;
-		}
-	//}}}
+    mNumDrawLines = numDrawLines;
+    }
+  //}}}
 
-	//{{{  vars
-	LTDC_HandleTypeDef LtdcHandler;
+  //{{{  vars
+  LTDC_HandleTypeDef LtdcHandler;
 
-	int mStartTime = 0;
+  int mStartTime = 0;
 
-	float mFirstLine = 0;
-	int mNumDrawLines = 0;
-	int mStringPos = 0;
+  float mFirstLine = 0;
+  int mNumDrawLines = 0;
+  int mStringPos = 0;
 
-	bool mShowTitle = true;
-	bool mShowInfo = true;
-	bool mShowLcdStats = false;
-	bool mShowFooter = true;
+  bool mShowTitle = true;
+  bool mShowInfo = true;
+  bool mShowLcdStats = false;
+  bool mShowFooter = true;
 
-	std::string mTitle;
+  std::string mTitle;
 
-	int mLastLine = -1;
-	int mMaxLine = 256;
+  int mLastLine = -1;
+  int mMaxLine = 256;
 
-	//{{{
-	class cLine {
-	public:
-		cLine() {}
-		~cLine() {}
+  //{{{
+  class cLine {
+  public:
+    cLine() {}
+    ~cLine() {}
 
-		//{{{
-		void clear() {
-			mTime = 0;
-			mColour = COL_WHITE;
-			mString = "";
-			}
-		//}}}
+    //{{{
+    void clear() {
+      mTime = 0;
+      mColour = COL_WHITE;
+      mString = "";
+      }
+    //}}}
 
-		int mTime = 0;
-		int mColour = COL_WHITE;
-		std::string mString;
-		};
-	//}}}
-	cLine mLines[256];
+    int mTime = 0;
+    int mColour = COL_WHITE;
+    std::string mString;
+    };
+  //}}}
+  cLine mLines[256];
 
-	int mDrawStartTime = 0;
-	int mDrawTime = 0;
-	bool mDrawBuffer = false;
-	uint32_t mBuffer[2] = {0,0};
+  int mDrawStartTime = 0;
+  int mDrawTime = 0;
+  bool mDrawBuffer = false;
+  uint32_t mBuffer[2] = {0,0};
 
-	uint32_t* mDma2dCurBuf = nullptr;
-	uint32_t mDma2dTimeouts = 0;
+  uint32_t* mDma2dCurBuf = nullptr;
+  uint32_t mDma2dTimeouts = 0;
 
-	uint32_t mCurFrameBufferAddress = 0;
-	uint32_t mSetFrameBufferAddress[2];
-	uint32_t mCurDstColour = 0;
-	uint32_t mCurSrcColour = 0;
-	uint32_t mDstStride = 0;
+  uint32_t mCurFrameBufferAddress = 0;
+  uint32_t mSetFrameBufferAddress[2];
+  uint32_t mCurDstColour = 0;
+  uint32_t mCurSrcColour = 0;
+  uint32_t mDstStride = 0;
 
-	cFontCharMap mFontCharMap;
+  cFontCharMap mFontCharMap;
 
-	FT_Library FTlibrary;
-	FT_Face FTface;
-	FT_GlyphSlot FTglyphSlot;
-	//}}}
-	};
+  FT_Library FTlibrary;
+  FT_Face FTface;
+  FT_GlyphSlot FTglyphSlot;
+  //}}}
+  };
 //}}}
 //{{{  Ps2
 //{{{  ps2 keyboard defines
@@ -2588,54 +2787,54 @@ private:
 //}}}
 //{{{  struct ps2Keymap_t
 typedef struct {
-	uint8_t noshift[PS2_KEYMAP_SIZE];
-	uint8_t shift[PS2_KEYMAP_SIZE];
-	uint8_t uses_altgr;
-	uint8_t altgr[PS2_KEYMAP_SIZE];
-	} ps2Keymap_t;
+  uint8_t noshift[PS2_KEYMAP_SIZE];
+  uint8_t shift[PS2_KEYMAP_SIZE];
+  uint8_t uses_altgr;
+  uint8_t altgr[PS2_KEYMAP_SIZE];
+  } ps2Keymap_t;
 //}}}
 //{{{
 const ps2Keymap_t kPs2Keymap = {
-	// without shift
-	{0, PS2_F9, 0, PS2_F5, PS2_F3, PS2_F1, PS2_F2, PS2_F12,
-	 0, PS2_F10, PS2_F8, PS2_F6, PS2_F4, PS2_TAB, '`', 0,
-	 0, 0 /*Lalt*/, 0 /*Lshift*/, 0, 0 /*Lctrl*/, 'q', '1', 0,
-	 0, 0, 'z', 's', 'a', 'w', '2', 0,
-	 0, 'c', 'x', 'd', 'e', '4', '3', 0,
-	 0, ' ', 'v', 'f', 't', 'r', '5', 0,
-	 0, 'n', 'b', 'h', 'g', 'y', '6', 0,
-	 0, 0, 'm', 'j', 'u', '7', '8', 0,
-	 0, ',', 'k', 'i', 'o', '0', '9', 0,
-	 0, '.', '/', 'l', ';', 'p', '-', 0,
-	 0, 0, '\'', 0, '[', '=', 0, 0,
-	 0 /*CapsLock*/, 0 /*Rshift*/, PS2_ENTER /*Enter*/, ']', 0, '\\', 0, 0,
-	 0, 0, 0, 0, 0, 0, PS2_BACKSPACE, 0,
-	 0, '1', 0, '4', '7', 0, 0, 0,
-	 '0', '.', '2', '5', '6', '8', PS2_ESC, 0 /*NumLock*/,
-	 PS2_F11, '+', '3', '-', '*', '9', PS2_SCROLL, 0,
-	 0, 0, 0, PS2_F7 },
+  // without shift
+  {0, PS2_F9, 0, PS2_F5, PS2_F3, PS2_F1, PS2_F2, PS2_F12,
+   0, PS2_F10, PS2_F8, PS2_F6, PS2_F4, PS2_TAB, '`', 0,
+   0, 0 /*Lalt*/, 0 /*Lshift*/, 0, 0 /*Lctrl*/, 'q', '1', 0,
+   0, 0, 'z', 's', 'a', 'w', '2', 0,
+   0, 'c', 'x', 'd', 'e', '4', '3', 0,
+   0, ' ', 'v', 'f', 't', 'r', '5', 0,
+   0, 'n', 'b', 'h', 'g', 'y', '6', 0,
+   0, 0, 'm', 'j', 'u', '7', '8', 0,
+   0, ',', 'k', 'i', 'o', '0', '9', 0,
+   0, '.', '/', 'l', ';', 'p', '-', 0,
+   0, 0, '\'', 0, '[', '=', 0, 0,
+   0 /*CapsLock*/, 0 /*Rshift*/, PS2_ENTER /*Enter*/, ']', 0, '\\', 0, 0,
+   0, 0, 0, 0, 0, 0, PS2_BACKSPACE, 0,
+   0, '1', 0, '4', '7', 0, 0, 0,
+   '0', '.', '2', '5', '6', '8', PS2_ESC, 0 /*NumLock*/,
+   PS2_F11, '+', '3', '-', '*', '9', PS2_SCROLL, 0,
+   0, 0, 0, PS2_F7 },
 
-	// with shift
-	{0, PS2_F9, 0, PS2_F5, PS2_F3, PS2_F1, PS2_F2, PS2_F12,
-	 0, PS2_F10, PS2_F8, PS2_F6, PS2_F4, PS2_TAB, '~', 0,
-	 0, 0 /*Lalt*/, 0 /*Lshift*/, 0, 0 /*Lctrl*/, 'Q', '!', 0,
-	 0, 0, 'Z', 'S', 'A', 'W', '@', 0,
-	 0, 'C', 'X', 'D', 'E', '$', '#', 0,
-	 0, ' ', 'V', 'F', 'T', 'R', '%', 0,
-	 0, 'N', 'B', 'H', 'G', 'Y', '^', 0,
-	 0, 0, 'M', 'J', 'U', '&', '*', 0,
-	 0, '<', 'K', 'I', 'O', ')', '(', 0,
-	 0, '>', '?', 'L', ':', 'P', '_', 0,
-	 0, 0, '"', 0, '{', '+', 0, 0,
-	 0 /*CapsLock*/, 0 /*Rshift*/, PS2_ENTER /*Enter*/, '}', 0, '|', 0, 0,
-	 0, 0, 0, 0, 0, 0, PS2_BACKSPACE, 0,
-	 0, '1', 0, '4', '7', 0, 0, 0,
-	 '0', '.', '2', '5', '6', '8', PS2_ESC, 0 /*NumLock*/,
-	 PS2_F11, '+', '3', '-', '*', '9', PS2_SCROLL, 0,
-	 0, 0, 0, PS2_F7 },
+  // with shift
+  {0, PS2_F9, 0, PS2_F5, PS2_F3, PS2_F1, PS2_F2, PS2_F12,
+   0, PS2_F10, PS2_F8, PS2_F6, PS2_F4, PS2_TAB, '~', 0,
+   0, 0 /*Lalt*/, 0 /*Lshift*/, 0, 0 /*Lctrl*/, 'Q', '!', 0,
+   0, 0, 'Z', 'S', 'A', 'W', '@', 0,
+   0, 'C', 'X', 'D', 'E', '$', '#', 0,
+   0, ' ', 'V', 'F', 'T', 'R', '%', 0,
+   0, 'N', 'B', 'H', 'G', 'Y', '^', 0,
+   0, 0, 'M', 'J', 'U', '&', '*', 0,
+   0, '<', 'K', 'I', 'O', ')', '(', 0,
+   0, '>', '?', 'L', ':', 'P', '_', 0,
+   0, 0, '"', 0, '{', '+', 0, 0,
+   0 /*CapsLock*/, 0 /*Rshift*/, PS2_ENTER /*Enter*/, '}', 0, '|', 0, 0,
+   0, 0, 0, 0, 0, 0, PS2_BACKSPACE, 0,
+   0, '1', 0, '4', '7', 0, 0, 0,
+   '0', '.', '2', '5', '6', '8', PS2_ESC, 0 /*NumLock*/,
+   PS2_F11, '+', '3', '-', '*', '9', PS2_SCROLL, 0,
+   0, 0, 0, PS2_F7 },
 
-	0
-	};
+  0
+  };
 //}}}
 
 //{{{  ps2 vars
@@ -2665,261 +2864,261 @@ extern "C" { void EXTI2_IRQHandler(); }
 //{{{
 void EXTI2_IRQHandler() {
 
-	if (__HAL_GPIO_EXTI_GET_IT (GPIO_PIN_2) != RESET) {
-		__HAL_GPIO_EXTI_CLEAR_IT (GPIO_PIN_2);
+  if (__HAL_GPIO_EXTI_GET_IT (GPIO_PIN_2) != RESET) {
+    __HAL_GPIO_EXTI_CLEAR_IT (GPIO_PIN_2);
 
-		if (ps2rx) {
-			bool bit = (GPIOG->IDR & GPIO_PIN_3) != 0;
+    if (ps2rx) {
+      bool bit = (GPIOG->IDR & GPIO_PIN_3) != 0;
 
-			if (bitPos == -1) {
-				//{{{  wait for lo start bit
-				if (!bit) {
-					// lo start bit
-					bitPos = 0;
-					data = 0;
-					}
-				}
-				//}}}
-			else if (bitPos < 8) {
-				// get data bits 0..7
-				data = data | (bit << bitPos);
-				bitPos++;
-				}
-			else if (bitPos == 8) {
-			 //{{{  parity bit - got data
-			 if (stream) {
-				 if (streamByte == -1) {
-					 if ((data & 0xC0) == 0x80) {
-						 streamByte = 0;
-						 streamBytes[streamByte] =  data;
-						 }
-					 }
-				 else {
-					 streamByte++;
-					 if ((streamByte == 3) && ((data & 0xc0) != 0xc0))
-						 streamByte = -1;
-					 else {
-						 streamBytes[streamByte] = data;
-							if (streamByte == 5) {
-								touchX = ((streamBytes[3] & 0x10) << 8) | ((streamBytes[1] & 0x0F) << 8) | streamBytes[4];
-								touchY = ((streamBytes[3] & 0x20) << 7) | ((streamBytes[1] & 0xF0) << 4) | streamBytes[5];
-								touchZ = streamBytes[2];
-								streamByte = -1;
-								}
-							}
-					 }
-				 }
-			 else if (raw) {
-				 rxData[inPtr] = data | (0x100 * rxReleaseCode);
-				 inPtr = (inPtr + 1) % 32;
-				 }
-			 else if (data == 0xE0)
-				 rxExpandCode = true;
-			 else if (data == 0xF0)
-				 rxReleaseCode = true;
-			 else if (data == 0x12) // SHIFT_L;
-				 shifted = !rxReleaseCode;
-			 else if (data == 0x59) // SHIFT_R;
-				 shifted = !rxReleaseCode;
-			 else if (data == 0x14) // CTRL_L
-				 ctrled = !rxReleaseCode;
-			 else {
-				 if (rxExpandCode) {
-					 if (data == 0x70)
-						 data = PS2_INSERT;
-					 else if (data == 0x6C)
-						 data = PS2_HOME;
-					 else if (data == 0x7D)
-						 data = PS2_PAGEUP;
-					 else if (data == 0x71)
-						 data = PS2_DELETE;
-					 else if (data == 0x6C)
-						 data = PS2_HOME;
-					 else if (data == 0x69)
-						 data = PS2_END;
-					 else if (data == 0x6C)
-						 data = PS2_PAGEDOWN;
-					 else if (data == 0x75)
-						 data = PS2_UPARROW;
-					 else if (data == 0x6B)
-						 data = PS2_LEFTARROW;
-					 else if (data == 0x72)
-						 data = PS2_DOWNARROW;
-					 else if (data == 0x74)
-						 data = PS2_RIGHTARROW;
-					 else if (data == 0x4A)
-						 data = '/';
-					 else if (data == 0x5A)
-						 data = PS2_ENTER;
-					 else
-						 data |= 0x200;
-					 }
-				 else if (shifted)
-					 data = kPs2Keymap.shift[data];
-				 else
-					 data = kPs2Keymap.noshift[data];
+      if (bitPos == -1) {
+        //{{{  wait for lo start bit
+        if (!bit) {
+          // lo start bit
+          bitPos = 0;
+          data = 0;
+          }
+        }
+        //}}}
+      else if (bitPos < 8) {
+        // get data bits 0..7
+        data = data | (bit << bitPos);
+        bitPos++;
+        }
+      else if (bitPos == 8) {
+       //{{{  parity bit - got data
+       if (stream) {
+         if (streamByte == -1) {
+           if ((data & 0xC0) == 0x80) {
+             streamByte = 0;
+             streamBytes[streamByte] =  data;
+             }
+           }
+         else {
+           streamByte++;
+           if ((streamByte == 3) && ((data & 0xc0) != 0xc0))
+             streamByte = -1;
+           else {
+             streamBytes[streamByte] = data;
+              if (streamByte == 5) {
+                touchX = ((streamBytes[3] & 0x10) << 8) | ((streamBytes[1] & 0x0F) << 8) | streamBytes[4];
+                touchY = ((streamBytes[3] & 0x20) << 7) | ((streamBytes[1] & 0xF0) << 4) | streamBytes[5];
+                touchZ = streamBytes[2];
+                streamByte = -1;
+                }
+              }
+           }
+         }
+       else if (raw) {
+         rxData[inPtr] = data | (0x100 * rxReleaseCode);
+         inPtr = (inPtr + 1) % 32;
+         }
+       else if (data == 0xE0)
+         rxExpandCode = true;
+       else if (data == 0xF0)
+         rxReleaseCode = true;
+       else if (data == 0x12) // SHIFT_L;
+         shifted = !rxReleaseCode;
+       else if (data == 0x59) // SHIFT_R;
+         shifted = !rxReleaseCode;
+       else if (data == 0x14) // CTRL_L
+         ctrled = !rxReleaseCode;
+       else {
+         if (rxExpandCode) {
+           if (data == 0x70)
+             data = PS2_INSERT;
+           else if (data == 0x6C)
+             data = PS2_HOME;
+           else if (data == 0x7D)
+             data = PS2_PAGEUP;
+           else if (data == 0x71)
+             data = PS2_DELETE;
+           else if (data == 0x6C)
+             data = PS2_HOME;
+           else if (data == 0x69)
+             data = PS2_END;
+           else if (data == 0x6C)
+             data = PS2_PAGEDOWN;
+           else if (data == 0x75)
+             data = PS2_UPARROW;
+           else if (data == 0x6B)
+             data = PS2_LEFTARROW;
+           else if (data == 0x72)
+             data = PS2_DOWNARROW;
+           else if (data == 0x74)
+             data = PS2_RIGHTARROW;
+           else if (data == 0x4A)
+             data = '/';
+           else if (data == 0x5A)
+             data = PS2_ENTER;
+           else
+             data |= 0x200;
+           }
+         else if (shifted)
+           data = kPs2Keymap.shift[data];
+         else
+           data = kPs2Keymap.noshift[data];
 
-				 rxData[inPtr] = data | (0x100 * rxReleaseCode);
-				 inPtr = (inPtr + 1) % 32;
-				 rxExpandCode = false;
-				 rxReleaseCode = false;
-				 }
+         rxData[inPtr] = data | (0x100 * rxReleaseCode);
+         inPtr = (inPtr + 1) % 32;
+         rxExpandCode = false;
+         rxReleaseCode = false;
+         }
 
-			 bitPos++;
-			 }
-			 //}}}
-			else if (bitPos == 9) {
-				//{{{  expect hi stop bit
-				if (bit)
-					bitPos = -1;
-				}
-				//}}}
-			}
-		}
-	}
+       bitPos++;
+       }
+       //}}}
+      else if (bitPos == 9) {
+        //{{{  expect hi stop bit
+        if (bit)
+          bitPos = -1;
+        }
+        //}}}
+      }
+    }
+  }
 //}}}
 
 //{{{
 uint16_t ps2get() {
-	while (inPtr == outPtr) {}
-	uint16_t ch = rxData[outPtr];
-	outPtr = (outPtr + 1) % 32;
-	return ch;
-	}
+  while (inPtr == outPtr) {}
+  uint16_t ch = rxData[outPtr];
+  outPtr = (outPtr + 1) % 32;
+  return ch;
+  }
 //}}}
 //{{{
 void ps2send (uint8_t value)  {
 
-	HAL_GPIO_WritePin (GPIOG, GPIO_PIN_2, GPIO_PIN_RESET); // set clock lo, release inhibit, if necessary
-	HAL_Delay (2); // Wait out any final clock pulse, 100us
+  HAL_GPIO_WritePin (GPIOG, GPIO_PIN_2, GPIO_PIN_RESET); // set clock lo, release inhibit, if necessary
+  HAL_Delay (2); // Wait out any final clock pulse, 100us
 
-	ps2rx = false;
-	HAL_GPIO_WritePin (GPIOG, GPIO_PIN_3, GPIO_PIN_RESET); // set data lo, start bit
-	HAL_GPIO_WritePin (GPIOG, GPIO_PIN_2, GPIO_PIN_SET);   // set clock hi, float
+  ps2rx = false;
+  HAL_GPIO_WritePin (GPIOG, GPIO_PIN_3, GPIO_PIN_RESET); // set data lo, start bit
+  HAL_GPIO_WritePin (GPIOG, GPIO_PIN_2, GPIO_PIN_SET);   // set clock hi, float
 
-	uint8_t parity = 1;
-	for (int bit = 0; bit < 8; bit++) {
-		while (HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for rising edge
-		HAL_GPIO_WritePin (GPIOG, GPIO_PIN_3, (value & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // set data to i’th data bit
-		parity = parity + value;  // Accumulate parity
-		value = value >> 1;       // Shift right to get next bit
-		while (!HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for falling edge
-		}
+  uint8_t parity = 1;
+  for (int bit = 0; bit < 8; bit++) {
+    while (HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for rising edge
+    HAL_GPIO_WritePin (GPIOG, GPIO_PIN_3, (value & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // set data to i’th data bit
+    parity = parity + value;  // Accumulate parity
+    value = value >> 1;       // Shift right to get next bit
+    while (!HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for falling edge
+    }
 
-	while (HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for rising edge
-	HAL_GPIO_WritePin (GPIOG, GPIO_PIN_3, (parity & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // set data to parity bit
-	while (!HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for falling edge
+  while (HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for rising edge
+  HAL_GPIO_WritePin (GPIOG, GPIO_PIN_3, (parity & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET); // set data to parity bit
+  while (!HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for falling edge
 
-	while (HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for rising edge
-	HAL_GPIO_WritePin (GPIOG, GPIO_PIN_3, GPIO_PIN_SET); // set data hi, stop bit
-	while (!HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for falling edge
+  while (HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for rising edge
+  HAL_GPIO_WritePin (GPIOG, GPIO_PIN_3, GPIO_PIN_SET); // set data hi, stop bit
+  while (!HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for falling edge
 
-	while (HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for rising edge
-	if (HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2) == true)
-		lcd->info ("ps2send - missing line control bit");
-	while (!HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for falling edge
-	ps2rx = true;
+  while (HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for rising edge
+  if (HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2) == true)
+    lcd->info ("ps2send - missing line control bit");
+  while (!HAL_GPIO_ReadPin (GPIOG, GPIO_PIN_2)) {} // wait for falling edge
+  ps2rx = true;
 
-	if (ps2get() != 0xFA)
-		lcd->info ("ps2send - no 0xFA ack");
-	}
+  if (ps2get() != 0xFA)
+    lcd->info ("ps2send - no 0xFA ack");
+  }
 //}}}
 //{{{
 void ps2sendTouchpadSpecialCommand (uint8_t arg) {
 // send touchpad special command sequence
 
-	for (int i = 0; i < 4; i++) {
-		ps2send (0xE8);   // touchpad setResolution
-		ps2send ((arg >> (6-2*i)) & 3);
-		}
-	}
+  for (int i = 0; i < 4; i++) {
+    ps2send (0xE8);   // touchpad setResolution
+    ps2send ((arg >> (6-2*i)) & 3);
+    }
+  }
 //}}}
 //{{{
 void initPs2gpio() {
 
-	bitPos = -1;
-	inPtr = 0;
-	outPtr = 0;
+  bitPos = -1;
+  inPtr = 0;
+  outPtr = 0;
 
-	__HAL_RCC_GPIOG_CLK_ENABLE();
+  __HAL_RCC_GPIOG_CLK_ENABLE();
 
-	// PS2 clock
-	GPIO_InitTypeDef GPIO_Init_Structure;
-	GPIO_Init_Structure.Mode = GPIO_MODE_IT_RISING;
-	GPIO_Init_Structure.Speed = GPIO_SPEED_FREQ_HIGH;
-	GPIO_Init_Structure.Pull = GPIO_PULLUP;
-	GPIO_Init_Structure.Pin = GPIO_PIN_2;
-	HAL_GPIO_Init (GPIOG, &GPIO_Init_Structure);
+  // PS2 clock
+  GPIO_InitTypeDef GPIO_Init_Structure;
+  GPIO_Init_Structure.Mode = GPIO_MODE_IT_RISING;
+  GPIO_Init_Structure.Speed = GPIO_SPEED_FREQ_HIGH;
+  GPIO_Init_Structure.Pull = GPIO_PULLUP;
+  GPIO_Init_Structure.Pin = GPIO_PIN_2;
+  HAL_GPIO_Init (GPIOG, &GPIO_Init_Structure);
 
-	// PS2 data
-	GPIO_Init_Structure.Mode = GPIO_MODE_OUTPUT_OD;
-	GPIO_Init_Structure.Speed = GPIO_SPEED_FREQ_HIGH;
-	GPIO_Init_Structure.Pull = GPIO_PULLUP;
-	GPIO_Init_Structure.Pin = GPIO_PIN_3;
-	HAL_GPIO_Init (GPIOG, &GPIO_Init_Structure);
+  // PS2 data
+  GPIO_Init_Structure.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_Init_Structure.Speed = GPIO_SPEED_FREQ_HIGH;
+  GPIO_Init_Structure.Pull = GPIO_PULLUP;
+  GPIO_Init_Structure.Pin = GPIO_PIN_3;
+  HAL_GPIO_Init (GPIOG, &GPIO_Init_Structure);
 
-	// Enable and set EXTI line 2 Interrupt to the lowest priority
-	HAL_NVIC_SetPriority (EXTI2_IRQn, 2, 0);
-	HAL_NVIC_EnableIRQ (EXTI2_IRQn);
+  // Enable and set EXTI line 2 Interrupt to the lowest priority
+  HAL_NVIC_SetPriority (EXTI2_IRQn, 2, 0);
+  HAL_NVIC_EnableIRQ (EXTI2_IRQn);
 
-	HAL_GPIO_WritePin (GPIOG, GPIO_PIN_2, GPIO_PIN_SET);
-	HAL_GPIO_WritePin (GPIOG, GPIO_PIN_3, GPIO_PIN_SET);
-	HAL_Delay (100);
-	}
+  HAL_GPIO_WritePin (GPIOG, GPIO_PIN_2, GPIO_PIN_SET);
+  HAL_GPIO_WritePin (GPIOG, GPIO_PIN_3, GPIO_PIN_SET);
+  HAL_Delay (100);
+  }
 //}}}
 //{{{
 void initPs2keyboard() {
 
-	ps2send (0xFF);
-	if (ps2get() != 0xAA)
-		lcd->info ("initPs2keyboard - missing 0xAA reset");
+  ps2send (0xFF);
+  if (ps2get() != 0xAA)
+    lcd->info ("initPs2keyboard - missing 0xAA reset");
 
-	for (int i = 0; i < 8; i++) {
-		ps2send (0xED); // send leds
-		ps2send (i);
-		HAL_Delay (100);
-		}
+  for (int i = 0; i < 8; i++) {
+    ps2send (0xED); // send leds
+    ps2send (i);
+    HAL_Delay (100);
+    }
 
-	ps2send (0x0F2); // sendId
-	lcd->info ("keyboard id " + hex (ps2get()) + hex(ps2get()));
-	}
+  ps2send (0x0F2); // sendId
+  lcd->info ("keyboard id " + hex (ps2get()) + hex(ps2get()));
+  }
 //}}}
 //{{{
 void initPs2touchpad() {
 
-	ps2send (0xFF);  // Touchpad reset
-	if (ps2get() != 0xAA)
-		lcd->info ("initPs2touchpad - missing 0xAA reset");
-	if (ps2get() != 0x00)
-		lcd->info ("initPs2touchpad - missing 0x00 reset");
+  ps2send (0xFF);  // Touchpad reset
+  if (ps2get() != 0xAA)
+    lcd->info ("initPs2touchpad - missing 0xAA reset");
+  if (ps2get() != 0x00)
+    lcd->info ("initPs2touchpad - missing 0x00 reset");
 
-	//ps2sendTouchpadSpecialCommand (0x00);
-	//ps2send (0xE9); // touchpad statusRequest prefixed by specialCommand
-	//auto minor = ps2get();
-	//ps2get();  // 0x47
-	//auto major = ps2get();
-	//lcd->info ("Identify " + hex (major & 0x0F) + "." + hex (minor) + " modelCode:" + hex (major >> 4));
+  //ps2sendTouchpadSpecialCommand (0x00);
+  //ps2send (0xE9); // touchpad statusRequest prefixed by specialCommand
+  //auto minor = ps2get();
+  //ps2get();  // 0x47
+  //auto major = ps2get();
+  //lcd->info ("Identify " + hex (major & 0x0F) + "." + hex (minor) + " modelCode:" + hex (major >> 4));
 
-	//ps2sendTouchpadSpecialCommand (0x02);
-	//ps2send (0xE9); // touchpad statusRequest prefixed by specialCommand
-	//auto capMsb = ps2get();
-	//ps2get();  // 0x47
-	//auto capLsb = PS2get();
-	//lcd->info ("Capabilities " + hex ((capMsb << 8) | capLsb));
+  //ps2sendTouchpadSpecialCommand (0x02);
+  //ps2send (0xE9); // touchpad statusRequest prefixed by specialCommand
+  //auto capMsb = ps2get();
+  //ps2get();  // 0x47
+  //auto capLsb = PS2get();
+  //lcd->info ("Capabilities " + hex ((capMsb << 8) | capLsb));
 
-	//ps2sendTouchpadSpecialCommand (0x03);
-	//ps2send (0xE9); // touchpad statusRequest prefixed by specialCommand
-	//ps2send modelId1 = ps2get();
-	//auto modelId2 = ps2get();
-	//auto modelId3 = ps2get();
-	//lcd->info ("ModelId " + hex ((modelId1 << 16) | (modelId2 << 8) | modelId3));
+  //ps2sendTouchpadSpecialCommand (0x03);
+  //ps2send (0xE9); // touchpad statusRequest prefixed by specialCommand
+  //ps2send modelId1 = ps2get();
+  //auto modelId2 = ps2get();
+  //auto modelId3 = ps2get();
+  //lcd->info ("ModelId " + hex ((modelId1 << 16) | (modelId2 << 8) | modelId3));
 
-	ps2sendTouchpadSpecialCommand (0x80);
-	ps2send (0xF3); // touchpad setSampleRate prefixed by specialCommand
-	ps2send (0x14); // - setSampleRate = 20
+  ps2sendTouchpadSpecialCommand (0x80);
+  ps2send (0xF3); // touchpad setSampleRate prefixed by specialCommand
+  ps2send (0x14); // - setSampleRate = 20
 
-	ps2send (0xF4); // touchpad enable streaming
-	}
+  ps2send (0xF4); // touchpad enable streaming
+  }
 //}}}
 //}}}
 //{{{  Sd
@@ -2950,229 +3149,229 @@ extern "C" { void DMA2_Stream6_IRQHandler() { HAL_DMA_IRQHandler (uSdHandle.hdma
 //{{{
 uint8_t SD_Init() {
 
-	uSdHandle.Instance = SDIO;
-	uSdHandle.Init.ClockEdge           = SDIO_CLOCK_EDGE_RISING;
-	uSdHandle.Init.ClockBypass         = SDIO_CLOCK_BYPASS_DISABLE;  // SDIO_CLOCK_BYPASS_ENABLE;
-	uSdHandle.Init.ClockPowerSave      = SDIO_CLOCK_POWER_SAVE_DISABLE;
-	uSdHandle.Init.BusWide             = SDIO_BUS_WIDE_1B;
-	uSdHandle.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
-	uSdHandle.Init.ClockDiv            = 0;
+  uSdHandle.Instance = SDIO;
+  uSdHandle.Init.ClockEdge           = SDIO_CLOCK_EDGE_RISING;
+  uSdHandle.Init.ClockBypass         = SDIO_CLOCK_BYPASS_DISABLE;  // SDIO_CLOCK_BYPASS_ENABLE;
+  uSdHandle.Init.ClockPowerSave      = SDIO_CLOCK_POWER_SAVE_DISABLE;
+  uSdHandle.Init.BusWide             = SDIO_BUS_WIDE_1B;
+  uSdHandle.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
+  uSdHandle.Init.ClockDiv            = 0;
 
-	__HAL_RCC_SDIO_CLK_ENABLE();
-	__HAL_RCC_DMA2_CLK_ENABLE();
-	__HAL_RCC_GPIOC_CLK_ENABLE();
-	__HAL_RCC_GPIOD_CLK_ENABLE();
-	//{{{  gpio init
-	// sdPresent init - PC6
-	GPIO_InitTypeDef gpio_init_structure;
-	gpio_init_structure.Pin = GPIO_PIN_6;
-	gpio_init_structure.Mode = GPIO_MODE_INPUT;
-	gpio_init_structure.Pull = GPIO_PULLUP;
-	gpio_init_structure.Speed = GPIO_SPEED_FREQ_HIGH;
-	HAL_GPIO_Init (GPIOC, &gpio_init_structure);
+  __HAL_RCC_SDIO_CLK_ENABLE();
+  __HAL_RCC_DMA2_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  //{{{  gpio init
+  // sdPresent init - PC6
+  GPIO_InitTypeDef gpio_init_structure;
+  gpio_init_structure.Pin = GPIO_PIN_6;
+  gpio_init_structure.Mode = GPIO_MODE_INPUT;
+  gpio_init_structure.Pull = GPIO_PULLUP;
+  gpio_init_structure.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init (GPIOC, &gpio_init_structure);
 
-	// SDIO D0..D3 - PC8..PC11
-	gpio_init_structure.Pin = GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11;
-	gpio_init_structure.Mode = GPIO_MODE_AF_PP;
-	gpio_init_structure.Alternate = GPIO_AF12_SDIO;
-	HAL_GPIO_Init (GPIOC, &gpio_init_structure);
+  // SDIO D0..D3 - PC8..PC11
+  gpio_init_structure.Pin = GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11;
+  gpio_init_structure.Mode = GPIO_MODE_AF_PP;
+  gpio_init_structure.Alternate = GPIO_AF12_SDIO;
+  HAL_GPIO_Init (GPIOC, &gpio_init_structure);
 
-	// SDIO CMD - PD2
-	gpio_init_structure.Pin = GPIO_PIN_2;
-	HAL_GPIO_Init (GPIOD, &gpio_init_structure);
+  // SDIO CMD - PD2
+  gpio_init_structure.Pin = GPIO_PIN_2;
+  HAL_GPIO_Init (GPIOD, &gpio_init_structure);
 
-	// SDIO CLK - PC12
-	gpio_init_structure.Pin = GPIO_PIN_12;
-	//gpio_init_structure.Pull = GPIO_NOPULL;
-	gpio_init_structure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	HAL_GPIO_Init (GPIOC, &gpio_init_structure);
-	//}}}
-	//{{{  DMA rx parameters
-	dmaRxHandle.Instance                 = DMA2_Stream3;
-	dmaRxHandle.Init.Channel             = DMA_CHANNEL_4;
-	dmaRxHandle.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-	dmaRxHandle.Init.PeriphInc           = DMA_PINC_DISABLE;
-	dmaRxHandle.Init.MemInc              = DMA_MINC_ENABLE;
-	dmaRxHandle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-	dmaRxHandle.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
-	dmaRxHandle.Init.Mode                = DMA_PFCTRL;
-	dmaRxHandle.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
-	dmaRxHandle.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
-	dmaRxHandle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-	dmaRxHandle.Init.MemBurst            = DMA_MBURST_INC4;
-	dmaRxHandle.Init.PeriphBurst         = DMA_PBURST_INC4;
-	__HAL_LINKDMA (&uSdHandle, hdmarx, dmaRxHandle);
-	HAL_DMA_DeInit (&dmaRxHandle);
-	HAL_DMA_Init (&dmaRxHandle);
-	//}}}
-	//{{{  DMA tx parameters
-	dmaTxHandle.Instance                 = DMA2_Stream6;
-	dmaTxHandle.Init.Channel             = DMA_CHANNEL_4;
-	dmaTxHandle.Init.Direction           = DMA_MEMORY_TO_PERIPH;
-	dmaTxHandle.Init.PeriphInc           = DMA_PINC_DISABLE;
-	dmaTxHandle.Init.MemInc              = DMA_MINC_ENABLE;
-	dmaTxHandle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-	dmaTxHandle.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
-	dmaTxHandle.Init.Mode                = DMA_PFCTRL;
-	dmaTxHandle.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
-	dmaTxHandle.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
-	dmaTxHandle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-	dmaTxHandle.Init.MemBurst            = DMA_MBURST_INC4;
-	dmaTxHandle.Init.PeriphBurst         = DMA_PBURST_INC4;
+  // SDIO CLK - PC12
+  gpio_init_structure.Pin = GPIO_PIN_12;
+  //gpio_init_structure.Pull = GPIO_NOPULL;
+  gpio_init_structure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init (GPIOC, &gpio_init_structure);
+  //}}}
+  //{{{  DMA rx parameters
+  dmaRxHandle.Instance                 = DMA2_Stream3;
+  dmaRxHandle.Init.Channel             = DMA_CHANNEL_4;
+  dmaRxHandle.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+  dmaRxHandle.Init.PeriphInc           = DMA_PINC_DISABLE;
+  dmaRxHandle.Init.MemInc              = DMA_MINC_ENABLE;
+  dmaRxHandle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+  dmaRxHandle.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
+  dmaRxHandle.Init.Mode                = DMA_PFCTRL;
+  dmaRxHandle.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
+  dmaRxHandle.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
+  dmaRxHandle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+  dmaRxHandle.Init.MemBurst            = DMA_MBURST_INC4;
+  dmaRxHandle.Init.PeriphBurst         = DMA_PBURST_INC4;
+  __HAL_LINKDMA (&uSdHandle, hdmarx, dmaRxHandle);
+  HAL_DMA_DeInit (&dmaRxHandle);
+  HAL_DMA_Init (&dmaRxHandle);
+  //}}}
+  //{{{  DMA tx parameters
+  dmaTxHandle.Instance                 = DMA2_Stream6;
+  dmaTxHandle.Init.Channel             = DMA_CHANNEL_4;
+  dmaTxHandle.Init.Direction           = DMA_MEMORY_TO_PERIPH;
+  dmaTxHandle.Init.PeriphInc           = DMA_PINC_DISABLE;
+  dmaTxHandle.Init.MemInc              = DMA_MINC_ENABLE;
+  dmaTxHandle.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+  dmaTxHandle.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
+  dmaTxHandle.Init.Mode                = DMA_PFCTRL;
+  dmaTxHandle.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
+  dmaTxHandle.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
+  dmaTxHandle.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+  dmaTxHandle.Init.MemBurst            = DMA_MBURST_INC4;
+  dmaTxHandle.Init.PeriphBurst         = DMA_PBURST_INC4;
 
-	__HAL_LINKDMA (&uSdHandle, hdmatx, dmaTxHandle);
-	HAL_DMA_DeInit (&dmaTxHandle);
-	HAL_DMA_Init (&dmaTxHandle);
-	//}}}
+  __HAL_LINKDMA (&uSdHandle, hdmatx, dmaTxHandle);
+  HAL_DMA_DeInit (&dmaTxHandle);
+  HAL_DMA_Init (&dmaTxHandle);
+  //}}}
 
-	HAL_NVIC_SetPriority (DMA2_Stream3_IRQn, 6, 0);
-	HAL_NVIC_EnableIRQ (DMA2_Stream3_IRQn);
-	HAL_NVIC_SetPriority (DMA2_Stream6_IRQn, 6, 0);
-	HAL_NVIC_EnableIRQ (DMA2_Stream6_IRQn);
+  HAL_NVIC_SetPriority (DMA2_Stream3_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ (DMA2_Stream3_IRQn);
+  HAL_NVIC_SetPriority (DMA2_Stream6_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ (DMA2_Stream6_IRQn);
 
-	HAL_NVIC_SetPriority (SDIO_IRQn, 5, 0);
-	HAL_NVIC_EnableIRQ (SDIO_IRQn);
+  HAL_NVIC_SetPriority (SDIO_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ (SDIO_IRQn);
 
-	// HAL SD initialization
-	if (HAL_SD_Init (&uSdHandle, &uSdCardInfo) != SD_OK)
-		return MSD_ERROR;
-	if (HAL_SD_WideBusOperation_Config (&uSdHandle, SDIO_BUS_WIDE_4B) != SD_OK)
-		return MSD_ERROR;
+  // HAL SD initialization
+  if (HAL_SD_Init (&uSdHandle, &uSdCardInfo) != SD_OK)
+    return MSD_ERROR;
+  if (HAL_SD_WideBusOperation_Config (&uSdHandle, SDIO_BUS_WIDE_4B) != SD_OK)
+    return MSD_ERROR;
 
-	//if (HAL_SD_HighSpeed (&uSdHandle) == SD_OK)
-	return MSD_OK;
-	}
+  //if (HAL_SD_HighSpeed (&uSdHandle) == SD_OK)
+  return MSD_OK;
+  }
 //}}}
 //{{{
 uint8_t SD_ITConfig() {
 
-	//GPIO_InitTypeDef gpio_init_structure;
-	//gpio_init_structure.Pin = SD_DETECT_PIN;
-	//gpio_init_structure.Pull = GPIO_PULLUP;
-	//gpio_init_structure.Speed = GPIO_SPEED_FAST;
-	//gpio_init_structure.Mode = GPIO_MODE_IT_RISING_FALLING;
-	//HAL_GPIO_Init (SD_DETECT_GPIO_PORT, &gpio_init_structure);
+  //GPIO_InitTypeDef gpio_init_structure;
+  //gpio_init_structure.Pin = SD_DETECT_PIN;
+  //gpio_init_structure.Pull = GPIO_PULLUP;
+  //gpio_init_structure.Speed = GPIO_SPEED_FAST;
+  //gpio_init_structure.Mode = GPIO_MODE_IT_RISING_FALLING;
+  //HAL_GPIO_Init (SD_DETECT_GPIO_PORT, &gpio_init_structure);
 
-	// Enable and set SD detect EXTI Interrupt to the lowest priority */
-	//HAL_NVIC_SetPriority ((IRQn_Type)(SD_DETECT_EXTI_IRQn), 0x0F, 0x00);
-	//HAL_NVIC_EnableIRQ ((IRQn_Type)(SD_DETECT_EXTI_IRQn));
+  // Enable and set SD detect EXTI Interrupt to the lowest priority */
+  //HAL_NVIC_SetPriority ((IRQn_Type)(SD_DETECT_EXTI_IRQn), 0x0F, 0x00);
+  //HAL_NVIC_EnableIRQ ((IRQn_Type)(SD_DETECT_EXTI_IRQn));
 
-	return MSD_OK;
-	}
+  return MSD_OK;
+  }
 //}}}
 
 //{{{
 bool SD_present() {
-	return !(GPIOC->IDR & GPIO_PIN_6);
-	}
+  return !(GPIOC->IDR & GPIO_PIN_6);
+  }
 //}}}
 //{{{
 int8_t SD_IsReady() {
-	return (SD_present() && (HAL_SD_GetStatus (&uSdHandle) == SD_TRANSFER_OK)) ? 0 : -1;
-	}
+  return (SD_present() && (HAL_SD_GetStatus (&uSdHandle) == SD_TRANSFER_OK)) ? 0 : -1;
+  }
 //}}}
 //{{{
 int8_t SD_GetCapacity (uint32_t* block_num, uint16_t* block_size) {
 
-	if (SD_present()) {
-		HAL_SD_CardInfoTypedef info;
-		HAL_SD_Get_CardInfo (&uSdHandle, &info);
-		*block_num = (info.CardCapacity) / 512 - 1;
-		*block_size = 512;
-		return 0;
-		}
+  if (SD_present()) {
+    HAL_SD_CardInfoTypedef info;
+    HAL_SD_Get_CardInfo (&uSdHandle, &info);
+    *block_num = (info.CardCapacity) / 512 - 1;
+    *block_size = 512;
+    return 0;
+    }
 
-	return -1;
-	}
+  return -1;
+  }
 //}}}
 
 //{{{
 HAL_SD_TransferStateTypedef SD_GetStatus() {
-	return HAL_SD_GetStatus (&uSdHandle);
-	}
+  return HAL_SD_GetStatus (&uSdHandle);
+  }
 //}}}
 //{{{
 void SD_GetCardInfo (HAL_SD_CardInfoTypedef* CardInfo) {
-	HAL_SD_Get_CardInfo (&uSdHandle, CardInfo);
-	}
+  HAL_SD_Get_CardInfo (&uSdHandle, CardInfo);
+  }
 //}}}
 //{{{
 std::string SD_info() {
-	return "r:" + dec (mReadHits) + ":" + dec (mReads) + ":"  + dec (mReadBlock + mReadMultipleLen) +
-				 " w:" + dec (mWrites);
-	}
+  return "r:" + dec (mReadHits) + ":" + dec (mReads) + ":"  + dec (mReadBlock + mReadMultipleLen) +
+         " w:" + dec (mWrites);
+  }
 //}}}
 
 //{{{
 uint8_t SD_Read (uint8_t* buf, uint32_t blk_addr, uint16_t blocks) {
 
-	uint32_t tmp = (uint32_t)buf;
+  uint32_t tmp = (uint32_t)buf;
 
-	auto result = HAL_SD_ReadBlocks_DMA (&uSdHandle, (uint32_t*)buf, blk_addr * 512, 512, blocks);
-	if (result != SD_OK) {
-		lcd->debug ("HAL_SD_ReadBlocks_DMA:" + hex (tmp) + " " + dec (blk_addr) + " num:" + dec (blocks) +  dec (result));
-		return MSD_ERROR;
-		}
+  auto result = HAL_SD_ReadBlocks_DMA (&uSdHandle, (uint32_t*)buf, blk_addr * 512, 512, blocks);
+  if (result != SD_OK) {
+    lcd->debug ("HAL_SD_ReadBlocks_DMA:" + hex (tmp) + " " + dec (blk_addr) + " num:" + dec (blocks) +  dec (result));
+    return MSD_ERROR;
+    }
 
-	result = HAL_SD_CheckReadOperation (&uSdHandle, 500);
-	if (result != SD_OK) {
-		lcd->debug ("HAL_SD_CheckReadOperation:" + hex (tmp) + " " + dec (blk_addr) + " num:" + dec (blocks) +  dec (result));
-		return MSD_ERROR;
-		}
-	//SCB_InvalidateDCache_by_Addr ((uint32_t*)((uint32_t)buf & 0xFFFFFFE0), (blocks * 512) + 32);
+  result = HAL_SD_CheckReadOperation (&uSdHandle, 500);
+  if (result != SD_OK) {
+    lcd->debug ("HAL_SD_CheckReadOperation:" + hex (tmp) + " " + dec (blk_addr) + " num:" + dec (blocks) +  dec (result));
+    return MSD_ERROR;
+    }
+  //SCB_InvalidateDCache_by_Addr ((uint32_t*)((uint32_t)buf & 0xFFFFFFE0), (blocks * 512) + 32);
 
-	return MSD_OK;
-	}
+  return MSD_OK;
+  }
 //}}}
 //{{{
 uint8_t SD_Write (uint8_t* buf, uint32_t blk_addr, uint16_t blocks) {
 
-	//if (HAL_SD_WriteBlocks (&uSdHandle, (uint32_t*)buf, blk_addr * 512, blocks) != SD_OK)
-	//  return MSD_ERROR;
-	//can't remove ?
-	HAL_SD_CheckWriteOperation (&uSdHandle, 0xFFFFFFFF);
+  //if (HAL_SD_WriteBlocks (&uSdHandle, (uint32_t*)buf, blk_addr * 512, blocks) != SD_OK)
+  //  return MSD_ERROR;
+  //can't remove ?
+  HAL_SD_CheckWriteOperation (&uSdHandle, 0xFFFFFFFF);
 
-	return MSD_OK;
-	}
+  return MSD_OK;
+  }
 //}}}
 //{{{
 int8_t SD_ReadCached (uint8_t* buf, uint32_t blk_addr, uint16_t blocks) {
 
-	return SD_Read (buf, blk_addr, blocks);
-	}
+  return SD_Read (buf, blk_addr, blocks);
+  }
 //}}}
 //{{{
 int8_t SD_WriteCached (uint8_t* buf, uint32_t blk_addr, uint16_t blocks) {
 
-	if (SD_present()) {
-		mWrites++;
-		SD_Write (buf, blk_addr, blocks);
+  if (SD_present()) {
+    mWrites++;
+    SD_Write (buf, blk_addr, blocks);
 
-		mReadCacheBlock = 0xFFFFFFF0;
-		if (blk_addr != mWriteBlock + mWriteMultipleLen) {
-			if (mWriteMultipleLen) {
-				// flush pending multiple
-				//cLcd::debug ("wm:" + dec (mWriteBlock) + "::" + dec (mWriteMultipleLen));
-				mWriteMultipleLen = 0;
-				}
-			mWriteBlock = blk_addr;
-			}
-		mWriteMultipleLen += blocks;
+    mReadCacheBlock = 0xFFFFFFF0;
+    if (blk_addr != mWriteBlock + mWriteMultipleLen) {
+      if (mWriteMultipleLen) {
+        // flush pending multiple
+        //cLcd::debug ("wm:" + dec (mWriteBlock) + "::" + dec (mWriteMultipleLen));
+        mWriteMultipleLen = 0;
+        }
+      mWriteBlock = blk_addr;
+      }
+    mWriteMultipleLen += blocks;
 
-		return 0;
-		}
+    return 0;
+    }
 
-	return -1;
-	}
+  return -1;
+  }
 //}}}
 
 //{{{
 uint8_t SD_Erase (uint64_t StartAddr, uint64_t EndAddr) {
-	if (HAL_SD_Erase (&uSdHandle, StartAddr, EndAddr) != SD_OK)
-		return MSD_ERROR;
-	else
-		return MSD_OK;
-	}
+  if (HAL_SD_Erase (&uSdHandle, StartAddr, EndAddr) != SD_OK)
+    return MSD_ERROR;
+  else
+    return MSD_OK;
+  }
 //}}}
 
 // diskio
@@ -3180,223 +3379,221 @@ static volatile DSTATUS Stat = STA_NOINIT;
 //{{{
 DSTATUS diskInitialize() {
 
-	return SD_GetStatus() == SD_TRANSFER_OK ? 0 : STA_NOINIT;
-	}
+  return SD_GetStatus() == SD_TRANSFER_OK ? 0 : STA_NOINIT;
+  }
 //}}}
 
 //{{{
 DSTATUS diskStatus() {
 
-	return SD_GetStatus() == SD_TRANSFER_OK ? 0 : STA_NOINIT;
-	}
+  return SD_GetStatus() == SD_TRANSFER_OK ? 0 : STA_NOINIT;
+  }
 //}}}
 //{{{
 DRESULT diskIoctl (BYTE cmd, void* buff) {
 
-	DRESULT res = RES_ERROR;
+  DRESULT res = RES_ERROR;
 
-	switch (cmd) {
-		// Make sure that no pending write process
-		case CTRL_SYNC :
-			res = RES_OK;
-			break;
+  switch (cmd) {
+    // Make sure that no pending write process
+    case CTRL_SYNC :
+      res = RES_OK;
+      break;
 
-		// Get number of sectors on the disk (DWORD)
-		case GET_SECTOR_COUNT : {
-			HAL_SD_CardInfoTypedef CardInfo;
-			SD_GetCardInfo (&CardInfo);
-			*(DWORD*)buff = CardInfo.CardCapacity / SECTOR_SIZE;
-			res = RES_OK;
-			break;
-			}
+    // Get number of sectors on the disk (DWORD)
+    case GET_SECTOR_COUNT : {
+      HAL_SD_CardInfoTypedef CardInfo;
+      SD_GetCardInfo (&CardInfo);
+      *(DWORD*)buff = CardInfo.CardCapacity / SECTOR_SIZE;
+      res = RES_OK;
+      break;
+      }
 
-		// Get R/W sector size (WORD)
-		case GET_SECTOR_SIZE :
-			*(WORD*)buff = SECTOR_SIZE;
-			res = RES_OK;
-			break;
+    // Get R/W sector size (WORD)
+    case GET_SECTOR_SIZE :
+      *(WORD*)buff = SECTOR_SIZE;
+      res = RES_OK;
+      break;
 
-		// Get erase block size in unit of sector (DWORD)
-		case GET_BLOCK_SIZE :
-			*(DWORD*)buff = SECTOR_SIZE;
-			res = RES_OK;
-			break;
+    // Get erase block size in unit of sector (DWORD)
+    case GET_BLOCK_SIZE :
+      *(DWORD*)buff = SECTOR_SIZE;
+      res = RES_OK;
+      break;
 
-		default:
-			res = RES_PARERR;
-		}
+    default:
+      res = RES_PARERR;
+    }
 
-	return res;
-	}
+  return res;
+  }
 //}}}
 
 //{{{
 DRESULT diskRead (BYTE* buffer, DWORD sector, UINT count) {
 
-	if ((uint32_t)buffer & 0x03) {
-		lcd->info ("diskRead align b:" + hex ((int)buffer) + " sec:" + dec (sector) + " num:" + dec (count));
+  if ((uint32_t)buffer & 0x03) {
+    lcd->info ("diskRead align b:" + hex ((int)buffer) + " sec:" + dec (sector) + " num:" + dec (count));
 
-		// not 32bit aligned, dma fails,
-		auto tempBuffer = (uint8_t*)pvPortMalloc (count * SECTOR_SIZE);
+    // not 32bit aligned, dma fails,
+    auto tempBuffer = (uint8_t*)pvPortMalloc (count * SECTOR_SIZE);
 
-		// read into 32bit aligned tempBuffer
-		auto result = SD_ReadCached (tempBuffer, sector, count) == MSD_OK ? RES_OK : RES_ERROR;
-		memcpy (buffer, tempBuffer, count * SECTOR_SIZE);
+    // read into 32bit aligned tempBuffer
+    auto result = SD_ReadCached (tempBuffer, sector, count) == MSD_OK ? RES_OK : RES_ERROR;
+    memcpy (buffer, tempBuffer, count * SECTOR_SIZE);
 
-		vPortFree (tempBuffer);
-		return result;
-		}
+    vPortFree (tempBuffer);
+    return result;
+    }
 
-	else {
-		//lcd->info ("diskRead - sec:" + dec (sector) + " num:" + dec (count));
-		return SD_ReadCached ((uint8_t*)buffer, sector, count) == MSD_OK ? RES_OK : RES_ERROR;
-		}
-	}
+  else {
+    //lcd->info ("diskRead - sec:" + dec (sector) + " num:" + dec (count));
+    return SD_ReadCached ((uint8_t*)buffer, sector, count) == MSD_OK ? RES_OK : RES_ERROR;
+    }
+  }
 //}}}
 //{{{
 DRESULT diskWrite (const BYTE* buffer, DWORD sector, UINT count) {
-	return SD_WriteCached ((uint8_t*)buffer, (uint64_t)(sector * SECTOR_SIZE), count) == MSD_OK ? RES_OK : RES_ERROR;
-	}
+  return SD_WriteCached ((uint8_t*)buffer, (uint64_t)(sector * SECTOR_SIZE), count) == MSD_OK ? RES_OK : RES_ERROR;
+  }
 //}}}
 //}}}
 
-#include "resize.h"
 std::vector<std::string> mFileNames;
 //{{{
 void listDirectory (std::string directoryName, std::string ext) {
 
-	//lcd->info ("dir " + directoryName);
-	//lcd->render();
+  //lcd->info ("dir " + directoryName);
+  //lcd->render();
 
-	cDirectory directory (directoryName);
-	if (directory.getError()) {
-		//{{{  open error
-		lcd->info (COL_RED, "directory open error:"  + dec (directory.getError()));
-		return;
-		}
-		//}}}
+  cDirectory directory (directoryName);
+  if (directory.getError()) {
+    //{{{  open error
+    lcd->info (COL_RED, "directory open error:"  + dec (directory.getError()));
+    return;
+    }
+    //}}}
 
-	cFileInfo fileInfo;
-	while ((directory.find (fileInfo) == FR_OK) && !fileInfo.getEmpty()) {
-		if (fileInfo.getBack()) {
-			//debug (fileInfo.getName());
-			}
+  cFileInfo fileInfo;
+  while ((directory.find (fileInfo) == FR_OK) && !fileInfo.getEmpty()) {
+    if (fileInfo.getBack()) {
+      //debug (fileInfo.getName());
+      }
 
-		else if (fileInfo.isDirectory()) {
-			listDirectory (directoryName + "/" + fileInfo.getName(), ext);
-			}
-		else if (fileInfo.matchExtension (ext.c_str())) {
-			mFileNames.push_back (directoryName + "/" + fileInfo.getName());
-			//lcd->info (fileInfo.getName());
-			//lcd->render();
-			}
-		}
-	}
+    else if (fileInfo.isDirectory()) {
+      listDirectory (directoryName + "/" + fileInfo.getName(), ext);
+      }
+    else if (fileInfo.matchExtension (ext.c_str())) {
+      mFileNames.push_back (directoryName + "/" + fileInfo.getName());
+      //lcd->info (fileInfo.getName());
+      //lcd->render();
+      }
+    }
+  }
 //}}}
 //{{{
 int main() {
 
-	HAL_Init();
-	SystemClockConfig180();
-	initDebugUart();
-	BSP_PB_Init (BUTTON_KEY, BUTTON_MODE_GPIO);
-	//configureDtrace4();
-	SDRAMgpioInit();
-	SDRAMbank1Init();
-	SDRAMbank2Init();
+  HAL_Init();
+  SystemClockConfig180();
+  initDebugUart();
+  BSP_PB_Init (BUTTON_KEY, BUTTON_MODE_GPIO);
+  //configureDtrace4();
+  SDRAMgpioInit();
+  SDRAMbank1Init();
+  SDRAMbank2Init();
 
-	HeapRegion_t xHeapRegions[] = { {(uint8_t*)SDRAM_BANK2_ADDR + 0x400000, 0x400000 }, { nullptr, 0 } };
-	heapInit (xHeapRegions);
+  HeapRegion_t xHeapRegions[] = { {(uint8_t*)SDRAM_BANK2_ADDR + 0x400000, 0x400000 }, { nullptr, 0 } };
+  heapInit (xHeapRegions);
 
-	// clear frameBuffer
-	memset ((void*)SDRAM_BANK2_ADDR, 0, 0x400000);
+  // clear frameBuffer
+  memset ((void*)SDRAM_BANK2_ADDR, 0, 0x400000);
 
-	lcd = new cLcd (SDRAM_BANK2_ADDR, SDRAM_BANK2_ADDR + 0x200000);
-	const std::string kHello = "built " + std::string(__TIME__) + " on " + std::string(__DATE__);
-	lcd->init ("stm32F429disco test - " + kHello);
-	lcd->displayOn();
-	lcd->render();
+  lcd = new cLcd (SDRAM_BANK2_ADDR, SDRAM_BANK2_ADDR + 0x200000);
+  const std::string kHello = "built " + std::string(__TIME__) + " on " + std::string(__DATE__);
+  lcd->init ("stm32F429disco test - " + kHello);
+  lcd->displayOn();
+  lcd->render();
 
-	if (BSP_PB_GetState (BUTTON_KEY) == GPIO_PIN_SET) {
-		//{{{  ps2
-		initPs2gpio();
-		initPs2touchpad();
-		stream = true;
-		}
-		//}}}
-	else {
-		//{{{  sd
-		if (SD_present()) {
-			int ret = SD_Init();
-			lcd->debug ("SDinit " + dec(ret));
+  if (BSP_PB_GetState (BUTTON_KEY) == GPIO_PIN_SET) {
+    //{{{  ps2
+    initPs2gpio();
+    initPs2touchpad();
+    stream = true;
+    }
+    //}}}
+  else {
+    //{{{  sd
+    if (SD_present()) {
+      int ret = SD_Init();
+      lcd->debug ("SDinit " + dec(ret));
 
-			cFatFs* fatFs = cFatFs::create();
-			if (fatFs->mount() != FR_OK)
-				lcd->debug ("fatFs mount problem");
-			else
-				lcd->debug ("SD label:" + fatFs->getLabel() + " vsn:" + hex (fatFs->getVolumeSerialNumber()) +
-									 " freeSectors:" + dec (fatFs->getFreeSectors()));
-			listDirectory ("", "JPG");
-			}
-		else
-			lcd->debug ("no SD card");
-		}
-		//}}}
+      cFatFs* fatFs = cFatFs::create();
+      if (fatFs->mount() != FR_OK)
+        lcd->debug ("fatFs mount problem");
+      else
+        lcd->debug ("SD label:" + fatFs->getLabel() + " vsn:" + hex (fatFs->getVolumeSerialNumber()) +
+                   " freeSectors:" + dec (fatFs->getFreeSectors()));
+      listDirectory ("", "JPG");
+      }
+    else
+      lcd->debug ("no SD card");
+    }
+    //}}}
 
-	for (auto fileStr : mFileNames) {
-		lcd->info (fileStr);
-		cFile file (fileStr, FA_OPEN_EXISTING | FA_READ);
-		auto buf = (uint8_t*)pvPortMalloc (file.getSize());
-		auto bytesRead = 0;
-		file.read (buf, file.getSize(), bytesRead);
-		lcd->info ("- read");
+  for (auto fileStr : mFileNames) {
+    lcd->info (fileStr);
+    cFile file (fileStr, FA_OPEN_EXISTING | FA_READ);
+    auto buf = (uint8_t*)pvPortMalloc (file.getSize());
+    auto bytesRead = 0;
+    file.read (buf, file.getSize(), bytesRead);
+    lcd->info ("- read");
 
-		cJpegPic* jpeg = new cJpegPic(3, buf);
-		jpeg->readHeader();
-		auto width = jpeg->getWidth();
-		auto height = jpeg->getHeight();
+    cJpegPic* jpeg = new cJpegPic(3, buf);
+    jpeg->readHeader();
+    auto width = jpeg->getWidth();
+    auto height = jpeg->getHeight();
 
-		auto scaleShift = 0;
-		auto scale = 1;
-		while ((scaleShift < 3) &&
-					 ((width / scale > lcd->getLcdWidthPix()) || (height /scale > lcd->getLcdHeightPix()))) {
-			scale *= 2;
-			scaleShift++;
-			}
+    auto scaleShift = 0;
+    auto scale = 1;
+    while ((scaleShift < 3) &&
+           ((width / scale > lcd->getLcdWidthPix()) || (height /scale > lcd->getLcdHeightPix()))) {
+      scale *= 2;
+      scaleShift++;
+      }
 
-		auto out = jpeg->decodeBody (scaleShift);
-		delete (jpeg);
-		vPortFree (buf);
+    auto out = jpeg->decodeBody (scaleShift);
+    delete (jpeg);
+    vPortFree (buf);
 
-		lcd->debug ("- decode " + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + " " + dec(scaleShift));
+    lcd->debug ("- decode " + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + " " + dec(scaleShift));
 
-		lcd->startRender();
-		lcd->clear (COL_BLACK);
-		//lcd->copy (out, 0, 0, width >> scaleShift , height >> scaleShift);
-		lcd->endRender (true);
+    lcd->startRender();
+    lcd->clear (COL_BLACK);
+    //lcd->copy (out, 0, 0, width >> scaleShift , height >> scaleShift);
+    lcd->endRender (true);
 
-		RESIZE_InitTypedef Resize = {
-			(void*)out, width >> scaleShift, DMA2D_INPUT_RGB888, 0, 0, width >> scaleShift, height >> scaleShift,
-			(void*)SDRAM_BANK2_ADDR, 800, DMA2D_RGB565, 0, 0, 800, 1024 };
-		resize (&Resize);
+    cLcd::tSizeParams sizeParams = {
+      (uint32_t)out, width >> scaleShift, DMA2D_INPUT_RGB888, 0, 0, width >> scaleShift, height >> scaleShift,
+      (uint32_t)SDRAM_BANK2_ADDR, 800, DMA2D_RGB565, 0, 0, 800, 1024 };
+    lcd->size (&sizeParams);
+    vPortFree (out);
+    }
 
-		vPortFree (out);
-		}
-
-	while (true) {
-		lcd->startRender();
-		lcd->clear (COL_BLACK);
-		//std::string str = "x:" + dec(touchX) + " y:" + dec(touchY) + " z:" + dec(touchZ);
-		//lcd->text (COL_YELLOW, getFontHeight(), str, 100, 200, lcd->getLcdWidthPix(), getBoxHeight());
-		auto x = lcd->getLcdWidthPix() - ((touchY-1300)/4);
-		auto y = lcd->getLcdHeightPix() - ((touchX-1300)/4);
-		lcd->ellipse (COL_YELLOW, x, y, touchZ, touchZ);
-		lcd->endRender (true);
-		//uint16_t value = PS2get();
-		//char ch = (char)value;
-		//std::string charStr (1, ch);
-		//std::string releaseStr = (value & 0x100) ? " release " : " ";
-		//lcd->info ("key:" + charStr + releaseStr + hex (value));
-		}
-	}
+  while (true) {
+    lcd->startRender();
+    lcd->clear (COL_BLACK);
+    //std::string str = "x:" + dec(touchX) + " y:" + dec(touchY) + " z:" + dec(touchZ);
+    //lcd->text (COL_YELLOW, getFontHeight(), str, 100, 200, lcd->getLcdWidthPix(), getBoxHeight());
+    auto x = lcd->getLcdWidthPix() - ((touchY-1300)/4);
+    auto y = lcd->getLcdHeightPix() - ((touchX-1300)/4);
+    lcd->ellipse (COL_YELLOW, x, y, touchZ, touchZ);
+    lcd->endRender (true);
+    //uint16_t value = PS2get();
+    //char ch = (char)value;
+    //std::string charStr (1, ch);
+    //std::string releaseStr = (value & 0x100) ? " release " : " ";
+    //lcd->info ("key:" + charStr + releaseStr + hex (value));
+    }
+  }
 //}}}
