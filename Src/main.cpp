@@ -1845,7 +1845,7 @@ public:
       }
 
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OMAR); // OMAR - output start address 3c
-    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * dstComponents;
+    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * kDstComponents;
 
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->NLR);
     *mDma2dCurBuf++ = (width << 16) | height;
@@ -1866,9 +1866,11 @@ public:
       }
 
     *mDma2dCurBuf++ = kStamp;
-    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * dstComponents; // output start address
+    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * kDstComponents; // output start address
+
     mDstStride = getLcdWidthPix() - width;
     *mDma2dCurBuf++ = mDstStride;                                          // stride
+
     *mDma2dCurBuf++ = (width << 16) | height;                              // width:height
     *mDma2dCurBuf++ = (uint32_t)src;                                       // fgnd start address
     }
@@ -2100,25 +2102,25 @@ public:
   void copy (tTile* srcTile, int16_t x, int16_t y) {
   // copy
 
-    // src - fgnd
-    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGPFCCR); // FGPFCCR - fgnd PFC
+    // fgnd src
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGPFCCR); // fgnd PFC
     *mDma2dCurBuf++ = srcTile->format;
 
-    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGMAR); // FGMAR - fgnd address
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGMAR); // fgnd address
     *mDma2dCurBuf++ = (uint32_t)srcTile->base;
 
-    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGOR); // FGOR - fgnd stride
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGOR); // fgnd stride
     *mDma2dCurBuf++ = srcTile->pitch - srcTile->width;
 
     // output
-    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OMAR); // OMAR - output start address
-    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * dstComponents;
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OMAR); // output start address
+    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * kDstComponents;
 
     mDstStride = getLcdWidthPix() - srcTile->width;
-    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OOR); // OOR - output stride
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OOR); //  output stride
     *mDma2dCurBuf++ = mDstStride;
 
-    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->NLR); // NLR - width:height
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->NLR); // width:height
     *mDma2dCurBuf++ = (srcTile->width << 16) | srcTile->height;
 
     *mDma2dCurBuf++ = (uint32_t)DMA2D;        // CR
@@ -2128,29 +2130,29 @@ public:
   //{{{
   void copy90 (tTile* srcTile, int16_t x, int16_t y) {
 
-    // src - fgnd
-    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGPFCCR); // FGPFCCR - fgnd PFC
+    // fgnd src
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGPFCCR); // fgnd PFC
     *mDma2dCurBuf++ = srcTile->format;
 
-    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->NLR); // NLR - width:height
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->NLR); // width:height
     *mDma2dCurBuf++ = 0x10000 | (srcTile->width);
 
-    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGOR); // FGOR - fgnd stride
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGOR); // fgnd stride
     *mDma2dCurBuf++ = 0;
 
     // output
     mDstStride = getLcdWidthPix() - 1;
-    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OOR); // OOR - output stride
+    *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OOR); //  output stride
     *mDma2dCurBuf++ = mDstStride;
 
     for (int line = 0; line < srcTile->height; line++) {
-      *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OMAR); // OMAR - output start address
-      *mDma2dCurBuf++ = mCurFrameBufferAddress + (line * dstComponents);
+      *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OMAR); //  output start address
+      *mDma2dCurBuf++ = mCurFrameBufferAddress + (line * kDstComponents);
 
-      *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGMAR); // FGMAR - fgnd address
+      *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGMAR); //  fgnd address
       *mDma2dCurBuf++ = (uint32_t)srcTile->base + (line * srcTile->width * srcTile->components);
 
-      *mDma2dCurBuf++ = (uint32_t)DMA2D;        // CR
+      *mDma2dCurBuf++ = (uint32_t)DMA2D;          // CR
       *mDma2dCurBuf++ = DMA2D_M2M_PFC | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
       }
 
@@ -2158,9 +2160,9 @@ public:
   //}}}
   //{{{
   void size (tTile* srcTile, int16_t x, int16_t y, uint16_t width, uint16_t height) {
-  // do size with 90 rotate
+  // 2 passs size with rotates
 
-    uint32_t tmpBuf = (uint32_t)pvPortMalloc (srcTile->width * height * tmpComponents);
+    uint32_t tempBuf = (uint32_t)pvPortMalloc (srcTile->width * height * kTempComponents);
 
     // first pass
     uint32_t srcBase = srcTile->base + ((srcTile->y * srcTile->pitch) + srcTile->x) * srcTile->components;
@@ -2169,23 +2171,23 @@ public:
     uint16_t srcPitch = srcTile->pitch * srcTile->components;
     uint32_t srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
     uint32_t srcPtr1 = srcPtr + srcPitch;
-    uint32_t dstPtr = tmpBuf;
+    uint32_t dstPtr = tempBuf;
     uint32_t fccr = srcTile->format | ((blendIndex >> 13) << 24);
-    uint16_t dstPitch = tmpComponents;
+    uint16_t dstPitch = kTempComponents;
     mDstStride = height - 1;
 
-    DMA2D->BGPFCCR = 0xff000000 | srcTile->format;
-    DMA2D->OPFCCR = tmpFormat;
-    DMA2D->NLR = 0x10000 | srcTile->width;
     DMA2D->FGOR = 0;
+    DMA2D->BGPFCCR = 0xff000000 | srcTile->format;
     DMA2D->BGOR = 0;
+    DMA2D->OPFCCR = kTempFormat;
     DMA2D->OOR = mDstStride;
+    DMA2D->NLR = 0x10000 | srcTile->width;
     for (int i = 0; i < height; i++) {
-      //{{{  loop lines, src -> tmp
-      DMA2D->BGMAR = srcPtr;
-      DMA2D->FGMAR = srcPtr1;
-      DMA2D->OMAR = dstPtr;
+      //{{{  loop lines, src -> temp
       DMA2D->FGPFCCR = fccr;
+      DMA2D->FGMAR = srcPtr1;
+      DMA2D->BGMAR = srcPtr;
+      DMA2D->OMAR = dstPtr;
 
       DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
 
@@ -2202,34 +2204,32 @@ public:
       //}}}
 
     // second pass
-    srcBase = tmpBuf;
+    srcBase = tempBuf;
     blendCoeff = ((srcTile->width-1) << 21) / width;
     blendIndex = blendCoeff >> 1;
-    srcPitch = height * tmpComponents;
+    srcPitch = height * kTempComponents;
     srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
     srcPtr1 = srcPtr + srcPitch;
-    dstPtr = mCurFrameBufferAddress + (((y * getLcdWidthPix()) + x) * dstComponents);
-    fccr = tmpFormat | ((blendIndex >> 13) << 24);
-    dstPitch = dstComponents;
+    dstPtr = mCurFrameBufferAddress + (((y * getLcdWidthPix()) + x) * kDstComponents);
+    fccr = kTempFormat | ((blendIndex >> 13) << 24);
+    dstPitch = kDstComponents;
     mDstStride = width - 1;
 
-    DMA2D->BGPFCCR = 0xff000000 | tmpFormat;
-    DMA2D->OPFCCR  = dstFormat;
-    DMA2D->NLR = 0x10000 | height;
-    DMA2D->FGOR = 0;
-    DMA2D->BGOR = 0;
+    DMA2D->BGPFCCR = 0xff000000 | kTempFormat;
+    DMA2D->OPFCCR  = kDstFormat;
     DMA2D->OOR = mDstStride;
+    DMA2D->NLR = 0x10000 | height;
     for (int i = 0; i < width; i++) {
-      //{{{  loop columns, tmp -> dst
-      DMA2D->BGMAR = srcPtr;
-      DMA2D->FGMAR = srcPtr1;
-      DMA2D->OMAR = dstPtr;
+      //{{{  loop columns, temp -> dst
       DMA2D->FGPFCCR = fccr;
+      DMA2D->FGMAR = srcPtr1;
+      DMA2D->BGMAR = srcPtr;
+      DMA2D->OMAR = dstPtr;
 
       DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
 
       blendIndex += blendCoeff;
-      fccr = tmpFormat | ((blendIndex >> 13) << 24);
+      fccr = kTempFormat | ((blendIndex >> 13) << 24);
       srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
       srcPtr1 = srcPtr + srcPitch;
       dstPtr += dstPitch;
@@ -2240,7 +2240,7 @@ public:
       }
       //}}}
 
-    vPortFree ((void*)tmpBuf);
+    vPortFree ((void*)tempBuf);
     }
   //}}}
   //{{{
@@ -2249,41 +2249,40 @@ public:
     uint32_t srcIncx = (srcTile->width << 16) / width;
     uint32_t srcIncy = (srcTile->height << 16) / height;
 
-    uint32_t srcy = 0;
-    uint16_t* dstBase = (uint16_t*)(mCurFrameBufferAddress) + (y * getLcdWidthPix()) + x;
-    if (srcTile->format == DMA2D_RGB565) {
+    uint16_t* dstPtr = (uint16_t*)(mCurFrameBufferAddress) + (y * getLcdWidthPix()) + x;
+
+    if (srcTile->components == 2) {
       uint16_t* srcBase = (uint16_t*)(srcTile->base) + (srcTile->y * srcTile->pitch) + srcTile->x;
-      for (int j = 0; j < height; j++) {
-        uint16_t* srcLineBase = srcBase + ((srcy >> 16) * srcTile->pitch);
-        uint16_t* dstPtr = dstBase + (j * getLcdWidthPix());
-        for (uint32_t srcx = 0; srcx < width * srcIncx; srcx += srcIncx)
+      for (uint32_t srcy = (srcTile->y << 16); srcy < ((srcTile->y + height) * srcIncy); srcy += srcIncy) {
+        uint16_t* srcLineBase = srcBase + (srcy >> 16) * srcTile->pitch;
+        for (uint32_t srcx = srcTile->x << 16; srcx < (srcTile->x + width) * srcIncx; srcx += srcIncx)
           *dstPtr++ = *(srcLineBase + (srcx >> 16));
-        srcy += srcIncy;
+        dstPtr += getLcdWidthPix() - width;
         }
       }
+
     else {
       uint8_t* srcBase = (uint8_t*)(srcTile->base + ((srcTile->y * srcTile->pitch) + srcTile->x) * srcTile->components);
-      for (int j = 0; j < height; j++) {
-        uint32_t srcx = 0;
+      for (uint32_t srcy = (srcTile->y << 16); srcy < ((srcTile->y + height) * srcIncy); srcy += srcIncy) {
         uint8_t* srcLineBase = srcBase + ((srcy >> 16) * srcTile->pitch) * srcTile->components;
-        uint16_t* dstPtr = dstBase + (j * getLcdWidthPix());
-        for (int i = 0; i < width; i++) {
+        for (uint32_t srcx = srcTile->x << 16; srcx < (srcTile->x + width) * srcIncx; srcx += srcIncx) {
           uint8_t* srcPtr = srcLineBase + (srcx >> 16) * srcTile->components;
           *dstPtr++ = ((*srcPtr++) >> 3) | (((*srcPtr++) & 0xFC) << 3) | (((*srcPtr) & 0xF8) << 8);
-          srcx += srcIncx;
           }
-        srcy += srcIncy;
+        dstPtr += getLcdWidthPix() - width;
         }
       }
     }
   //}}}
 
 private:
-  const uint32_t dstFormat = DMA2D_RGB565;
-  const uint16_t dstComponents = 2;
-  const uint32_t tmpFormat = DMA2D_RGB565;
-  const uint16_t tmpComponents = 2;
-
+  //{{{  const
+  const uint32_t kLtdcFormat = LTDC_PIXEL_FORMAT_RGB565;
+  const uint32_t kDstFormat = DMA2D_RGB565;
+  const uint16_t kDstComponents = 2;
+  const uint32_t kTempFormat = DMA2D_RGB565;
+  const uint16_t kTempComponents = 2;
+  //}}}
   //{{{
   class cFontChar {
   public:
@@ -2418,7 +2417,7 @@ private:
     curLayerCfg->WindowY0 = 0;
     curLayerCfg->WindowY1 = getLcdHeightPix();
 
-    curLayerCfg->PixelFormat = LTDC_PIXEL_FORMAT_RGB565;
+    curLayerCfg->PixelFormat = kLtdcFormat;
 
     curLayerCfg->FBStartAdress = (uint32_t)frameBufferAddress;
 
@@ -3527,24 +3526,24 @@ int main() {
     auto tRender = HAL_GetTick();
 
     cLcd::tTile srcTile = {(uint32_t)decodedPic, width, DMA2D_RGB565, 2, 0,0, width, height};
-    //cLcd::tTile srcTile = {(uint32_t)piccy, width, DMA2D_RGB888, 3, 0,0, width, height};
     lcd->copy (&srcTile, 0, 0);
     lcd->flush();
     auto tCopy = HAL_GetTick();
+
     lcd->copy90 (&srcTile, 0, 0);
     lcd->flush();
     auto tCopy90 = HAL_GetTick();
-    lcd->sizeCpu (&srcTile, 0, 0, 800, 1280);
+
+    lcd->size (&srcTile, 0, 0, 800, 1024);
     auto tSize = HAL_GetTick();
 
-    lcd->info ("r:" + dec(tRead-t0) +
-               " h:" + dec(tHeader-tRead) +
-               " d:" + dec(tDecode-tHeader) +
+    lcd->sizeCpu (&srcTile, 0, 0, 800, 1280);
+    auto tSizeCpu = HAL_GetTick();
+
+    lcd->info ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " d:" + dec(tDecode-tHeader) +
                " rn:" + dec(tRender-tDecode) +
-               " c:" + dec(tCopy-tRender) +
-               " c90:" + dec(tCopy90-tCopy) +
-               " s:" + dec(tSize-tCopy90)
-               );
+               " c:" + dec(tCopy-tRender) + " c90:" + dec(tCopy90-tCopy) + 
+               " s:" + dec(tSize-tCopy90) + " sc:" + dec(tSizeCpu-tSize));
     vPortFree (decodedPic);
     }
 
