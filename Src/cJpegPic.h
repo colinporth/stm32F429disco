@@ -304,7 +304,7 @@ public:
 class cJpegPic : public iPic {
 public:
   //{{{
-  cJpegPic (uint16_t components, uint8_t* buffer) : mBuffer(buffer), mBufferPtr(buffer), mBytesPerPixel(components)  {
+  cJpegPic (uint16_t components, uint8_t* buffer) : mBuffer(buffer), mBufferPtr(buffer), mComponents(components)  {
 
     memset (mQtable, 0, 4 * sizeof(int32_t));
 
@@ -328,7 +328,7 @@ public:
   // iPic
   virtual uint16_t getWidth() { return mWidth; }
   virtual uint16_t getHeight() { return mHeight; }
-  virtual uint16_t getComponents() { return mBytesPerPixel; }
+  virtual uint16_t getComponents() { return mComponents; }
   virtual uint8_t* getPic() { return mFrameBuffer; }
   virtual void setPic (uint8_t* buffer, int size) {};
 
@@ -415,7 +415,7 @@ public:
     mScaleShift = scaleShift;
     mFrameWidth = mWidth >> scaleShift;
     mFrameHeight = mHeight >> scaleShift;
-    mFrameBuffer = (uint8_t*)bigMalloc (mFrameWidth * mFrameHeight * mBytesPerPixel, "jpegFrame");
+    mFrameBuffer = (uint8_t*)bigMalloc (mFrameWidth * mFrameHeight * mComponents, "jpegFrame");
 
     // Initialize DC values
     mDcValue[0] = 0;
@@ -1308,8 +1308,8 @@ private:
 
       if (mScaleShift == 3) {
         //{{{  1/8 scaling, just use DC value
-        auto dstPtr = mFrameBuffer + ((y * mFrameWidth) + x) * mBytesPerPixel;
-        auto stride = (mFrameWidth - rx) * mBytesPerPixel;
+        auto dstPtr = mFrameBuffer + ((y * mFrameWidth) + x) * mComponents;
+        auto stride = (mFrameWidth - rx) * mComponents;
 
         auto chromaPtr = mMcuBuffer + (mx * my);
         int32_t cb = *chromaPtr - 128;
@@ -1321,17 +1321,17 @@ private:
             lumaPtr += 64 * 2;
           for (uint32_t ix = 0; ix < mx; ix += 8, lumaPtr += 64) {
             // convert YCbCr to BGRA
-            if (mBytesPerPixel == 2) {
+            if (mComponents == 2) {
               *((uint16_t*)dstPtr) =  (kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)] >> 3) |
                                       ((kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)] & 0xFC) << 3) |
                                       ((kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)] & 0xF8) << 8);
-              dstPtr += mBytesPerPixel;
+              dstPtr += mComponents;
               }
             else {
               *dstPtr++ = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
               *dstPtr++ = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
               *dstPtr++ = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
-              if (mBytesPerPixel == 4)
+              if (mComponents == 4)
                 *dstPtr++ = 0xFF;
               }
             }
@@ -1421,19 +1421,19 @@ private:
         //}}}
 
         auto src = mIdctRgbBuffer;
-        auto dstPtr = mFrameBuffer + ((y * mFrameWidth) + x) * mBytesPerPixel;
-        auto stride = (mFrameWidth - rx) * mBytesPerPixel;
+        auto dstPtr = mFrameBuffer + ((y * mFrameWidth) + x) * mComponents;
+        auto stride = (mFrameWidth - rx) * mComponents;
         for (uint32_t j = 0; j < ry; j++, dstPtr += stride)
           for (uint32_t i = 0; i < rx; i++) {
-            if (mBytesPerPixel == 2) {
+            if (mComponents == 2) {
               *((uint16_t*)dstPtr) = ((*src++) >> 3) | (((*src++) & 0xFC) << 3) | (((*src) & 0xF8) << 8);
-              dstPtr += mBytesPerPixel;
+              dstPtr += mComponents;
               }
             else {
               *dstPtr++ = *src++; // B
               *dstPtr++ = *src++; // G
               *dstPtr++ = *src++; // R
-              if (mBytesPerPixel == 4)
+              if (mComponents == 4)
                 *dstPtr++ = 0xFF;
               }
             }
@@ -1442,8 +1442,8 @@ private:
       }
     else {
       //{{{  1/1 scaling
-      auto dstPtr = mFrameBuffer + ((y * mFrameWidth) + x) * mBytesPerPixel;
-      auto stride = (mFrameWidth - rx) * mBytesPerPixel;
+      auto dstPtr = mFrameBuffer + ((y * mFrameWidth) + x) * mComponents;
+      auto stride = (mFrameWidth - rx) * mComponents;
 
       for (uint32_t iy = 0; iy < ry; iy++, dstPtr += stride) {
         auto chromaPtr = mMcuBuffer;
@@ -1472,17 +1472,17 @@ private:
             chromaPtr++;
 
           // convert YCbCr to BGRA
-          if (mBytesPerPixel == 2) {
+          if (mComponents == 2) {
             *((uint16_t*)dstPtr) =  (kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)] >> 3) |
                                    ((kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)] & 0xFC) << 3) |
                                    ((kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)] & 0xF8) << 8);
-            dstPtr += mBytesPerPixel;
+            dstPtr += mComponents;
             }
           else {
             *dstPtr++ = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
             *dstPtr++ = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
             *dstPtr++ = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
-            if (mBytesPerPixel == 4)
+            if (mComponents == 4)
               *dstPtr++ = 0xFF;
             }
           }
@@ -1529,6 +1529,6 @@ private:
   uint32_t mThumbOffset = 0;
   uint32_t mThumbBytes = 0;
 
-  uint16_t mBytesPerPixel;
+  uint16_t mComponents;
   //}}}
   };
