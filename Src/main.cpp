@@ -2243,6 +2243,40 @@ public:
     vPortFree ((void*)tmpBuf);
     }
   //}}}
+  //{{{
+  void sizeCpu (tTile* srcTile, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+
+    uint32_t srcIncx = (srcTile->width << 16) / width;
+    uint32_t srcIncy = (srcTile->height << 16) / height;
+
+    uint32_t srcy = 0;
+    uint16_t* dstBase = (uint16_t*)(mCurFrameBufferAddress) + (y * getLcdWidthPix()) + x;
+    if (srcTile->format == DMA2D_RGB565) {
+      uint16_t* srcBase = (uint16_t*)(srcTile->base) + (srcTile->y * srcTile->pitch) + srcTile->x;
+      for (int j = 0; j < height; j++) {
+        uint16_t* srcLineBase = srcBase + ((srcy >> 16) * srcTile->pitch);
+        uint16_t* dstPtr = dstBase + (j * getLcdWidthPix());
+        for (uint32_t srcx = 0; srcx < width * srcIncx; srcx += srcIncx)
+          *dstPtr++ = *(srcLineBase + (srcx >> 16));
+        srcy += srcIncy;
+        }
+      }
+    else {
+      uint8_t* srcBase = (uint8_t*)(srcTile->base + ((srcTile->y * srcTile->pitch) + srcTile->x) * srcTile->components);
+      for (int j = 0; j < height; j++) {
+        uint32_t srcx = 0;
+        uint8_t* srcLineBase = srcBase + ((srcy >> 16) * srcTile->pitch) * srcTile->components;
+        uint16_t* dstPtr = dstBase + (j * getLcdWidthPix());
+        for (int i = 0; i < width; i++) {
+          uint8_t* srcPtr = srcLineBase + (srcx >> 16) * srcTile->components;
+          *dstPtr++ = ((*srcPtr++) >> 3) | (((*srcPtr++) & 0xFC) << 3) | (((*srcPtr) & 0xF8) << 8);
+          srcx += srcIncx;
+          }
+        srcy += srcIncy;
+        }
+      }
+    }
+  //}}}
 
 private:
   const uint32_t dstFormat = DMA2D_RGB565;
@@ -3460,7 +3494,7 @@ int main() {
     //}}}
     auto tRead = HAL_GetTick();
     //{{{  readHeader, calc scale
-    cJpegPic* jpeg = new cJpegPic(3, buf);
+    cJpegPic* jpeg = new cJpegPic (2, buf);
     jpeg->readHeader();
     auto width = jpeg->getWidth();
     auto height = jpeg->getHeight();
@@ -3479,9 +3513,9 @@ int main() {
     //}}}
     auto tHeader = HAL_GetTick();
 
-    lcd->info (fileStr + " " + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + " " + dec(scaleShift));
+    lcd->info (fileStr + " sz:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + ">>" + dec(scaleShift));
 
-    auto pic888 = jpeg->decodeBody (scaleShift);
+    auto decodedPic = jpeg->decodeBody (scaleShift);
     auto tDecode = HAL_GetTick();
 
     delete (jpeg);
@@ -3492,16 +3526,26 @@ int main() {
     lcd->endRender (true);
     auto tRender = HAL_GetTick();
 
-    cLcd::tTile srcTile = {(uint32_t)pic888, width, DMA2D_RGB888, 3, 0,0, width, height};
+    cLcd::tTile srcTile = {(uint32_t)decodedPic, width, DMA2D_RGB565, 2, 0,0, width, height};
+    //cLcd::tTile srcTile = {(uint32_t)piccy, width, DMA2D_RGB888, 3, 0,0, width, height};
     lcd->copy (&srcTile, 0, 0);
     lcd->flush();
+    auto tCopy = HAL_GetTick();
     lcd->copy90 (&srcTile, 0, 0);
     lcd->flush();
-    lcd->size (&srcTile, 0, 0, 800, 1024);
+    auto tCopy90 = HAL_GetTick();
+    lcd->sizeCpu (&srcTile, 0, 0, 800, 1280);
+    auto tSize = HAL_GetTick();
 
-    lcd->info ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " d:" + dec(tDecode-tHeader) +
-               " rn:" + dec(tRender-tDecode));
-    vPortFree (pic888);
+    lcd->info ("r:" + dec(tRead-t0) +
+               " h:" + dec(tHeader-tRead) +
+               " d:" + dec(tDecode-tHeader) +
+               " rn:" + dec(tRender-tDecode) +
+               " c:" + dec(tCopy-tRender) +
+               " c90:" + dec(tCopy90-tCopy) +
+               " s:" + dec(tSize-tCopy90)
+               );
+    vPortFree (decodedPic);
     }
 
   while (true) {

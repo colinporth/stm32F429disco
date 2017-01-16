@@ -1321,11 +1321,19 @@ private:
             lumaPtr += 64 * 2;
           for (uint32_t ix = 0; ix < mx; ix += 8, lumaPtr += 64) {
             // convert YCbCr to BGRA
-            *dstPtr++ = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
-            *dstPtr++ = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
-            *dstPtr++ = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
-            if (mBytesPerPixel == 4)
-              *dstPtr++ = 0xFF;
+            if (mBytesPerPixel == 2) {
+              *((uint16_t*)dstPtr) =  (kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)] >> 3) |
+                                      ((kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)] & 0xFC) << 3) |
+                                      ((kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)] & 0xF8) << 8);
+              dstPtr += mBytesPerPixel;
+              }
+            else {
+              *dstPtr++ = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
+              *dstPtr++ = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
+              *dstPtr++ = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
+              if (mBytesPerPixel == 4)
+                *dstPtr++ = 0xFF;
+              }
             }
           }
         }
@@ -1417,11 +1425,17 @@ private:
         auto stride = (mFrameWidth - rx) * mBytesPerPixel;
         for (uint32_t j = 0; j < ry; j++, dstPtr += stride)
           for (uint32_t i = 0; i < rx; i++) {
-            *dstPtr++ = *src++; // B
-            *dstPtr++ = *src++; // G
-            *dstPtr++ = *src++; // R
-            if (mBytesPerPixel == 4)
-              *dstPtr++ = 0xFF;
+            if (mBytesPerPixel == 2) {
+              *((uint16_t*)dstPtr) = ((*src++) >> 3) | (((*src++) & 0xFC) << 3) | (((*src) & 0xF8) << 8);
+              dstPtr += mBytesPerPixel;
+              }
+            else {
+              *dstPtr++ = *src++; // B
+              *dstPtr++ = *src++; // G
+              *dstPtr++ = *src++; // R
+              if (mBytesPerPixel == 4)
+                *dstPtr++ = 0xFF;
+              }
             }
         }
         //}}}
@@ -1458,11 +1472,19 @@ private:
             chromaPtr++;
 
           // convert YCbCr to BGRA
-          *dstPtr++ = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
-          *dstPtr++ = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
-          *dstPtr++ = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
-          if (mBytesPerPixel == 4)
-            *dstPtr++ = 0xFF;
+          if (mBytesPerPixel == 2) {
+            *((uint16_t*)dstPtr) =  (kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)] >> 3) |
+                                   ((kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)] & 0xFC) << 3) |
+                                   ((kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)] & 0xF8) << 8);
+            dstPtr += mBytesPerPixel;
+            }
+          else {
+            *dstPtr++ = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
+            *dstPtr++ = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
+            *dstPtr++ = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
+            if (mBytesPerPixel == 4)
+              *dstPtr++ = 0xFF;
+            }
           }
         }
       }
