@@ -1861,8 +1861,8 @@ public:
   //{{{
   void sizeCpu (cTile& srcTile, int16_t x, int16_t y, uint16_t width, uint16_t height) {
 
-    uint32_t xStep16 = (srcTile.mWidth << 16) / width;
-    uint32_t yStep16 = (srcTile.mHeight << 16) / height;
+    uint32_t xStep16 = ((srcTile.mWidth - 1) << 16) / (width - 1);
+    uint32_t yStep16 = ((srcTile.mHeight - 1) << 16) / (height - 1);
 
     uint16_t* dstPtr = (uint16_t*)(mCurFrameBufferAddress) + (y * getWidthPix()) + x;
 
@@ -3512,12 +3512,10 @@ int main() {
     //}}}
     auto tHeader = HAL_GetTick();
 
-    lcd->debug (fileStr + " sz:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + ">>" + dec(scaleShift));
-    auto tRender = HAL_GetTick();
-
+    lcd->info (fileStr + " sz:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + ">>" + dec(scaleShift));
     cLcd::cTile picTile (jpeg->decodeBody (scaleShift, kComponents), kComponents, width, 0,0, width, height);
     if (!picTile.mPiccy)
-      lcd->debug ("no piccy");
+      lcd->debug ("- no piccy");
     delete (jpeg);
     vPortFree (buf);
     auto tDecode = HAL_GetTick();
@@ -3533,11 +3531,10 @@ int main() {
       for (int i = 0; i < 4; i++)
          lcd->sizeCpu (picTile, i*800/4, j*1280/4, 800/4, 1280/4);
     picTile.free();
-
     auto tSize = HAL_GetTick();
 
-    lcd->info ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " dec:" + dec(tDecode-tRender) +
-               " copy:" + dec(tCopy-tDecode) + " c90:" + dec(tCopy90-tCopy) + " size:" + dec(tSize-tCopy90));
+    lcd->debug ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " dec:" + dec(tDecode-tHeader) +
+                " copy:" + dec(tCopy-tDecode) + " c90:" + dec(tCopy90-tCopy) + " size:" + dec(tSize-tCopy90));
     }
 
   while (true) {
