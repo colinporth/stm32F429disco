@@ -841,7 +841,7 @@ void initDebugUart() {
   }
 //}}}
 
-//{{{  sys
+//{{{  system
 const uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
 uint32_t SystemCoreClock = 16000000;
 int globalCounter = 0;
@@ -1274,7 +1274,7 @@ void memoryTest() {
   }
 //}}}
 //}}}
-//{{{  sdram
+//{{{  sdRam
 //{{{
 void SDRAMgpioInit() {
 // Timing configuration 90 MHz SD clock frequency (180MHz/2)
@@ -1638,9 +1638,10 @@ public:
   //{{{
   void rect (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height) {
     ready();
+    DMA2D->OPFCCR  = kDstFormat;
     DMA2D->OCOLR = colour;
     DMA2D->OOR = getWidthPix() - width;
-    DMA2D->OMAR = mCurFrameBufferAddress + ((y * getWidthPix()) + x) * kDstComponents; 
+    DMA2D->OMAR = mCurFrameBufferAddress + ((y * getWidthPix()) + x) * kDstComponents;
     DMA2D->NLR = (width << 16) | height;
     DMA2D->CR = DMA2D_R2M | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
     mWait = true;
@@ -1689,11 +1690,11 @@ public:
     regs[3] = getWidthPix() - width;
     regs[4] = DMA2D_INPUT_A8;
     regs[5] = ((colour & 0xF800) << 8) | ((colour & 0x07E0) << 5) | ((colour & 0x001F) << 3);
-    regs[6] = DMA2D_INPUT_RGB565;
+    regs[6] = kDstFormat;
     regs[7] = 0;
     regs[8] = 0;
     regs[9] = 0;
-    regs[10] = DMA2D_INPUT_RGB565;
+    regs[10] = kDstFormat;
     regs[11] = 0;
     regs[12] = regs[2];
     regs[13] = regs[3];
@@ -1720,8 +1721,8 @@ public:
     DMA2D->BGOR    = stride;         // - repeated to bgnd stride
     DMA2D->FGPFCCR = DMA2D_INPUT_A8; // fgnd PFC
     DMA2D->FGCOLR  = col;
-    DMA2D->BGPFCCR = DMA2D_INPUT_RGB565;
-    DMA2D->OPFCCR  = DMA2D_INPUT_RGB565;
+    DMA2D->BGPFCCR = kDstFormat;
+    DMA2D->OPFCCR  = kDstFormat;
     DMA2D->OMAR    = address;        // output start address
     DMA2D->OOR     = stride;         // output stride
     DMA2D->NLR     = nlr;            //  width:height
@@ -1736,6 +1737,7 @@ public:
     DMA2D->FGPFCCR = srcTile.mFormat;
     DMA2D->FGMAR = (uint32_t)srcTile.mBase;
     DMA2D->FGOR = srcTile.mPitch - srcTile.mWidth;
+    DMA2D->OPFCCR = kDstFormat;
     DMA2D->OMAR = mCurFrameBufferAddress + ((y * getWidthPix()) + x) * kDstComponents;
     DMA2D->OOR = getWidthPix() - srcTile.mWidth;
     DMA2D->NLR = (srcTile.mWidth << 16) | srcTile.mHeight;
@@ -1746,16 +1748,22 @@ public:
   //{{{
   void copy90 (cTile& srcTile, int16_t x, int16_t y) {
 
+    uint32_t src = (uint32_t)srcTile.mBase;
+    uint32_t dst = mCurFrameBufferAddress;
+
     ready();
     DMA2D->FGPFCCR = srcTile.mFormat;
     DMA2D->FGOR = 0;
+    DMA2D->OPFCCR = kDstFormat;
     DMA2D->OOR = getWidthPix() - 1;
     DMA2D->NLR = 0x10000 | (srcTile.mWidth);
 
     for (int line = 0; line < srcTile.mHeight; line++) {
-      DMA2D->FGMAR = (uint32_t)srcTile.mBase + (line * srcTile.mWidth * srcTile.mComponents);
-      DMA2D->OMAR = mCurFrameBufferAddress + (line * kDstComponents);
+      DMA2D->FGMAR = src;
+      DMA2D->OMAR = dst;
       DMA2D->CR = DMA2D_M2M_PFC | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
+      src += srcTile.mWidth * srcTile.mComponents;
+      dst += kDstComponents;
       wait();
       }
     }
@@ -2128,11 +2136,6 @@ public:
     mDrawBuffer = !mDrawBuffer;
     setLayer (0, mBuffer[mDrawBuffer]);
     mDrawStartTime = HAL_GetTick();
-    }
-  //}}}
-  //{{{
-  void renderCursor (uint16_t colour, int16_t x, int16_t y, uint16_t z) {
-    ellipse (colour, x, y, z, z);
     }
   //}}}
   //{{{
@@ -3511,18 +3514,11 @@ int main() {
     lcd->copy90 (srcTile, 0, 0);
     auto tCopy90 = HAL_GetTick();
 
-    //lcd->size (srcTile, 0, 0, 800, 1024);
+    lcd->sizeCpu (srcTile, 0, 0, 800, 1280);
     auto tSize = HAL_GetTick();
 
-    lcd->sizeCpu (srcTile, 0, 0, 800, 1280);
-    auto tSizeCpu = HAL_GetTick();
-
-    //lcd->sizeCpuBiLinear (srcTile, 0, 0, 800, 1280);
-    auto tSizeBiCpu = HAL_GetTick();
-
     lcd->info ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " d:" + dec(tDecode-tHeader) +
-               " c:" + dec(tCopy-tRender) + " c90:" + dec(tCopy90-tCopy) +
-               " s:" + dec(tSize-tCopy90) + " sc:" + dec(tSizeCpu-tSize) + " sbc:" + dec(tSizeBiCpu-tSizeCpu));
+               " c:" + dec(tCopy-tRender) + " c90:" + dec(tCopy90-tCopy) + " s:" + dec(tSize-tCopy90));
     vPortFree (decodedPic);
     }
 
