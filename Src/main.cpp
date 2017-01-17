@@ -1534,9 +1534,9 @@ public:
   //{{{  class cTile
   class cTile {
   public:
-    cTile (uint32_t base, uint16_t components, uint16_t pitch,
+    cTile (uint8_t* piccy, uint16_t components, uint16_t pitch,
            uint16_t x, uint16_t y, uint16_t width, uint16_t height)
-       :  mBase(base), mPitch(pitch), mComponents(components), mX(x), mY(y), mWidth(width), mHeight(height) {
+       :  mPiccy((uint32_t)piccy), mPitch(pitch), mComponents(components), mX(x), mY(y), mWidth(width), mHeight(height) {
      if (components == 2)
        mFormat = DMA2D_RGB565;
      else if (components == 3)
@@ -1545,7 +1545,11 @@ public:
        mFormat = DMA2D_ARGB8888;
       };
 
-    uint32_t mBase;
+    void free() {
+      vPortFree ((void*)mPiccy);
+      }
+
+    uint32_t mPiccy;
     uint16_t mComponents;
     uint16_t mPitch;
     uint16_t mX;
@@ -1743,7 +1747,7 @@ public:
 
     ready();
     DMA2D->FGPFCCR = srcTile.mFormat;
-    DMA2D->FGMAR = (uint32_t)srcTile.mBase;
+    DMA2D->FGMAR = (uint32_t)srcTile.mPiccy;
     DMA2D->FGOR = srcTile.mPitch - srcTile.mWidth;
     DMA2D->OPFCCR = kDstFormat;
     DMA2D->OMAR = mCurFrameBufferAddress + ((y * getWidthPix()) + x) * kDstComponents;
@@ -1756,7 +1760,7 @@ public:
   //{{{
   void copy90 (cTile& srcTile, int16_t x, int16_t y) {
 
-    uint32_t src = (uint32_t)srcTile.mBase;
+    uint32_t src = (uint32_t)srcTile.mPiccy;
     uint32_t dst = mCurFrameBufferAddress;
 
     ready();
@@ -1783,7 +1787,7 @@ public:
     uint32_t tempBuf = (uint32_t)pvPortMalloc (srcTile.mWidth * height * kTempComponents);
 
     // first pass
-    uint32_t srcBase = srcTile.mBase + ((srcTile.mY * srcTile.mPitch) + srcTile.mX) * srcTile.mComponents;
+    uint32_t srcBase = srcTile.mPiccy + ((srcTile.mY * srcTile.mPitch) + srcTile.mX) * srcTile.mComponents;
     uint32_t blendCoeff = ((srcTile.mHeight-1) << 21) / height;
     uint32_t blendIndex = blendCoeff >> 1;
     uint16_t srcPitch = srcTile.mPitch * srcTile.mComponents;
@@ -1863,7 +1867,7 @@ public:
     uint16_t* dstPtr = (uint16_t*)(mCurFrameBufferAddress) + (y * getWidthPix()) + x;
 
     if (srcTile.mComponents == 2) {
-      uint16_t* srcBase = (uint16_t*)(srcTile.mBase) + (srcTile.mY * srcTile.mPitch) + srcTile.mX;
+      uint16_t* srcBase = (uint16_t*)(srcTile.mPiccy) + (srcTile.mY * srcTile.mPitch) + srcTile.mX;
       for (uint32_t y16 = (srcTile.mY << 16); y16 < ((srcTile.mY + height) * yStep16); y16 += yStep16) {
         uint16_t* srcy1x1 = srcBase + (y16 >> 16) * srcTile.mPitch;
         for (uint32_t x16 = srcTile.mX << 16; x16 < (srcTile.mX + width) * xStep16; x16 += xStep16)
@@ -1873,7 +1877,7 @@ public:
       }
 
     else {
-      uint8_t* srcBase = (uint8_t*)(srcTile.mBase + ((srcTile.mY * srcTile.mPitch) + srcTile.mX) * srcTile.mComponents);
+      uint8_t* srcBase = (uint8_t*)(srcTile.mPiccy + ((srcTile.mY * srcTile.mPitch) + srcTile.mX) * srcTile.mComponents);
       for (uint32_t y16 = (srcTile.mY << 16); y16 < ((srcTile.mY + height) * yStep16); y16 += yStep16) {
         uint8_t* srcy = srcBase + ((y16 >> 16) * srcTile.mPitch) * srcTile.mComponents;
         for (uint32_t x16 = srcTile.mX << 16; x16 < (srcTile.mX + width) * xStep16; x16 += xStep16) {
@@ -1897,7 +1901,7 @@ public:
     for (uint32_t y16 = (srcTile.mY << 16); y16 < (srcTile.mY + height) * yStep16; y16 += yStep16) {
       uint8_t yweight2 = (y16 >> 9) & 0x7F;
       uint8_t yweight1 = 0x80 - yweight2;
-      const uint8_t* srcy = (uint8_t*)srcTile.mBase + ((y16 >> 16) * ySrcOffset) + (srcTile.mX * srcTile.mComponents);
+      const uint8_t* srcy = (uint8_t*)srcTile.mPiccy + ((y16 >> 16) * ySrcOffset) + (srcTile.mX * srcTile.mComponents);
       for (uint32_t x16 = srcTile.mX << 16; x16 < (srcTile.mX + width) * xStep16; x16 += xStep16) {
         uint8_t xweight2 = (x16 >> 9) & 0x7F;
         uint8_t xweight1 = 0x80 - xweight2;
@@ -1915,6 +1919,15 @@ public:
                         (*srcy2x1 * xweight1 + *srcy2x2 * xweight2) * yweight2) >> 6) & 0xF800);
         }
       }
+    }
+  //}}}
+  //{{{
+  uint32_t ready() {
+    if (mWait) {
+      mWait = false;
+      return wait();
+      }
+    return 0;
     }
   //}}}
 
@@ -2457,15 +2470,6 @@ private:
     DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
                    DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
     return took;
-    }
-  //}}}
-  //{{{
-  uint32_t ready() {
-    if (mWait) {
-      mWait = false;
-      return wait();
-      }
-    return 0;
     }
   //}}}
 
@@ -3484,7 +3488,7 @@ int main() {
     //}}}
     auto tRead = HAL_GetTick();
 
-    cJpegPic* jpeg = new cJpegPic (kComponents, buf);
+    cJpegPic* jpeg = new cJpegPic (buf);
     //{{{  readHeader, calc scale
     jpeg->readHeader();
     auto width = jpeg->getWidth();
@@ -3505,31 +3509,31 @@ int main() {
     auto tHeader = HAL_GetTick();
 
     lcd->info (fileStr + " sz:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + ">>" + dec(scaleShift));
-
-    auto decodedPic = jpeg->decodeBody (scaleShift);
-    auto tDecode = HAL_GetTick();
-
-    delete (jpeg);
-    vPortFree (buf);
-
     lcd->startRender();
     lcd->clear (COL_BLACK);
     lcd->endRender (true);
     auto tRender = HAL_GetTick();
 
-    cLcd::cTile srcTile ((uint32_t)decodedPic, kComponents, width, 0,0, width, height);
-    lcd->copy (srcTile, 0, 0);
+    cLcd::cTile picTile (jpeg->decodeBody (scaleShift, kComponents), kComponents, width, 0,0, width, height);
+    delete (jpeg);
+    vPortFree (buf);
+    auto tDecode = HAL_GetTick();
+
+    lcd->copy (picTile, 0, 0);
+    lcd->ready();
     auto tCopy = HAL_GetTick();
 
-    lcd->copy90 (srcTile, 0, 0);
+    lcd->copy90 (picTile, 0, 0);
     auto tCopy90 = HAL_GetTick();
 
-    lcd->sizeCpu (srcTile, 0, 0, 800, 1280);
+    for (int j = 0; j < 4; j++)
+      for (int i = 0; i < 4; i++)
+         lcd->sizeCpu (picTile, i*800/4, j*1280/4, 800/4, 1280/4);
     auto tSize = HAL_GetTick();
 
-    lcd->info ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " d:" + dec(tDecode-tHeader) +
-               " c:" + dec(tCopy-tRender) + " c90:" + dec(tCopy90-tCopy) + " s:" + dec(tSize-tCopy90));
-    vPortFree (decodedPic);
+    lcd->info ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " dec:" + dec(tDecode-tRender) +
+               " copy:" + dec(tCopy-tDecode) + " c90:" + dec(tCopy90-tCopy) + " size:" + dec(tSize-tCopy90));
+    picTile.free();
     }
 
   while (true) {

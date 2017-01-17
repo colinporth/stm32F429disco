@@ -304,7 +304,7 @@ public:
 class cJpegPic : public iPic {
 public:
   //{{{
-  cJpegPic (uint16_t components, uint8_t* buffer) : mBuffer(buffer), mBufferPtr(buffer), mComponents(components)  {
+  cJpegPic (uint8_t* buffer) : mBuffer(buffer), mBufferPtr(buffer), mComponents(3)  {
 
     memset (mQtable, 0, 4 * sizeof(int32_t));
 
@@ -410,8 +410,9 @@ public:
     }
   //}}}
   //{{{
-  uint8_t* decodeBody (uint8_t scaleShift) {
+  uint8_t* decodeBody (uint8_t scaleShift, uint8_t components) {
 
+    mComponents = components;
     mScaleShift = scaleShift;
     mFrameWidth = mWidth >> scaleShift;
     mFrameHeight = mHeight >> scaleShift;
