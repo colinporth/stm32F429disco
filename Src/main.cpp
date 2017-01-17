@@ -1640,7 +1640,7 @@ public:
     ready();
     DMA2D->OCOLR = colour;
     DMA2D->OOR = getWidthPix() - width;
-    DMA2D->OMAR = mCurFrameBufferAddress + (((y * getWidthPix()) + x) * kDstComponents); // OMAR - output start address 3c
+    DMA2D->OMAR = mCurFrameBufferAddress + ((y * getWidthPix()) + x) * kDstComponents; 
     DMA2D->NLR = (width << 16) | height;
     DMA2D->CR = DMA2D_R2M | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
     mWait = true;
@@ -1654,7 +1654,7 @@ public:
     //__IO uint32_t NLR;           /*!< DMA2D Number of Line Register,                  Address offset: 0x44 */
     uint32_t regs[4];
     regs[0] = colour;
-    regs[1] = mCurFrameBufferAddress + (((y * getWidthPix()) + x) * kDstComponents);
+    regs[1] = mCurFrameBufferAddress + ((y * getWidthPix()) + x) * kDstComponents;
     regs[2] = getWidthPix() - width;
     regs[3] = (width << 16) | height;
 
@@ -2131,7 +2131,7 @@ public:
     }
   //}}}
   //{{{
-  void renderCursor (uint16_t colour, int16_t x, int16_t y, int16_t z) {
+  void renderCursor (uint16_t colour, int16_t x, int16_t y, uint16_t z) {
     ellipse (colour, x, y, z, z);
     }
   //}}}
