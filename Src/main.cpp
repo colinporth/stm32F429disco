@@ -1,8 +1,11 @@
 // main.cpp
+//{{{  malloc defines
 #define bigMalloc(size,tag)    pvPortMalloc(size)
 #define bigFree                vPortFree
+
 #define smallMalloc(size,tag)  malloc(size)
 #define smallFree              free
+//}}}
 //{{{  includes
 #include <stdint.h>
 #include <stdlib.h>
@@ -51,7 +54,6 @@
 #define SDRAM_MODEREG_WRITEBURST_MODE_SINGLE     ((uint16_t)0x0200)
 //}}}
 //{{{  trace defines
-
 #define ITM_LAR_KEY   0xC5ACCE55
 //{{{  ITM defines
 /* ITM Trace Privilege Register Definitions */
@@ -147,6 +149,7 @@ __OM  union {
 #define ITM1_BASE       (0xE0000000UL)                            /*!< ITM Base Address */
 #define ITM1            ((ITM1_Type*)       ITM_BASE)   /*!< ITM configuration struct */
 //}}}
+
 //{{{  DWT defines
 /* DWT Control Register Definitions */
 #define DWt1_CTRL_NUMCOMP_Pos               28U                                         /*!< DWT CTRL: NUMCOMP Position */
@@ -285,6 +288,7 @@ typedef struct {
 #define DWt1_BASE       (0xE0001000UL)                            /*!< DWT Base Address */
 #define DWT1            ((DWt1_Type*)       DWt1_BASE)   /*!< DWT configuration struct */
 //}}}
+
 //{{{  CoreDebug defines
 /* Debug Halting Control and Status Register Definitions */
 #define CoreDebug1_DHCSR_DBGKEY_Pos         16U                                            /*!< CoreDebug DHCSR: DBGKEY Position */
@@ -381,6 +385,7 @@ typedef struct {
 #define CoreDebug1_BASE (0xE000EDF0UL)                            /*!< Core Debug Base Address */
 #define CoreDebug1      ((CoreDebug1_Type*) CoreDebug_BASE)   /*!< Core Debug configuration struct */
 //}}}
+
 //{{{  TPI defines
 /* TPI Asynchronous Clock Prescaler Register Definitions */
 #define TPI1_ACPR_PRESCALER_Pos              0U                                         /*!< TPI ACPR: PRESCALER Position */
@@ -527,6 +532,7 @@ typedef struct {
 #define TPI1_BASE       (0xE0040000UL)                            /*!< TPI Base Address */
 #define TPI1            ((TPI1_Type*)       TPI_BASE)   /*!< TPI configuration struct */
 //}}}
+
 //{{{  ETM defines
 #define ETM_CR_POWERDOWN                0x00000001
 #define ETM_CR_MONITORCPRT              0x00000002
@@ -669,6 +675,7 @@ typedef struct {
 #define ETM_BASE 0xE0041000
 #define ETM ((ETM_Type*)ETM_BASE)
 //}}}
+
 //{{{  DBGMCU defines
 /********************  Bit definition for DBGMCU1_IDCODE register  *************/
 #define DBGMCU1_IDCODE_DEV_ID_Pos                     (0U)
@@ -1578,17 +1585,23 @@ void LCD_DMA2D_IRQHandler() {
 
 class cLcd {
 public:
-  //{{{  struct tTile
-  typedef struct {
-    uint32_t base;
-    uint16_t pitch;
-    uint16_t format;
-    uint16_t components;
-    uint16_t x;
-    uint16_t y;
-    uint16_t width;
-    uint16_t height;
-    } tTile;
+  //{{{  class cTile
+  class cTile {
+  public:
+    cTile (uint32_t base, uint16_t pitch, uint16_t format, uint16_t components,
+           uint16_t x, uint16_t y, uint16_t width, uint16_t height)
+       :  mBase(base), mPitch(pitch), mFormat(format), mComponents(components),
+          mX(x), mY(y), mWidth(width), mHeight(height) {};
+
+    uint32_t mBase;
+    uint16_t mPitch;
+    uint16_t mFormat;
+    uint16_t mComponents;
+    uint16_t mX;
+    uint16_t mY;
+    uint16_t mWidth;
+    uint16_t mHeight;
+    };
   //}}}
   //{{{
   cLcd (uint32_t buffer0, uint32_t buffer1)  {
@@ -1636,8 +1649,8 @@ public:
     }
   //}}}
 
-  uint16_t getLcdWidthPix() { return 800; }
-  uint16_t getLcdHeightPix() { return 1280; }
+  uint16_t getWidthPix() { return 800; }
+  uint16_t getHeightPix() { return 1280; }
 
   //{{{
   void setShowDebug (bool title, bool info, bool lcdStats, bool footer) {
@@ -1687,7 +1700,7 @@ public:
         // set displayFirstLine
         if (y < 2 * getBoxHeight())
           displayTop();
-        else if (y > getLcdHeightPix() - 2 * getBoxHeight())
+        else if (y > getHeightPix() - 2 * getBoxHeight())
           displayTail();
         }
       }
@@ -1708,15 +1721,8 @@ public:
   //}}}
   //{{{
   void startRender() {
-
     mDrawBuffer = !mDrawBuffer;
     setLayer (0, mBuffer[mDrawBuffer]);
-
-    // frameSync;
-    //ltdc.frameWait = 1;
-    //if (xSemaphoreTake (ltdc.sem, 100) == pdFALSE)
-    //  ltdc.timeouts++;
-
     mDrawStartTime = HAL_GetTick();
     }
   //}}}
@@ -1731,7 +1737,7 @@ public:
     auto y = 0;
     if ((mShowTitle || forceInfo) && !mTitle.empty()) {
       //{{{  draw title
-      text (COL_YELLOW, getFontHeight(), mTitle, 0, y, getLcdWidthPix(), getBoxHeight());
+      text (COL_YELLOW, getFontHeight(), mTitle, 0, y, getWidthPix(), getBoxHeight());
       y += getBoxHeight();
       }
       //}}}
@@ -1753,11 +1759,11 @@ public:
         auto xinc = text (COL_GREEN, getFontHeight(),
                           dec ((mLines[lineIndex].mTime-mStartTime) / 1000) + "." +
                           dec ((mLines[lineIndex].mTime-mStartTime) % 1000, 3, '0'),
-                          x, y, getLcdWidthPix(), getBoxHeight());
+                          x, y, getWidthPix(), getBoxHeight());
         x += xinc + 3;
 
         text (mLines[lineIndex].mColour, getFontHeight(), mLines[lineIndex].mString,
-              x, y, getLcdWidthPix()-x, getLcdHeightPix());
+              x, y, getWidthPix()-x, getHeightPix());
 
         y += getBoxHeight();
         }
@@ -1770,7 +1776,7 @@ public:
                         dec (mDma2dTimeouts) + " " +
                         dec (ltdc.transferErrorIrq) + " " +
                         dec (ltdc.fifoUnderunIrq);
-      text (COL_WHITE, getFontHeight(), str, 0, getLcdHeightPix() - 2 * getBoxHeight(), getLcdWidthPix(), 24);
+      text (COL_WHITE, getFontHeight(), str, 0, getHeightPix() - 2 * getBoxHeight(), getWidthPix(), 24);
       }
       //}}}
     if (mShowFooter || forceInfo)
@@ -1780,7 +1786,7 @@ public:
             //dec (xPortGetMinimumEverFreeHeapSize()) + " " +
             //dec (osGetCPUUsage()) + "% " +
           dec (mDrawTime) + "ms " + dec (mDma2dCurBuf - mDma2dBuf),
-            0, -getFontHeight() + getLcdHeightPix(), getLcdWidthPix(), getFontHeight());
+            0, -getFontHeight() + getHeightPix(), getWidthPix(), getFontHeight());
       //}}}
 
     // terminate opCode buffer, send it
@@ -1803,7 +1809,6 @@ public:
   //}}}
   //{{{
   void flush() {
-
     *mDma2dCurBuf = kEnd;
     LCD_DMA2D_IRQHandler();
     mDma2dCurBuf = mDma2dBuf;
@@ -1838,14 +1843,14 @@ public:
       }
 
     // quite often same stride
-    if (uint32_t(getLcdWidthPix() - width) != mDstStride) {
+    if (uint32_t(getWidthPix() - width) != mDstStride) {
       *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OOR); // OOR - output stride
-      mDstStride = getLcdWidthPix() - width;
+      mDstStride = getWidthPix() - width;
       *mDma2dCurBuf++ = mDstStride;
       }
 
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OMAR); // OMAR - output start address 3c
-    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * kDstComponents;
+    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getWidthPix()) + x) * kDstComponents;
 
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->NLR);
     *mDma2dCurBuf++ = (width << 16) | height;
@@ -1866,9 +1871,9 @@ public:
       }
 
     *mDma2dCurBuf++ = kStamp;
-    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * kDstComponents; // output start address
+    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getWidthPix()) + x) * kDstComponents; // output start address
 
-    mDstStride = getLcdWidthPix() - width;
+    mDstStride = getWidthPix() - width;
     *mDma2dCurBuf++ = mDstStride;                                          // stride
 
     *mDma2dCurBuf++ = (width << 16) | height;                              // width:height
@@ -1919,11 +1924,11 @@ public:
       y = 0;
       }
 
-    if (y + height > getLcdHeightPix()) {
+    if (y + height > getHeightPix()) {
       // bottom yclip
-      if (y >= getLcdHeightPix())
+      if (y >= getHeightPix())
         return;
-      height = getLcdHeightPix() - y;
+      height = getHeightPix() - y;
       }
 
     stamp (colour, src, x, y, width, height);
@@ -1932,9 +1937,9 @@ public:
   //{{{
   void rectClipped (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height) {
 
-    if (x >= getLcdWidthPix())
+    if (x >= getWidthPix())
       return;
-    if (y >= getLcdHeightPix())
+    if (y >= getHeightPix())
       return;
 
     int xend = x + width;
@@ -1947,13 +1952,13 @@ public:
 
     if (x < 0)
       x = 0;
-    if (xend > getLcdWidthPix())
-      xend = getLcdWidthPix();
+    if (xend > getWidthPix())
+      xend = getWidthPix();
 
     if (y < 0)
       y = 0;
-    if (yend > getLcdHeightPix())
-      yend = getLcdHeightPix();
+    if (yend > getHeightPix())
+      yend = getHeightPix();
 
     if (!width)
       return;
@@ -1975,7 +1980,7 @@ public:
   //{{{
   void clear (uint16_t colour) {
 
-    rect (colour, 0, 0, getLcdWidthPix(), getLcdHeightPix());
+    rect (colour, 0, 0, getWidthPix(), getHeightPix());
     }
   //}}}
   //{{{
@@ -2099,58 +2104,58 @@ public:
   //}}}
 
   //{{{
-  void copy (tTile* srcTile, int16_t x, int16_t y) {
+  void copy (cTile& srcTile, int16_t x, int16_t y) {
   // copy
 
     // fgnd src
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGPFCCR); // fgnd PFC
-    *mDma2dCurBuf++ = srcTile->format;
+    *mDma2dCurBuf++ = srcTile.mFormat;
 
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGMAR); // fgnd address
-    *mDma2dCurBuf++ = (uint32_t)srcTile->base;
+    *mDma2dCurBuf++ = (uint32_t)srcTile.mBase;
 
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGOR); // fgnd stride
-    *mDma2dCurBuf++ = srcTile->pitch - srcTile->width;
+    *mDma2dCurBuf++ = srcTile.mPitch - srcTile.mWidth;
 
     // output
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OMAR); // output start address
-    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getLcdWidthPix()) + x) * kDstComponents;
+    *mDma2dCurBuf++ = mCurFrameBufferAddress + ((y * getWidthPix()) + x) * kDstComponents;
 
-    mDstStride = getLcdWidthPix() - srcTile->width;
+    mDstStride = getWidthPix() - srcTile.mWidth;
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OOR); //  output stride
     *mDma2dCurBuf++ = mDstStride;
 
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->NLR); // width:height
-    *mDma2dCurBuf++ = (srcTile->width << 16) | srcTile->height;
+    *mDma2dCurBuf++ = (srcTile.mWidth << 16) | srcTile.mHeight;
 
     *mDma2dCurBuf++ = (uint32_t)DMA2D;        // CR
     *mDma2dCurBuf++ = DMA2D_M2M_PFC | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
     }
   //}}}
   //{{{
-  void copy90 (tTile* srcTile, int16_t x, int16_t y) {
+  void copy90 (cTile& srcTile, int16_t x, int16_t y) {
 
     // fgnd src
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGPFCCR); // fgnd PFC
-    *mDma2dCurBuf++ = srcTile->format;
+    *mDma2dCurBuf++ = srcTile.mFormat;
 
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->NLR); // width:height
-    *mDma2dCurBuf++ = 0x10000 | (srcTile->width);
+    *mDma2dCurBuf++ = 0x10000 | (srcTile.mWidth);
 
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGOR); // fgnd stride
     *mDma2dCurBuf++ = 0;
 
     // output
-    mDstStride = getLcdWidthPix() - 1;
+    mDstStride = getWidthPix() - 1;
     *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OOR); //  output stride
     *mDma2dCurBuf++ = mDstStride;
 
-    for (int line = 0; line < srcTile->height; line++) {
+    for (int line = 0; line < srcTile.mHeight; line++) {
       *mDma2dCurBuf++ = (uint32_t)&(DMA2D->OMAR); //  output start address
       *mDma2dCurBuf++ = mCurFrameBufferAddress + (line * kDstComponents);
 
       *mDma2dCurBuf++ = (uint32_t)&(DMA2D->FGMAR); //  fgnd address
-      *mDma2dCurBuf++ = (uint32_t)srcTile->base + (line * srcTile->width * srcTile->components);
+      *mDma2dCurBuf++ = (uint32_t)srcTile.mBase + (line * srcTile.mWidth * srcTile.mComponents);
 
       *mDma2dCurBuf++ = (uint32_t)DMA2D;          // CR
       *mDma2dCurBuf++ = DMA2D_M2M_PFC | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
@@ -2159,29 +2164,29 @@ public:
     }
   //}}}
   //{{{
-  void size (tTile* srcTile, int16_t x, int16_t y, uint16_t width, uint16_t height) {
-  // 2 passs size with rotates
+  void size (cTile& srcTile, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+  // 2 passs size with rotates, bilinear blend but broken
 
-    uint32_t tempBuf = (uint32_t)pvPortMalloc (srcTile->width * height * kTempComponents);
+    uint32_t tempBuf = (uint32_t)pvPortMalloc (srcTile.mWidth * height * kTempComponents);
 
     // first pass
-    uint32_t srcBase = srcTile->base + ((srcTile->y * srcTile->pitch) + srcTile->x) * srcTile->components;
-    uint32_t blendCoeff = ((srcTile->height-1) << 21) / height;
+    uint32_t srcBase = srcTile.mBase + ((srcTile.mY * srcTile.mPitch) + srcTile.mX) * srcTile.mComponents;
+    uint32_t blendCoeff = ((srcTile.mHeight-1) << 21) / height;
     uint32_t blendIndex = blendCoeff >> 1;
-    uint16_t srcPitch = srcTile->pitch * srcTile->components;
+    uint16_t srcPitch = srcTile.mPitch * srcTile.mComponents;
     uint32_t srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
     uint32_t srcPtr1 = srcPtr + srcPitch;
     uint32_t dstPtr = tempBuf;
-    uint32_t fccr = srcTile->format | ((blendIndex >> 13) << 24);
+    uint32_t fccr = srcTile.mFormat | ((blendIndex >> 13) << 24);
     uint16_t dstPitch = kTempComponents;
     mDstStride = height - 1;
 
     DMA2D->FGOR = 0;
-    DMA2D->BGPFCCR = 0xff000000 | srcTile->format;
+    DMA2D->BGPFCCR = 0xff000000 | srcTile.mFormat;
     DMA2D->BGOR = 0;
     DMA2D->OPFCCR = kTempFormat;
     DMA2D->OOR = mDstStride;
-    DMA2D->NLR = 0x10000 | srcTile->width;
+    DMA2D->NLR = 0x10000 | srcTile.mWidth;
     for (int i = 0; i < height; i++) {
       //{{{  loop lines, src -> temp
       DMA2D->FGPFCCR = fccr;
@@ -2192,7 +2197,7 @@ public:
       DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
 
       blendIndex += blendCoeff;
-      fccr = srcTile->format | ((blendIndex >> 13) << 24);
+      fccr = srcTile.mFormat | ((blendIndex >> 13) << 24);
       srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
       srcPtr1 = srcPtr + srcPitch;
       dstPtr += dstPitch;
@@ -2205,12 +2210,12 @@ public:
 
     // second pass
     srcBase = tempBuf;
-    blendCoeff = ((srcTile->width-1) << 21) / width;
+    blendCoeff = ((srcTile.mWidth-1) << 21) / width;
     blendIndex = blendCoeff >> 1;
     srcPitch = height * kTempComponents;
     srcPtr = srcBase + (blendIndex >> 21) * srcPitch;
     srcPtr1 = srcPtr + srcPitch;
-    dstPtr = mCurFrameBufferAddress + (((y * getLcdWidthPix()) + x) * kDstComponents);
+    dstPtr = mCurFrameBufferAddress + (((y * getWidthPix()) + x) * kDstComponents);
     fccr = kTempFormat | ((blendIndex >> 13) << 24);
     dstPitch = kDstComponents;
     mDstStride = width - 1;
@@ -2244,32 +2249,63 @@ public:
     }
   //}}}
   //{{{
-  void sizeCpu (tTile* srcTile, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+  void sizeCpu (cTile& srcTile, int16_t x, int16_t y, uint16_t width, uint16_t height) {
 
-    uint32_t srcIncx = (srcTile->width << 16) / width;
-    uint32_t srcIncy = (srcTile->height << 16) / height;
+    uint32_t xStep16 = (srcTile.mWidth << 16) / width;
+    uint32_t yStep16 = (srcTile.mHeight << 16) / height;
 
-    uint16_t* dstPtr = (uint16_t*)(mCurFrameBufferAddress) + (y * getLcdWidthPix()) + x;
+    uint16_t* dstPtr = (uint16_t*)(mCurFrameBufferAddress) + (y * getWidthPix()) + x;
 
-    if (srcTile->components == 2) {
-      uint16_t* srcBase = (uint16_t*)(srcTile->base) + (srcTile->y * srcTile->pitch) + srcTile->x;
-      for (uint32_t srcy = (srcTile->y << 16); srcy < ((srcTile->y + height) * srcIncy); srcy += srcIncy) {
-        uint16_t* srcLineBase = srcBase + (srcy >> 16) * srcTile->pitch;
-        for (uint32_t srcx = srcTile->x << 16; srcx < (srcTile->x + width) * srcIncx; srcx += srcIncx)
-          *dstPtr++ = *(srcLineBase + (srcx >> 16));
-        dstPtr += getLcdWidthPix() - width;
+    if (srcTile.mComponents == 2) {
+      uint16_t* srcBase = (uint16_t*)(srcTile.mBase) + (srcTile.mY * srcTile.mPitch) + srcTile.mX;
+      for (uint32_t y16 = (srcTile.mY << 16); y16 < ((srcTile.mY + height) * yStep16); y16 += yStep16) {
+        uint16_t* srcy1x1 = srcBase + (y16 >> 16) * srcTile.mPitch;
+        for (uint32_t x16 = srcTile.mX << 16; x16 < (srcTile.mX + width) * xStep16; x16 += xStep16)
+          *dstPtr++ = *(srcy1x1 + (x16 >> 16));
+        dstPtr += getWidthPix() - width;
         }
       }
 
     else {
-      uint8_t* srcBase = (uint8_t*)(srcTile->base + ((srcTile->y * srcTile->pitch) + srcTile->x) * srcTile->components);
-      for (uint32_t srcy = (srcTile->y << 16); srcy < ((srcTile->y + height) * srcIncy); srcy += srcIncy) {
-        uint8_t* srcLineBase = srcBase + ((srcy >> 16) * srcTile->pitch) * srcTile->components;
-        for (uint32_t srcx = srcTile->x << 16; srcx < (srcTile->x + width) * srcIncx; srcx += srcIncx) {
-          uint8_t* srcPtr = srcLineBase + (srcx >> 16) * srcTile->components;
-          *dstPtr++ = ((*srcPtr++) >> 3) | (((*srcPtr++) & 0xFC) << 3) | (((*srcPtr) & 0xF8) << 8);
+      uint8_t* srcBase = (uint8_t*)(srcTile.mBase + ((srcTile.mY * srcTile.mPitch) + srcTile.mX) * srcTile.mComponents);
+      for (uint32_t y16 = (srcTile.mY << 16); y16 < ((srcTile.mY + height) * yStep16); y16 += yStep16) {
+        uint8_t* srcy = srcBase + ((y16 >> 16) * srcTile.mPitch) * srcTile.mComponents;
+        for (uint32_t x16 = srcTile.mX << 16; x16 < (srcTile.mX + width) * xStep16; x16 += xStep16) {
+          uint8_t* srcy1x1 = srcy + (x16 >> 16) * srcTile.mComponents;
+          *dstPtr++ = ((*srcy1x1++) >> 3) | (((*srcy1x1++) & 0xFC) << 3) | (((*srcy1x1) & 0xF8) << 8);
           }
-        dstPtr += getLcdWidthPix() - width;
+        dstPtr += getWidthPix() - width;
+        }
+      }
+    }
+  //}}}
+  //{{{
+  void sizeCpuBiLinear (cTile& srcTile, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+
+    uint32_t xStep16 = ((srcTile.mWidth - 1) << 16) / (width - 1);
+    uint32_t yStep16 = ((srcTile.mHeight - 1) << 16) / (height - 1);
+    uint16_t* dstPtr = (uint16_t*)(mCurFrameBufferAddress) + (y * getWidthPix()) + x;
+
+    uint32_t ySrcOffset = srcTile.mPitch * srcTile.mComponents;
+    for (uint32_t y16 = (srcTile.mY << 16); y16 < (srcTile.mY + height) * yStep16; y16 += yStep16) {
+      uint8_t yweight2 = (y16 >> 9) & 0x7F;
+      uint8_t yweight1 = 0x80 - yweight2;
+      const uint8_t* srcy = (uint8_t*)srcTile.mBase + ((y16 >> 16) * ySrcOffset) + (srcTile.mX * srcTile.mComponents);
+      for (uint32_t x16 = srcTile.mX << 16; x16 < (srcTile.mX + width) * xStep16; x16 += xStep16) {
+        uint8_t xweight2 = (x16 >> 9) & 0x7F;
+        uint8_t xweight1 = 0x80 - xweight2;
+        const uint8_t* srcy1x1 = srcy + (x16 >> 16) * srcTile.mComponents;
+        const uint8_t* srcy1x2 = srcy1x1 + srcTile.mComponents;
+        const uint8_t* srcy2x1 = srcy1x1 + ySrcOffset;
+        const uint8_t* srcy2x2 = srcy2x1 + srcTile.mComponents;
+
+        //for (auto dstComponent = 0; dstComponent < 3; dstComponent++)
+        *dstPtr++ = ((((*srcy1x1++ * xweight1 + *srcy1x2++ * xweight2) * yweight1) +
+                       (*srcy2x1++ * xweight1 + *srcy2x2++ * xweight2) * yweight2) >> 17) |
+                    (((((*srcy1x1++ * xweight1 + *srcy1x2++ * xweight2) * yweight1) +
+                        (*srcy2x1++ * xweight1 + *srcy2x2++ * xweight2) * yweight2) >> 11) & 0x07E0) |
+                    (((((*srcy1x1 * xweight1 + *srcy1x2 * xweight2) * yweight1) +
+                        (*srcy2x1 * xweight1 + *srcy2x2 * xweight2) * yweight2) >> 6) & 0xF800);
         }
       }
     }
@@ -2278,8 +2314,10 @@ public:
 private:
   //{{{  const
   const uint32_t kLtdcFormat = LTDC_PIXEL_FORMAT_RGB565;
+
   const uint32_t kDstFormat = DMA2D_RGB565;
   const uint16_t kDstComponents = 2;
+
   const uint32_t kTempFormat = DMA2D_RGB565;
   const uint16_t kTempComponents = 2;
   //}}}
@@ -2312,7 +2350,7 @@ private:
     //}}}
     //{{{  gpio
     //  CK <-> PG.07   DE <-> PF.10  ADJ <-> PD.13 - optional HS <-> PC.06, VS <-> PA.04
-    //  R2 <-> PC.10   G2 <-> PA.06   B2 <-> PD.06
+    //  R2 <-> PC.10xx G2 <-> PA.06   B2 <-> PD.06
     //  R3 <-> PB.00   G3 <-> PG.10   B3 <-> PG.11
     //  R4 <-> PA.11   G4 <-> PB.10   B4 <-> PG.12
     //  R5 <-> PA.12   G5 <-> PB.11   B5 <-> PA.03
@@ -2413,9 +2451,9 @@ private:
     LTDC_LayerCfgTypeDef* curLayerCfg = &LtdcHandler.LayerCfg[layer];
 
     curLayerCfg->WindowX0 = 0;
-    curLayerCfg->WindowX1 = getLcdWidthPix();
+    curLayerCfg->WindowX1 = getWidthPix();
     curLayerCfg->WindowY0 = 0;
-    curLayerCfg->WindowY1 = getLcdHeightPix();
+    curLayerCfg->WindowY1 = getHeightPix();
 
     curLayerCfg->PixelFormat = kLtdcFormat;
 
@@ -2431,8 +2469,8 @@ private:
     curLayerCfg->BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
     curLayerCfg->BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
 
-    curLayerCfg->ImageWidth = getLcdWidthPix();
-    curLayerCfg->ImageHeight = getLcdHeightPix();
+    curLayerCfg->ImageWidth = getWidthPix();
+    curLayerCfg->ImageHeight = getHeightPix();
 
     HAL_LTDC_ConfigLayer (&LtdcHandler, curLayerCfg, layer);
 
@@ -2524,7 +2562,7 @@ private:
 
     mStringPos = getBoxHeight()*3;
 
-    auto numDrawLines = getLcdHeightPix() / getBoxHeight();
+    auto numDrawLines = getHeightPix() / getBoxHeight();
     if (mShowTitle && !mTitle.empty())
       numDrawLines--;
     if (mShowLcdStats)
@@ -3406,9 +3444,6 @@ std::vector<std::string> mFileNames;
 //{{{
 void listDirectory (std::string directoryName, std::string ext) {
 
-  //lcd->info ("dir " + directoryName);
-  //lcd->render();
-
   cDirectory directory (directoryName);
   if (directory.getError()) {
     //{{{  open error
@@ -3420,16 +3455,12 @@ void listDirectory (std::string directoryName, std::string ext) {
   cFileInfo fileInfo;
   while ((directory.find (fileInfo) == FR_OK) && !fileInfo.getEmpty()) {
     if (fileInfo.getBack()) {
-      //debug (fileInfo.getName());
       }
-
     else if (fileInfo.isDirectory()) {
       listDirectory (directoryName + "/" + fileInfo.getName(), ext);
       }
     else if (fileInfo.matchExtension (ext.c_str())) {
       mFileNames.push_back (directoryName + "/" + fileInfo.getName());
-      //lcd->info (fileInfo.getName());
-      //lcd->render();
       }
     }
   }
@@ -3492,8 +3523,9 @@ int main() {
     file.read (buf, file.getSize(), bytesRead);
     //}}}
     auto tRead = HAL_GetTick();
+
+    cJpegPic* jpeg = new cJpegPic (3, buf);
     //{{{  readHeader, calc scale
-    cJpegPic* jpeg = new cJpegPic (2, buf);
     jpeg->readHeader();
     auto width = jpeg->getWidth();
     auto height = jpeg->getHeight();
@@ -3502,7 +3534,7 @@ int main() {
     auto scaleShift = 0;
     auto scale = 1;
     while ((scaleShift < 3) &&
-           ((width / scale > lcd->getLcdWidthPix()) || (height /scale > lcd->getLcdHeightPix()))) {
+           ((width / scale > lcd->getWidthPix()) || (height /scale > lcd->getHeightPix()))) {
       scale *= 2;
       scaleShift++;
       }
@@ -3525,25 +3557,27 @@ int main() {
     lcd->endRender (true);
     auto tRender = HAL_GetTick();
 
-    cLcd::tTile srcTile = {(uint32_t)decodedPic, width, DMA2D_RGB565, 2, 0,0, width, height};
-    lcd->copy (&srcTile, 0, 0);
+    cLcd::cTile srcTile ((uint32_t)decodedPic, width, DMA2D_RGB888, 3, 0,0, width, height);  //565
+    lcd->copy (srcTile, 0, 0);
     lcd->flush();
     auto tCopy = HAL_GetTick();
 
-    lcd->copy90 (&srcTile, 0, 0);
+    lcd->copy90 (srcTile, 0, 0);
     lcd->flush();
     auto tCopy90 = HAL_GetTick();
 
-    lcd->size (&srcTile, 0, 0, 800, 1024);
+    lcd->size (srcTile, 0, 0, 800, 1024);
     auto tSize = HAL_GetTick();
 
-    lcd->sizeCpu (&srcTile, 0, 0, 800, 1280);
+    lcd->sizeCpu (srcTile, 0, 0, 800, 1280);
     auto tSizeCpu = HAL_GetTick();
 
+    lcd->sizeCpuBiLinear (srcTile, 0, 0, 800, 1280);
+    auto tSizeBiCpu = HAL_GetTick();
+
     lcd->info ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " d:" + dec(tDecode-tHeader) +
-               " rn:" + dec(tRender-tDecode) +
-               " c:" + dec(tCopy-tRender) + " c90:" + dec(tCopy90-tCopy) + 
-               " s:" + dec(tSize-tCopy90) + " sc:" + dec(tSizeCpu-tSize));
+               " c:" + dec(tCopy-tRender) + " c90:" + dec(tCopy90-tCopy) +
+               " s:" + dec(tSize-tCopy90) + " sc:" + dec(tSizeCpu-tSize) + " sbc:" + dec(tSizeBiCpu-tSizeCpu));
     vPortFree (decodedPic);
     }
 
@@ -3551,9 +3585,9 @@ int main() {
     lcd->startRender();
     lcd->clear (COL_BLACK);
     //std::string str = "x:" + dec(touchX) + " y:" + dec(touchY) + " z:" + dec(touchZ);
-    //lcd->text (COL_YELLOW, getFontHeight(), str, 100, 200, lcd->getLcdWidthPix(), getBoxHeight());
-    auto x = lcd->getLcdWidthPix() - ((touchY-1300)/4);
-    auto y = lcd->getLcdHeightPix() - ((touchX-1300)/4);
+    //lcd->text (COL_YELLOW, getFontHeight(), str, 100, 200, lcd->getWidthPix(), getBoxHeight());
+    auto x = lcd->getWidthPix() - ((touchY-1300)/4);
+    auto y = lcd->getHeightPix() - ((touchX-1300)/4);
     lcd->ellipse (COL_YELLOW, x, y, touchZ, touchZ);
     lcd->endRender (true);
     //uint16_t value = PS2get();
