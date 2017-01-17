@@ -1319,15 +1319,17 @@ private:
           auto lumaPtr = mMcuBuffer;
           if (iy == 8)
             lumaPtr += 64 * 2;
+
           for (uint32_t ix = 0; ix < mx; ix += 8, lumaPtr += 64) {
-            // convert YCbCr to BGRA
             if (mComponents == 2) {
+              // convert YCbCr to RGB565
               *((uint16_t*)dstPtr) =  (kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)] >> 3) |
-                                      ((kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)] & 0xFC) << 3) |
-                                      ((kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)] & 0xF8) << 8);
+                                     ((kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)] & 0xFC) << 3) |
+                                     ((kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)] & 0xF8) << 8);
               dstPtr += mComponents;
               }
             else {
+              // convert YCbCr to BGR, possibly A
               *dstPtr++ = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
               *dstPtr++ = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
               *dstPtr++ = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];
@@ -1426,6 +1428,7 @@ private:
         for (uint32_t j = 0; j < ry; j++, dstPtr += stride)
           for (uint32_t i = 0; i < rx; i++) {
             if (mComponents == 2) {
+              // convert to RGB565
               *((uint16_t*)dstPtr) = ((*src++) >> 3) | (((*src++) & 0xFC) << 3) | (((*src) & 0xF8) << 8);
               dstPtr += mComponents;
               }
@@ -1471,14 +1474,15 @@ private:
           else // single block width, increase chroma pointer every pixel
             chromaPtr++;
 
-          // convert YCbCr to BGRA
           if (mComponents == 2) {
+            // convert YCbCr to RGB565
             *((uint16_t*)dstPtr) =  (kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)] >> 3) |
                                    ((kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)] & 0xFC) << 3) |
                                    ((kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)] & 0xF8) << 8);
             dstPtr += mComponents;
             }
           else {
+            // convert YCbCr to BGR, possibly A
             *dstPtr++ = kClip8 [*lumaPtr +  ((kBcB * cb) >> 10)];
             *dstPtr++ = kClip8 [*lumaPtr - (((kGcB * cb) + (kGcR * cr)) >> 10)];
             *dstPtr++ = kClip8 [*lumaPtr +  ((kRcR * cr) >> 10)];

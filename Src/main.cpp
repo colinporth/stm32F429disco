@@ -1655,40 +1655,43 @@ public:
   //}}}
   //{{{
   void rect1 (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height) {
-    //__IO uint32_t OCOLR;         /*!< DMA2D Output Color Register,                    Address offset: 0x38 */
-    //__IO uint32_t OMAR;          /*!< DMA2D Output Memory Address Register,           Address offset: 0x3C */
-    //__IO uint32_t OOR;           /*!< DMA2D Output Offset Register,                   Address offset: 0x40 */
-    //__IO uint32_t NLR;           /*!< DMA2D Number of Line Register,                  Address offset: 0x44 */
-    uint32_t regs[4];
-    regs[0] = colour;
-    regs[1] = mCurFrameBufferAddress + ((y * getWidthPix()) + x) * kDstComponents;
-    regs[2] = getWidthPix() - width;
-    regs[3] = (width << 16) | height;
+  //__IO uint32_t OPFCCR;        /*!< DMA2D Output PFC Control Register,              Address offset: 0x34 */
+  //__IO uint32_t OCOLR;         /*!< DMA2D Output Color Register,                    Address offset: 0x38 */
+  //__IO uint32_t OMAR;          /*!< DMA2D Output Memory Address Register,           Address offset: 0x3C */
+  //__IO uint32_t OOR;           /*!< DMA2D Output Offset Register,                   Address offset: 0x40 */
+  //__IO uint32_t NLR;           /*!< DMA2D Number of Line Register,                  Address offset: 0x44 */
+
+    uint32_t regs[5];
+    regs[0] = kDstFormat;
+    regs[1] = colour;
+    regs[2] = mCurFrameBufferAddress + ((y * getWidthPix()) + x) * kDstComponents;
+    regs[3] = getWidthPix() - width;
+    regs[4] = (width << 16) | height;
 
     ready();
-    memcpy ((void*)(&DMA2D->OCOLR), regs, 4*4);
+    memcpy ((void*)(&DMA2D->OPFCCR), regs, 5*4);
     DMA2D->CR = DMA2D_R2M | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
     mWait = true;
     }
   //}}}
   //{{{
   void stamp (uint16_t colour, uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+  //__IO uint32_t FGMAR;         /*!< DMA2D Foreground Memory Address Register,       Address offset: 0x0C */
+  //__IO uint32_t FGOR;          /*!< DMA2D Foreground Offset Register,               Address offset: 0x10 */
+  //__IO uint32_t BGMAR;         /*!< DMA2D Background Memory Address Register,       Address offset: 0x14 */
+  //__IO uint32_t BGOR;          /*!< DMA2D Background Offset Register,               Address offset: 0x18 */
+  //__IO uint32_t FGPFCCR;       /*!< DMA2D Foreground PFC Control Register,          Address offset: 0x1C */
+  //__IO uint32_t FGCOLR;        /*!< DMA2D Foreground Color Register,                Address offset: 0x20 */
+  //__IO uint32_t BGPFCCR;       /*!< DMA2D Background PFC Control Register,          Address offset: 0x24 */
+  //__IO uint32_t BGCOLR;        /*!< DMA2D Background Color Register,                Address offset: 0x28 */
+  //__IO uint32_t FGCMAR;        /*!< DMA2D Foreground CLUT Memory Address Register,  Address offset: 0x2C */
+  //__IO uint32_t BGCMAR;        /*!< DMA2D Background CLUT Memory Address Register,  Address offset: 0x30 */
+  //__IO uint32_t OPFCCR;        /*!< DMA2D Output PFC Control Register,              Address offset: 0x34 */
+  //__IO uint32_t OCOLR;         /*!< DMA2D Output Color Register,                    Address offset: 0x38 */
+  //__IO uint32_t OMAR;          /*!< DMA2D Output Memory Address Register,           Address offset: 0x3C */
+  //__IO uint32_t OOR;           /*!< DMA2D Output Offset Register,                   Address offset: 0x40 */
+  //__IO uint32_t NLR;           /*!< DMA2D Number of Line Register,                  Address offset: 0x44 */
 
-    // __IO uint32_t FGMAR;         /*!< DMA2D Foreground Memory Address Register,       Address offset: 0x0C */
-    // __IO uint32_t FGOR;          /*!< DMA2D Foreground Offset Register,               Address offset: 0x10 */
-    // __IO uint32_t BGMAR;         /*!< DMA2D Background Memory Address Register,       Address offset: 0x14 */
-    // __IO uint32_t BGOR;          /*!< DMA2D Background Offset Register,               Address offset: 0x18 */
-    // __IO uint32_t FGPFCCR;       /*!< DMA2D Foreground PFC Control Register,          Address offset: 0x1C */
-    // __IO uint32_t FGCOLR;        /*!< DMA2D Foreground Color Register,                Address offset: 0x20 */
-    // __IO uint32_t BGPFCCR;       /*!< DMA2D Background PFC Control Register,          Address offset: 0x24 */
-    // __IO uint32_t BGCOLR;        /*!< DMA2D Background Color Register,                Address offset: 0x28 */
-    // __IO uint32_t FGCMAR;        /*!< DMA2D Foreground CLUT Memory Address Register,  Address offset: 0x2C */
-    // __IO uint32_t BGCMAR;        /*!< DMA2D Background CLUT Memory Address Register,  Address offset: 0x30 */
-    // __IO uint32_t OPFCCR;        /*!< DMA2D Output PFC Control Register,              Address offset: 0x34 */
-    // __IO uint32_t OCOLR;         /*!< DMA2D Output Color Register,                    Address offset: 0x38 */
-    // __IO uint32_t OMAR;          /*!< DMA2D Output Memory Address Register,           Address offset: 0x3C */
-    // __IO uint32_t OOR;           /*!< DMA2D Output Offset Register,                   Address offset: 0x40 */
-    //__IO uint32_t NLR;           /*!< DMA2D Number of Line Register,                  Address offset: 0x44 */
     uint32_t regs[15];
     regs[0] = (uint32_t)src;
     regs[1] = 0;
@@ -1711,7 +1714,6 @@ public:
     DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
     mWait = true;
     }
-
   //}}}
   //{{{
   void stamp1 (uint16_t colour, uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height) {
@@ -1888,6 +1890,7 @@ public:
 
     uint32_t xStep16 = ((srcTile.mWidth - 1) << 16) / (width - 1);
     uint32_t yStep16 = ((srcTile.mHeight - 1) << 16) / (height - 1);
+
     uint16_t* dstPtr = (uint16_t*)(mCurFrameBufferAddress) + (y * getWidthPix()) + x;
 
     uint32_t ySrcOffset = srcTile.mPitch * srcTile.mComponents;
