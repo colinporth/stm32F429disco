@@ -1726,6 +1726,7 @@ public:
             //dec (osGetCPUUsage()) + "% " +
           dec (mDrawTime) + "ms ", 0, -getFontHeight() + getHeightPix(), getWidthPix(), getFontHeight());
       //}}}
+    ready();
 
     // show it
     showLayer (0, mBuffer[mDrawBuffer], 255);
@@ -1984,20 +1985,19 @@ public:
   //{{{
   void rect (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height) {
 
+    ready();
     DMA2D->OCOLR = colour;
     DMA2D->OOR = getWidthPix() - width;
     DMA2D->OMAR = mCurFrameBufferAddress + (((y * getWidthPix()) + x) * kDstComponents); // OMAR - output start address 3c
     DMA2D->NLR = (width << 16) | height;
     DMA2D->CR = DMA2D_R2M | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-
-    while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
-    DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
-                   DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+    mWait = true;
     }
   //}}}
   //{{{
   void stamp (uint16_t colour, uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height) {
 
+    ready();
     DMA2D->FGCOLR = ((colour & 0xF800) << 8) | ((colour & 0x07E0) << 5) | ((colour & 0x001F) << 3);
     DMA2D->FGPFCCR = DMA2D_INPUT_A8;  // fgnd PFC
     DMA2D->BGPFCCR = DMA2D_INPUT_RGB565;
@@ -2010,15 +2010,13 @@ public:
     DMA2D->OOR     = getWidthPix() - width;  // output stride
     DMA2D->NLR     = (width << 16) | height; // width:height
     DMA2D->CR = DMA2D_M2M_BLEND | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-
-    while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
-    DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
-                   DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+    mWait = true;
     }
   //}}}
   //{{{
   void copy (cTile& srcTile, int16_t x, int16_t y) {
 
+    ready();
     DMA2D->FGPFCCR = srcTile.mFormat;
     DMA2D->FGMAR = (uint32_t)srcTile.mBase;
     DMA2D->FGOR = srcTile.mPitch - srcTile.mWidth;
@@ -2026,15 +2024,13 @@ public:
     DMA2D->OOR = getWidthPix() - srcTile.mWidth;
     DMA2D->NLR = (srcTile.mWidth << 16) | srcTile.mHeight;
     DMA2D->CR = DMA2D_M2M_PFC | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-
-    while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
-    DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
-                   DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+    mWait = true;
     }
   //}}}
   //{{{
   void copy90 (cTile& srcTile, int16_t x, int16_t y) {
 
+    ready();
     DMA2D->FGPFCCR = srcTile.mFormat;
     DMA2D->FGOR = 0;
     DMA2D->OOR = getWidthPix() - 1;
@@ -2044,12 +2040,8 @@ public:
       DMA2D->FGMAR = (uint32_t)srcTile.mBase + (line * srcTile.mWidth * srcTile.mComponents);
       DMA2D->OMAR = mCurFrameBufferAddress + (line * kDstComponents);
       DMA2D->CR = DMA2D_M2M_PFC | DMA2D_CR_TCIE | DMA2D_CR_TEIE | DMA2D_CR_CEIE | DMA2D_CR_START;
-
-      while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
-      DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
-                     DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+      wait();
       }
-
     }
   //}}}
   //{{{
@@ -2069,6 +2061,7 @@ public:
     uint32_t fccr = srcTile.mFormat | ((blendIndex >> 13) << 24);
     uint16_t dstPitch = kTempComponents;
 
+    ready();
     DMA2D->FGOR = 0;
     DMA2D->BGPFCCR = 0xff000000 | srcTile.mFormat;
     DMA2D->BGOR = 0;
@@ -2089,9 +2082,7 @@ public:
       srcPtr1 = srcPtr + srcPitch;
       dstPtr += dstPitch;
 
-      while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
-      DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
-                     DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+      wait();
       }
       //}}}
 
@@ -2124,9 +2115,7 @@ public:
       srcPtr1 = srcPtr + srcPitch;
       dstPtr += dstPitch;
 
-      while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
-      DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
-                     DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+      wait();
       }
       //}}}
 
@@ -2392,6 +2381,21 @@ private:
     LTDC->SRCR |= LTDC_SRCR_IMR;
     }
   //}}}
+  //{{{
+  void wait() {
+    while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
+    DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
+                   DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+    }
+  //}}}
+  //{{{
+  void ready() {
+    if (mWait) {
+      mWait = false;
+      wait();
+      }
+    }
+  //}}}
 
   //{{{
   cFontChar* loadChar (uint16_t fontHeight, char ch) {
@@ -2504,6 +2508,7 @@ private:
   int mDrawTime = 0;
   bool mDrawBuffer = false;
   uint32_t mBuffer[2] = {0,0};
+  bool mWait = false;
 
   uint32_t mCurFrameBufferAddress = 0;
   uint32_t mSetFrameBufferAddress[2];
