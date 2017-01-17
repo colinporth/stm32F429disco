@@ -1534,19 +1534,25 @@ public:
   //{{{  class cTile
   class cTile {
   public:
-    cTile (uint32_t base, uint16_t pitch, uint16_t format, uint16_t components,
+    cTile (uint32_t base, uint16_t components, uint16_t pitch,
            uint16_t x, uint16_t y, uint16_t width, uint16_t height)
-       :  mBase(base), mPitch(pitch), mFormat(format), mComponents(components),
-          mX(x), mY(y), mWidth(width), mHeight(height) {};
+       :  mBase(base), mPitch(pitch), mComponents(components), mX(x), mY(y), mWidth(width), mHeight(height) {
+     if (components == 2)
+       mFormat = DMA2D_RGB565;
+     else if (components == 3)
+       mFormat = DMA2D_RGB888;
+     else
+       mFormat = DMA2D_ARGB8888;
+      };
 
     uint32_t mBase;
-    uint16_t mPitch;
-    uint16_t mFormat;
     uint16_t mComponents;
+    uint16_t mPitch;
     uint16_t mX;
     uint16_t mY;
     uint16_t mWidth;
     uint16_t mHeight;
+    uint16_t mFormat;
     };
   //}}}
   //{{{
@@ -1910,9 +1916,13 @@ public:
   //}}}
 
   //{{{
+  void clear (uint16_t colour) {
+    rect (colour, 0, 0, getWidthPix(), getHeightPix());
+    }
+  //}}}
+  //{{{
   void pixelClipped (uint16_t colour, int16_t x, int16_t y) {
-
-      rectClipped (colour, x, y, 1, 1);
+    rectClipped (colour, x, y, 1, 1);
     }
   //}}}
   //{{{
@@ -1976,17 +1986,10 @@ public:
   //}}}
   //{{{
   void rectOutline (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height, uint8_t thickness) {
-
     rectClipped (colour, x, y, width, thickness);
     rectClipped (colour, x + width-thickness, y, thickness, height);
     rectClipped (colour, x, y + height-thickness, width, thickness);
     rectClipped (colour, x, y, thickness, height);
-    }
-  //}}}
-  //{{{
-  void clear (uint16_t colour) {
-
-    rect (colour, 0, 0, getWidthPix(), getHeightPix());
     }
   //}}}
   //{{{
@@ -2445,18 +2448,21 @@ private:
     }
   //}}}
   //{{{
-  void wait() {
-    while (!(DMA2D->ISR & DMA2D_FLAG_TC)) {}
+  uint32_t wait() {
+    uint32_t took = 0;
+    while (!(DMA2D->ISR & DMA2D_FLAG_TC)) { took++; }
     DMA2D->IFCR |= DMA2D_IFSR_CTEIF | DMA2D_IFSR_CTCIF | DMA2D_IFSR_CTWIF|
                    DMA2D_IFSR_CCAEIF | DMA2D_IFSR_CCTCIF | DMA2D_IFSR_CCEIF;
+    return took;
     }
   //}}}
   //{{{
-  void ready() {
+  uint32_t ready() {
     if (mWait) {
       mWait = false;
-      wait();
+      return wait();
       }
+    return 0;
     }
   //}}}
 
@@ -3464,6 +3470,7 @@ int main() {
     }
     //}}}
 
+  const int kComponents = 3;
   for (auto fileStr : mFileNames) {
     auto t0 = HAL_GetTick();
     //{{{  read file and header
@@ -3474,7 +3481,7 @@ int main() {
     //}}}
     auto tRead = HAL_GetTick();
 
-    cJpegPic* jpeg = new cJpegPic (3, buf);
+    cJpegPic* jpeg = new cJpegPic (kComponents, buf);
     //{{{  readHeader, calc scale
     jpeg->readHeader();
     auto width = jpeg->getWidth();
@@ -3507,7 +3514,7 @@ int main() {
     lcd->endRender (true);
     auto tRender = HAL_GetTick();
 
-    cLcd::cTile srcTile ((uint32_t)decodedPic, width, DMA2D_RGB888, 3, 0,0, width, height);  //565
+    cLcd::cTile srcTile ((uint32_t)decodedPic, kComponents, width, 0,0, width, height);
     lcd->copy (srcTile, 0, 0);
     auto tCopy = HAL_GetTick();
 
