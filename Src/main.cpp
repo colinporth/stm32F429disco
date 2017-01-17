@@ -29,6 +29,8 @@
 #include FT_FREETYPE_H
 #include "FreeSansBold.h"
 
+#include "cPngPic.h"
+//#include "cGifPic.h"
 #include "cJpegPic.h"
 
 #include "diskio.h"
@@ -3470,7 +3472,7 @@ int main() {
       else
         lcd->debug ("SD label:" + fatFs->getLabel() + " vsn:" + hex (fatFs->getVolumeSerialNumber()) +
                    " freeSectors:" + dec (fatFs->getFreeSectors()));
-      listDirectory ("", "JPG");
+      listDirectory ("", "PNG");
       }
     else
       lcd->debug ("no SD card");
@@ -3489,14 +3491,14 @@ int main() {
 
     auto bytesRead = 0;
     file.read (buf, file.getSize(), bytesRead);
-
-    cJpegPic* jpeg = new cJpegPic (buf);
     //}}}
+    //cJpegPic* pic = new cJpegPic (buf);
+    cPngPic* pic = new cPngPic (buf);
     auto tRead = HAL_GetTick();
     //{{{  readHeader, calc scale
-    jpeg->readHeader();
-    auto width = jpeg->getWidth();
-    auto height = jpeg->getHeight();
+    pic->readHeader();
+    auto width = pic->getWidth();
+    auto height = pic->getHeight();
 
     // calc scale
     auto scaleShift = 0;
@@ -3513,28 +3515,21 @@ int main() {
     auto tHeader = HAL_GetTick();
 
     lcd->info (fileStr + " sz:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + ">>" + dec(scaleShift));
-    cLcd::cTile picTile (jpeg->decodeBody (scaleShift, kComponents), kComponents, width, 0,0, width, height);
+    cLcd::cTile picTile (pic->decodeBody(), pic->getComponents(), width, 0,0, width, height);
     if (!picTile.mPiccy)
       lcd->debug ("- no piccy");
-    delete (jpeg);
+    delete (pic);
     vPortFree (buf);
     auto tDecode = HAL_GetTick();
 
-    lcd->copy (picTile, 0, 0);
-    lcd->ready();
-    auto tCopy = HAL_GetTick();
-
-    lcd->copy90 (picTile, 0, 0);
-    auto tCopy90 = HAL_GetTick();
-
-    for (int j = 0; j < 4; j++)
-      for (int i = 0; i < 4; i++)
-         lcd->sizeCpu (picTile, i*800/4, j*1280/4, 800/4, 1280/4);
+    lcd->startRender();
+    lcd->clear (COL_BLACK);
+    lcd->sizeCpu (picTile, 0,0,800, 1000);
     picTile.free();
-    auto tSize = HAL_GetTick();
-
-    lcd->debug ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " dec:" + dec(tDecode-tHeader) +
-                " copy:" + dec(tCopy-tDecode) + " c90:" + dec(tCopy90-tCopy) + " size:" + dec(tSize-tCopy90));
+    auto tCopy = HAL_GetTick();
+    lcd->info ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " dec:" + dec(tDecode-tHeader) +
+                " copy:" + dec(tCopy-tDecode));
+    lcd->endRender (true);
     }
 
   while (true) {
