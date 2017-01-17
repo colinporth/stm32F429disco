@@ -304,14 +304,12 @@ public:
 class cJpegPic : public iPic {
 public:
   //{{{
-  cJpegPic (uint8_t* buffer) : mBuffer(buffer), mBufferPtr(buffer), mComponents(3)  {
+  cJpegPic (uint8_t* buffer) : mBuffer(buffer) {
 
     memset (mQtable, 0, 4 * sizeof(int32_t));
-
     memset (mHuffBits, 0, 2 * 2);
     memset (mHuffData, 0, 2 * 2);
     memset (mHuffCode, 0, 2 * 2 * sizeof(uint16_t));
-
     mPoolBuffer = (uint8_t*)bigMalloc(kPoolBufferSize, "jpegPool");
     mInputBuffer = (uint8_t*)bigMalloc (kInputBufferSize, "jpegInputBuffer");
     }
@@ -330,7 +328,11 @@ public:
   virtual uint16_t getHeight() { return mHeight; }
   virtual uint16_t getComponents() { return mComponents; }
   virtual uint8_t* getPic() { return mFrameBuffer; }
-  virtual void setPic (uint8_t* buffer, int size) {};
+  //{{{
+  virtual void setPic (uint8_t* buffer, int size) {
+    mBuffer = buffer;
+    }
+  //}}}
 
   //{{{  gets
   uint32_t getPoolBytesLeft() { return mPoolBytesLeft; }
@@ -341,6 +343,7 @@ public:
   //{{{
   bool readHeader() {
 
+    mBufferPtr = mBuffer;
     mPoolPtr = mPoolBuffer;
     mPoolBytesLeft = kPoolBufferSize;
     mThumbOffset = 0;
@@ -468,7 +471,7 @@ protected:
     return bytes;
     }
   //}}}
-  uint8_t* mBuffer = nullptr;
+  uint8_t* mBuffer;
   uint8_t* mBufferPtr = nullptr;
 
 private:
@@ -1534,6 +1537,6 @@ private:
   uint32_t mThumbOffset = 0;
   uint32_t mThumbBytes = 0;
 
-  uint16_t mComponents;
+  uint16_t mComponents = 3;
   //}}}
   };

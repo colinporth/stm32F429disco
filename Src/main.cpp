@@ -1536,7 +1536,7 @@ public:
   public:
     cTile (uint8_t* piccy, uint16_t components, uint16_t pitch,
            uint16_t x, uint16_t y, uint16_t width, uint16_t height)
-       :  mPiccy((uint32_t)piccy), mPitch(pitch), mComponents(components), mX(x), mY(y), mWidth(width), mHeight(height) {
+       :  mPiccy((uint32_t)piccy), mComponents(components), mPitch(pitch), mX(x), mY(y), mWidth(width), mHeight(height) {
      if (components == 2)
        mFormat = DMA2D_RGB565;
      else if (components == 3)
@@ -3482,13 +3482,17 @@ int main() {
     auto t0 = HAL_GetTick();
     //{{{  read file and header
     cFile file (fileStr, FA_OPEN_EXISTING | FA_READ);
+
     auto buf = (uint8_t*)pvPortMalloc (file.getSize());
+    if (!buf)
+      lcd->debug ("no buf");
+
     auto bytesRead = 0;
     file.read (buf, file.getSize(), bytesRead);
-    //}}}
-    auto tRead = HAL_GetTick();
 
     cJpegPic* jpeg = new cJpegPic (buf);
+    //}}}
+    auto tRead = HAL_GetTick();
     //{{{  readHeader, calc scale
     jpeg->readHeader();
     auto width = jpeg->getWidth();
@@ -3508,13 +3512,12 @@ int main() {
     //}}}
     auto tHeader = HAL_GetTick();
 
-    lcd->info (fileStr + " sz:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + ">>" + dec(scaleShift));
-    lcd->startRender();
-    lcd->clear (COL_BLACK);
-    lcd->endRender (true);
+    lcd->debug (fileStr + " sz:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + ">>" + dec(scaleShift));
     auto tRender = HAL_GetTick();
 
     cLcd::cTile picTile (jpeg->decodeBody (scaleShift, kComponents), kComponents, width, 0,0, width, height);
+    if (!picTile.mPiccy)
+      lcd->debug ("no piccy");
     delete (jpeg);
     vPortFree (buf);
     auto tDecode = HAL_GetTick();
@@ -3529,11 +3532,12 @@ int main() {
     for (int j = 0; j < 4; j++)
       for (int i = 0; i < 4; i++)
          lcd->sizeCpu (picTile, i*800/4, j*1280/4, 800/4, 1280/4);
+    picTile.free();
+
     auto tSize = HAL_GetTick();
 
     lcd->info ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " dec:" + dec(tDecode-tRender) +
                " copy:" + dec(tCopy-tDecode) + " c90:" + dec(tCopy90-tCopy) + " size:" + dec(tSize-tCopy90));
-    picTile.free();
     }
 
   while (true) {
