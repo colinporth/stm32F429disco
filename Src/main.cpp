@@ -3,6 +3,8 @@
 #include "cLcd.h"
 #include "ps2.h"
 
+#include "stm32f429i_discovery.h"
+
 #include "fatFs.h"
 #include "diskio.h"
 

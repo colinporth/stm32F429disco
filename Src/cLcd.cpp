@@ -1,22 +1,7 @@
 // cLcd.cpp
-//{{{  includes
 #include "cLcd.h"
 #include "freeSansBold.h"
-//}}}
 
-//{{{  struct tLTDC
-typedef struct {
-  //SemaphoreHandle_t sem;
-  uint32_t timeouts;
-  uint32_t lineIrq;
-  uint32_t fifoUnderunIrq;
-  uint32_t transferErrorIrq;
-  uint32_t lastTicks;
-  uint32_t lineTicks;
-  uint32_t frameWait;
-  } tLTDC;
-//}}}
-tLTDC ltdc;
 uint8_t showAlpha[2];
 uint32_t showFrameBufferAddress[2];
 
@@ -71,17 +56,6 @@ void cLcd::setShowDebug (bool title, bool info, bool lcdStats, bool footer) {
   }
 //}}}
 //{{{
-void cLcd::debug (std::string str) {
-  info (COL_WHITE, str);
-  render();
-  }
-//}}}
-//{{{
-void cLcd::info (std::string str) {
-  info (COL_WHITE, str);
-  }
-//}}}
-//{{{
 void cLcd::info (uint16_t colour, std::string str) {
 
   bool tailing = mLastLine == (int)mFirstLine + mNumDrawLines - 1;
@@ -94,6 +68,17 @@ void cLcd::info (uint16_t colour, std::string str) {
 
   if (tailing)
     mFirstLine = mLastLine - mNumDrawLines + 1;
+  }
+//}}}
+//{{{
+void cLcd::info (std::string str) {
+  info (COL_WHITE, str);
+  }
+//}}}
+//{{{
+void cLcd::debug (std::string str) {
+  info (COL_WHITE, str);
+  render();
   }
 //}}}
 
@@ -643,15 +628,6 @@ void cLcd::endRender (bool forceInfo) {
       }
     }
     //}}}
-  if (mShowLcdStats) {
-    //{{{  draw lcdStats
-    std::string str = dec (ltdc.lineIrq) + ":f " +
-                      dec (ltdc.lineTicks) + "ms " +
-                      dec (ltdc.transferErrorIrq) + " " +
-                      dec (ltdc.fifoUnderunIrq);
-    text (COL_WHITE, cWidget::getFontHeight(), str, 0, getHeightPix() - 2 * cWidget::getBoxHeight(), getWidthPix(), 24);
-    }
-    //}}}
   if (mShowFooter || forceInfo)
     //{{{  draw footer
     text (COL_WHITE, cWidget::getFontHeight(),
@@ -729,7 +705,7 @@ void cLcd::press (int pressCount, int16_t x, int16_t y, uint16_t z, int16_t xinc
 //{{{
 void cLcd::ltdcInit (uint32_t frameBufferAddress) {
 
-  //{{{  clocks
+  //{{{  init clocks
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -740,7 +716,7 @@ void cLcd::ltdcInit (uint32_t frameBufferAddress) {
   __HAL_RCC_DMA2D_CLK_ENABLE();
   __HAL_RCC_LTDC_CLK_ENABLE();
   //}}}
-  //{{{  gpio
+  //{{{  int gpio
   //  CK <-> PG.07   DE <-> PF.10  ADJ <-> PD.13 - optional HS <-> PC.06, VS <-> PA.04
   //  R2 <-> PC.10xx G2 <-> PA.06   B2 <-> PD.06
   //  R3 <-> PB.00   G3 <-> PG.10   B3 <-> PG.11
@@ -811,25 +787,6 @@ void cLcd::ltdcInit (uint32_t frameBufferAddress) {
   mSetFrameBufferAddress[1] = frameBufferAddress;
   showFrameBufferAddress[1] = frameBufferAddress;
   showAlpha[1] = 0;
-
-  ltdc.timeouts = 0;
-  ltdc.lineIrq = 0;
-  ltdc.fifoUnderunIrq = 0;
-  ltdc.transferErrorIrq = 0;
-  ltdc.lastTicks = 0;
-  ltdc.lineTicks = 0;
-  ltdc.frameWait = 0;
-
-  //vSemaphoreCreateBinary (ltdc.sem);
-
- // HAL_NVIC_SetPriority (LTDC_IRQn, 0xE, 0);
- // HAL_NVIC_EnableIRQ (LTDC_IRQn);
-
-  // set line interupt line number
-  //LTDC->LIPCR = 0;
-
-  // enable line interrupt
-  //LTDC->IER |= LTDC_IT_LI;
   }
 //}}}
 //{{{
@@ -843,7 +800,6 @@ void cLcd::layerInit (uint8_t layer, uint32_t frameBufferAddress) {
   curLayerCfg->WindowY1 = getHeightPix();
 
   curLayerCfg->PixelFormat = kLtdcFormat;
-
   curLayerCfg->FBStartAdress = (uint32_t)frameBufferAddress;
 
   curLayerCfg->Alpha = 255;

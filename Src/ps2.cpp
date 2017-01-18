@@ -1,13 +1,5 @@
 // ps2.cpp
-//{{{  includes
-#include "utils.h"
-
-#include "stm32f4xx.h"
-#include "stm32f4xx_hal.h"
-#include "stm32f429i_discovery.h"
-
 #include "ps2.h"
-//}}}
 
 //{{{  struct ps2Keymap_t
 typedef struct {

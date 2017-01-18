@@ -1,16 +1,9 @@
 #pragma once
 //{{{  includes
-#include <stdint.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string>
-#include <sstream>
-#include <iostream>
-#include <iomanip>
+#include "utils.h"
 
 #include "stm32f4xx.h"
 #include "stm32f4xx_hal.h"
-#include "stm32f429i_discovery.h"
 //}}}
 
 //{{{

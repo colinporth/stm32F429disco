@@ -122,9 +122,9 @@ public:
   uint16_t getHeightPix() { return LCD_HEIGHT; }
 
   void setShowDebug (bool title, bool info, bool lcdStats, bool footer);
-  void debug (std::string str);
-  void info (std::string str);
   void info (uint16_t colour, std::string str);
+  void info (std::string str);
+  void debug (std::string str);
 
   void pixel (uint16_t colour, int16_t x, int16_t y);
   void rect (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height);
