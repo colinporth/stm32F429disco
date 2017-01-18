@@ -9,34 +9,6 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 //}}}
-//{{{  screen resolution defines
-#ifdef NEXXY_SCREEN
-  // NEXXY 7 inch
-  #define LTDC_CLOCK_4  130
-  #define LCD_WIDTH     800
-  #define LCD_HEIGHT   1280
-  #define HORIZ_SYNC     64
-  #define VERT_SYNC       1
-
-  #define BOX_HEIGHT        30
-  #define SMALL_FONT_HEIGHT 12
-  #define FONT_HEIGHT       26
-  #define BIG_FONT_HEIGHT   40
-
-#else
-  // ASUS eee 10 inch
-  #define LTDC_CLOCK_4  120  // 30
-  #define LCD_WIDTH    1024  // min 39Mhz typ 45Mhz max 51.42Mhz
-  #define LCD_HEIGHT    600
-  #define HORIZ_SYNC    176  // min  136  typ 176   max 216
-  #define VERT_SYNC      25  // min   12  typ  25   max  38
-
-  #define BOX_HEIGHT        20
-  #define SMALL_FONT_HEIGHT 19
-  #define FONT_HEIGHT       16
-  #define BIG_FONT_HEIGHT   32
-#endif
-//}}}
 //{{{  colour defines
 #define COL_WHITE         0xFFFF
 //#define COL_LIGHTGREY     0xFFD3D3D3
@@ -75,6 +47,34 @@
 //#define COL_ORANGE        0xFFFFA500
 //#define COL_DARKORANGE    0xFFC07800
 //#define COL_DARKERORANGE  0xFF805000
+//}}}
+//{{{  screen resolution defines
+#ifdef NEXXY_SCREEN
+  // NEXXY 7 inch
+  #define LTDC_CLOCK_4      130  // 32.5Mhz
+  #define LCD_WIDTH         800
+  #define LCD_HEIGHT       1280
+  #define HORIZ_SYNC         64
+  #define VERT_SYNC           1
+
+  #define BOX_HEIGHT         30
+  #define SMALL_FONT_HEIGHT  12
+  #define FONT_HEIGHT        26
+  #define BIG_FONT_HEIGHT    40
+
+#else
+  // ASUS eee 10 inch
+  #define LTDC_CLOCK_4      100  // 25Mhz
+  #define LCD_WIDTH        1024  // min 39Mhz typ 45Mhz max 51.42Mhz
+  #define LCD_HEIGHT        600
+  #define HORIZ_SYNC        136  // min  136  typ 176   max 216
+  #define VERT_SYNC          12  // min   12  typ  25   max  38
+
+  #define BOX_HEIGHT         20
+  #define SMALL_FONT_HEIGHT  10
+  #define FONT_HEIGHT        16
+  #define BIG_FONT_HEIGHT    32
+#endif
 //}}}
 
 class cWidget {
@@ -128,9 +128,7 @@ public:
 
   void pixel (uint16_t colour, int16_t x, int16_t y);
   void rect (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height);
-  void rect1 (uint16_t colour, int16_t x, int16_t y, uint16_t width, uint16_t height);
   void stamp (uint16_t colour, uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height);
-  void stamp1 (uint16_t colour, uint8_t* src, int16_t x, int16_t y, uint16_t width, uint16_t height);
   void copy (cTile& srcTile, int16_t x, int16_t y);
   void copy90 (cTile& srcTile, int16_t x, int16_t y);
   void size (cTile& srcTile, int16_t x, int16_t y, uint16_t width, uint16_t height);
@@ -238,9 +236,8 @@ private:
   bool mWait = false;
 
   uint32_t mCurFrameBufferAddress = 0;
-  uint32_t mSetFrameBufferAddress[2];
-  uint32_t mCurDstColour = 0;
-  uint32_t mCurSrcColour = 0;
+  uint32_t showFrameBufferAddress[2];
+  uint8_t showAlpha[2];
 
   cFontCharMap mFontCharMap;
 
