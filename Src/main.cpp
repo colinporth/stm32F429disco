@@ -8,9 +8,7 @@
 #include "fatFs.h"
 #include "diskio.h"
 
-#include "cPngPic.h"
-#include "cGifPic.h"
-#include "cJpegPic.h"
+#include "cDecodePic.h"
 //}}}
 //{{{  clock defines
 #define HSE_VALUE        ((uint32_t)8000000)
@@ -1766,7 +1764,7 @@ DRESULT diskWrite (const BYTE* buffer, DWORD sector, UINT count) {
 
 std::vector<std::string> mFileNames;
 //{{{
-void listDirectory (std::string directoryName, std::string ext) {
+void listDirectory (std::string directoryName, std::string ext, std::string ext1) {
 
   cDirectory directory (directoryName);
   if (directory.getError()) {
@@ -1781,9 +1779,9 @@ void listDirectory (std::string directoryName, std::string ext) {
     if (fileInfo.getBack()) {
       }
     else if (fileInfo.isDirectory()) {
-      listDirectory (directoryName + "/" + fileInfo.getName(), ext);
+      listDirectory (directoryName + "/" + fileInfo.getName(), ext, ext1);
       }
-    else if (fileInfo.matchExtension (ext.c_str())) {
+    else if (fileInfo.matchExtension (ext.c_str()) || fileInfo.matchExtension (ext1.c_str())) {
       mFileNames.push_back (directoryName + "/" + fileInfo.getName());
       }
     }
@@ -1834,7 +1832,7 @@ int main() {
       else
         lcd->debug ("SD label:" + fatFs->getLabel() + " vsn:" + hex (fatFs->getVolumeSerialNumber()) +
                    " freeSectors:" + dec (fatFs->getFreeSectors()));
-      listDirectory ("", "GIF");
+      listDirectory ("", "PNG", "JPG");
       }
     else
       lcd->debug ("no SD card");
@@ -1853,48 +1851,44 @@ int main() {
     auto bytesRead = 0;
     file.read (buf, file.getSize(), bytesRead);
     //}}}
-    //cJpegPic* pic = new cJpegPic (buf);
-    cGifPic* pic = new cGifPic ();
-    pic->setPic (buf, file.getSize());
-    //cPngPic* pic = new cPngPic (buf);
+    iPic* pic = new cDecodePic ();
     auto tRead = HAL_GetTick();
-    //{{{  readHeader, calc scale
-    pic->readHeader();
-    auto width = pic->getWidth();
-    auto height = pic->getHeight();
 
+    //{{{  scale calc
     // calc scale
-    auto scaleShift = 0;
-    auto scale = 1;
-    while ((scaleShift < 3) &&
-           ((width / scale > lcd->getWidthPix()) || (height /scale > lcd->getHeightPix()))) {
-      scale *= 2;
-      scaleShift++;
-      }
-
-    width >>= scaleShift;
-    height >>= scaleShift;
+    //auto scaleShift = 0;
+    //auto scale = 1;
+    //while ((scaleShift < 3) &&
+    //       ((width / scale > lcd->getWidthPix()) || (height /scale > lcd->getHeightPix()))) {
+    //  scale *= 2;
+    //  scaleShift++;
+    //  }
+    //width >>= scaleShift;
+    //height >>= scaleShift;
     //}}}
-    auto tHeader = HAL_GetTick();
-
-    lcd->info (fileStr + " sz:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + ">>" + dec(scaleShift));
-    pic->decodeBody (0);
-    cLcd::cTile picTile (pic->getPic(), pic->getComponents(), width, 0,0, width, height);
-    //cLcd::cTile picTile (pic->decodeBody(scaleShift, 3), pic->getComponents(), width, 0,0, width, height);
-    if (!picTile.mPiccy)
-      lcd->debug ("- no piccy");
-    delete (pic);
+    pic->setPic (buf, file.getSize());
     vPortFree (buf);
     auto tDecode = HAL_GetTick();
 
-    lcd->startRender();
-    lcd->clear (COL_BLACK);
-    lcd->copy (picTile, 0,0);
-    picTile.free();
-    lcd->endRender (true);
-    auto tCopy = HAL_GetTick();
-    lcd->info ("r:" + dec(tRead-t0) + " h:" + dec(tHeader-tRead) + " dec:" + dec(tDecode-tHeader) +
-                " copy:" + dec(tCopy-tDecode));
+    auto width = pic->getWidth();
+    auto height = pic->getHeight();
+    lcd->info (fileStr + " sz:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height));
+
+    if (pic->getPic()) {
+      cLcd::cTile picTile (pic->getPic(), pic->getComponents(), width,
+                           0,0, width > lcd->getWidthPix() ? lcd->getWidthPix() : width,
+                                height > lcd->getHeightPix() ? lcd->getHeightPix() : height);
+      lcd->startRender();
+      lcd->clear (COL_BLACK);
+      lcd->copy (picTile, 0,0);
+      picTile.free();
+      lcd->endRender (true);
+      lcd->info ("read:" + dec(tRead-t0) + " decode:" + dec(tDecode-tRead));
+      }
+    else
+      lcd->debug ("- no piccy");
+
+    delete (pic);
     }
 
   while (true) {
