@@ -176,7 +176,7 @@ public:
       mFrame_holders = 1;
 
       mPicBuffer = bigMalloc (mWidth*mHeight*4, "GIFimage");
-      buffer_position = unsigned int(gifData - mGifData);
+      buffer_position = (unsigned int)(gifData - mGifData);
       }
 
     /*  Do the colour map if we haven't already. As the top byte is always 0xff or 0x00
@@ -197,7 +197,7 @@ public:
           entry[3] = 0xff;  /* a */
           gifData += 3;
           }
-        buffer_position = unsigned int(gifData - mGifData);
+        buffer_position = (unsigned int)(gifData - mGifData);
         }
       else {
         /*  Create a default colour table with the first two colours as black and white */
@@ -256,20 +256,20 @@ public:
     /*  Get the start of our frame data and the end of the GIF data */
     gifData = mGifData + mFrames[frame].frame_pointer;
     gif_end = mGifData + buffer_size;
-    gif_bytes = unsigned int(gif_end - gifData);
+    gif_bytes = (unsigned int)(gif_end - gifData);
 
     /*  Check if we have enough data The shortest block of data is a 10-byte image descriptor + 1-byte gif trailer */
     if (gif_bytes < 12) return GIF_INSUFFICIENT_FRAME_DATA;
 
     /*  Save the buffer position */
     save_buffer_position = buffer_position;
-    buffer_position = unsigned int(gifData - mGifData);
+    buffer_position = (unsigned int)(gifData - mGifData);
 
     /*  Skip any extensions because we all ready processed them */
     if ((return_value = gif_skip_frame_extensions()) != GIF_OK)
       goto gif_decode_frame_exit;
     gifData = (mGifData + buffer_position);
-    gif_bytes = unsigned int(gif_end - gifData);
+    gif_bytes = (unsigned int)(gif_end - gifData);
 
     /*  Ensure we have enough data for the 10-byte image descriptor + 1-byte gif trailer */
     if (gif_bytes < 12) {
@@ -311,7 +311,7 @@ public:
 
     /*  Move our pointer to the colour table or image data (if no colour table is given) */
     gifData += 10;
-    gif_bytes = unsigned int(gif_end - gifData);
+    gif_bytes = (unsigned int)(gif_end - gifData);
 
     /*  Set up the colour table */
     if (flags & GIF_COLOUR_TABLE_MASK) {
@@ -336,7 +336,7 @@ public:
       else {
         gifData += 3 * colour_table_size;
         }
-      gif_bytes = unsigned int(gif_end - gifData);
+      gif_bytes = (unsigned int)(gif_end - gifData);
       }
     else
       colour_table = mGlobal_colour_table;
@@ -405,7 +405,7 @@ public:
 
       /*  Initialise the LZW decoding */
       set_code_size = gifData[0];
-      buffer_position = unsigned int(gifData - mGifData) + 1;
+      buffer_position = (unsigned int)(gifData - mGifData) + 1;
 
       /*  Set our code variables */
       code_size = set_code_size + 1;
@@ -431,7 +431,7 @@ public:
           of data to remove the need for end-of data checks every pixel. */
         x = width;
         while (x > 0) {
-          burst_bytes = unsigned int(mStackpointer - stack);
+          burst_bytes = (unsigned int)(mStackpointer - stack);
           if (burst_bytes > 0) {
             if (burst_bytes > x)
               burst_bytes = x;
@@ -535,7 +535,7 @@ private:
     /*  Initialise the extensions */
     while (gifData < gif_end && gifData[0] == GIF_EXTENSION_INTRODUCER) {
       ++gifData;
-      if ((gif_bytes = unsigned int(gif_end - gifData)) < 1)
+      if ((gif_bytes = (unsigned int)(gif_end - gifData)) < 1)
         return GIF_INSUFFICIENT_FRAME_DATA;
 
       /*  Switch on extension label */
@@ -606,7 +606,7 @@ private:
         }
 
       /*  Repeatedly skip blocks until we get a zero block or run out of data  This data is ignored by this gif decoder */
-      gif_bytes = unsigned int(gif_end - gifData);
+      gif_bytes = (unsigned int)(gif_end - gifData);
       block_size = 0;
       while (gifData < gif_end && gifData[0] != GIF_BLOCK_TERMINATOR) {
         block_size = gifData[0] + 1;
@@ -618,7 +618,7 @@ private:
       }
 
     /*  Set buffer position and return */
-    buffer_position = unsigned int(gifData - mGifData);
+    buffer_position = (unsigned int)(gifData - mGifData);
     return GIF_OK;
     }
   //}}}
@@ -642,7 +642,7 @@ private:
     /*  Get our buffer position etc. */
     gifData = (unsigned char *)(mGifData + buffer_position);
     gif_end = (unsigned char *)(mGifData + buffer_size);
-    gif_bytes = unsigned int(gif_end - gifData);
+    gif_bytes = (unsigned int)(gif_end - gifData);
 
     /*  Check if we've finished */
     if ((gif_bytes > 0) && (gifData[0] == GIF_TRAILER))
@@ -685,17 +685,17 @@ private:
       gif_decode_frame that doesn't have any of the LZW bits in it. */
 
     /*  Initialise any extensions */
-    buffer_position = unsigned int(gifData - mGifData);
+    buffer_position = (unsigned int)(gifData - mGifData);
     if ((return_value = gif_initialise_frame_extensions(frame)) != GIF_OK)
       return return_value;
     gifData = (mGifData + buffer_position);
-    gif_bytes = unsigned int(gif_end - gifData);
+    gif_bytes = (unsigned int)(gif_end - gifData);
 
     /*  Check if we've finished */
-    if ((gif_bytes = unsigned int(gif_end - gifData)) < 1)
+    if ((gif_bytes = (unsigned int)(gif_end - gifData)) < 1)
       return GIF_INSUFFICIENT_FRAME_DATA;
     else if (gifData[0] == GIF_TRAILER) {
-      buffer_position = unsigned int(gifData - mGifData);
+      buffer_position = (unsigned int)(gifData - mGifData);
       mFrame_count = frame + 1;
       return GIF_OK;
       }
@@ -749,13 +749,13 @@ private:
 
     /*  Move our data onwards and remember we've got a bit of this frame */
     gifData += 10;
-    gif_bytes = unsigned int(gif_end - gifData);
+    gif_bytes = (unsigned int)(gif_end - gifData);
     mFrame_count_partial = frame + 1;
 
     /*  Skip the local colour table */
     if (flags & GIF_COLOUR_TABLE_MASK) {
       gifData += 3 * colour_table_size;
-      if ((gif_bytes = unsigned int(gif_end - gifData)) < 0)
+      if ((gif_bytes = (unsigned int)(gif_end - gifData)) < 0)
         return GIF_INSUFFICIENT_FRAME_DATA;
       }
 
@@ -798,7 +798,7 @@ private:
       }
 
     /*  Add the frame and set the display flag */
-    buffer_position = unsigned int(gifData - mGifData);
+    buffer_position = (unsigned int)(gifData - mGifData);
     mFrame_count = frame + 1;
     mFrames[frame].display = true;
 
@@ -840,7 +840,7 @@ private:
     /*  Get our buffer position etc. */
     gifData = (unsigned char *)(mGifData + buffer_position);
     gif_end = (unsigned char *)(mGifData + buffer_size);
-    gif_bytes = unsigned int(gif_end - gifData);
+    gif_bytes = (unsigned int)(gif_end - gifData);
 
     /*  Skip the extensions */
     while (gifData < gif_end && gifData[0] == GIF_EXTENSION_INTRODUCER) {
@@ -865,7 +865,7 @@ private:
 
       /*  Repeatedly skip blocks until we get a zero block or run out of data
        *  This data is ignored by this gif decoder */
-      gif_bytes = unsigned int(gif_end - gifData);
+      gif_bytes = (unsigned int)(gif_end - gifData);
       block_size = 0;
       while (gifData < gif_end && gifData[0] != GIF_BLOCK_TERMINATOR) {
         block_size = gifData[0] + 1;
@@ -877,7 +877,7 @@ private:
       }
 
     /*  Set buffer position and return */
-    buffer_position = unsigned int(gifData - mGifData);
+    buffer_position = (unsigned int)(gifData - mGifData);
     return GIF_OK;
     }
   //}}}

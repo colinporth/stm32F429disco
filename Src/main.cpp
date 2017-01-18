@@ -9,7 +9,7 @@
 #include "diskio.h"
 
 #include "cPngPic.h"
-//#include "cGifPic.h"
+#include "cGifPic.h"
 #include "cJpegPic.h"
 //}}}
 //{{{  clock defines
@@ -1802,7 +1802,9 @@ int main() {
   sdramBank2Init();
 
   HeapRegion_t xHeapRegions[] = {
-    {(uint8_t*)SDRAM_BANK2_ADDR + (LCD_WIDTH*LCD_HEIGHT*4), 0x800000 - (LCD_WIDTH*LCD_HEIGHT*4) }, { nullptr, 0 } };
+    //{(uint8_t*)0x10000000, 0x10000 },
+    {(uint8_t*)SDRAM_BANK2_ADDR + (LCD_WIDTH*LCD_HEIGHT*4), 0x800000 - (LCD_WIDTH*LCD_HEIGHT*4) },
+    { nullptr, 0 } };
   heapInit (xHeapRegions);
   //{{{  init frameBuffer
   memset ((void*)SDRAM_BANK2_ADDR, 0, (LCD_WIDTH*LCD_HEIGHT*4));
@@ -1832,7 +1834,7 @@ int main() {
       else
         lcd->debug ("SD label:" + fatFs->getLabel() + " vsn:" + hex (fatFs->getVolumeSerialNumber()) +
                    " freeSectors:" + dec (fatFs->getFreeSectors()));
-      listDirectory ("", "PNG");
+      listDirectory ("", "GIF");
       }
     else
       lcd->debug ("no SD card");
@@ -1852,7 +1854,9 @@ int main() {
     file.read (buf, file.getSize(), bytesRead);
     //}}}
     //cJpegPic* pic = new cJpegPic (buf);
-    cPngPic* pic = new cPngPic (buf);
+    cGifPic* pic = new cGifPic ();
+    pic->setPic (buf, file.getSize());
+    //cPngPic* pic = new cPngPic (buf);
     auto tRead = HAL_GetTick();
     //{{{  readHeader, calc scale
     pic->readHeader();
@@ -1874,7 +1878,8 @@ int main() {
     auto tHeader = HAL_GetTick();
 
     lcd->info (fileStr + " sz:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) + ">>" + dec(scaleShift));
-    cLcd::cTile picTile (pic->decodeBody(), pic->getComponents(), width, 0,0, width, height);
+    pic->decodeBody (0);
+    cLcd::cTile picTile (pic->getPic(), pic->getComponents(), width, 0,0, width, height);
     //cLcd::cTile picTile (pic->decodeBody(scaleShift, 3), pic->getComponents(), width, 0,0, width, height);
     if (!picTile.mPiccy)
       lcd->debug ("- no piccy");
