@@ -27,6 +27,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>cLcd.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/cLcd.cpp</locationURI>
+		</link>
+		<link>
 			<name>fatFs.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/fatFs.cpp</locationURI>
@@ -37,14 +42,14 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/heap_5.c</locationURI>
 		</link>
 		<link>
-			<name>include</name>
-			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/freetype/include</locationURI>
-		</link>
-		<link>
 			<name>main.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/main.cpp</locationURI>
+		</link>
+		<link>
+			<name>ps2.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/ps2.cpp</locationURI>
 		</link>
 		<link>
 			<name>stm32f429i_discovery.c</name>
