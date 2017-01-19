@@ -85,8 +85,13 @@ public:
   static uint16_t getBigFontHeight() { return BIG_FONT_HEIGHT; }
   };
 
+class cFontChar;
+
 class cLcd {
 public:
+  void* operator new (std::size_t size) { return pvPortMalloc (size); }
+  void operator delete (void *ptr) { vPortFree (ptr); }
+
   //{{{
   class cTile {
   public:
@@ -163,17 +168,6 @@ private:
 
   const uint32_t kTempFormat = DMA2D_RGB565;
   const uint16_t kTempComponents = 2;
-  //}}}
-  //{{{
-  class cFontChar {
-  public:
-    uint8_t* bitmap;
-    int16_t left;
-    int16_t top;
-    int16_t pitch;
-    int16_t rows;
-    int16_t advance;
-    };
   //}}}
   typedef std::map<uint16_t, cFontChar*> cFontCharMap;
 

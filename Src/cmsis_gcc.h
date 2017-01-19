@@ -296,13 +296,12 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE void __set_FPSCR(uint32_t fps
 }
 //}}}
 
-// Define macros for porting to both thumb1 and thumb2.
-// For thumb1, use low register (r0-r7), specified by constraint "l"
-// Otherwise, use general registers, specified by constraint "r"
 #if defined (__thumb__) && !defined (__thumb2__)
+  // For thumb1, use low register (r0-r7), specified by constraint "l"
   #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
   #define __CMSIS_GCC_USE_REG(r) "l" (r)
 #else
+  // use general registers, specified by constraint "r"
   #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
   #define __CMSIS_GCC_USE_REG(r) "r" (r)
 #endif

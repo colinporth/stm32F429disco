@@ -1203,7 +1203,7 @@ int main() {
 
   HeapRegion_t xHeapRegions[] = {
     //{(uint8_t*)0x10000000, 0x10000 },
-    {(uint8_t*)SDRAM_BANK2_ADDR + (LCD_WIDTH*LCD_HEIGHT*4), 0x800000 - (LCD_WIDTH*LCD_HEIGHT*4) },
+    {(uint8_t*)SDRAM_BANK2_ADDR + (LCD_WIDTH*LCD_HEIGHT*4), SDRAM_BANK2_LEN - (LCD_WIDTH*LCD_HEIGHT*4) },
     { nullptr, 0 } };
   heapInit (xHeapRegions);
   //{{{  init frameBuffer
@@ -1213,9 +1213,11 @@ int main() {
   const std::string kHello = "built " + std::string(__TIME__) + " on " + std::string(__DATE__) +
                               " heap:" + dec (0x800000 - (LCD_WIDTH*LCD_HEIGHT*4));
   lcd->init ("stm32F429disco test - " + kHello);
+
   lcd->displayOn();
   lcd->render();
   //}}}
+
   if (BSP_PB_GetState (BUTTON_KEY) == GPIO_PIN_SET) {
     //{{{  ps2
     initPs2gpio();
@@ -1274,8 +1276,7 @@ int main() {
     auto width = pic->getWidth();
     auto height = pic->getHeight();
     lcd->info ("fileSize:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) +
-               "read:" + dec(tRead-t0) + " dec:" + dec(tDecode-tRead) + " " +
-               fileStr);
+               " " + dec(tRead-t0) + ":" + dec(tDecode-tRead) + "ms " + fileStr);
 
     if (pic->getPic()) {
       cLcd::cTile picTile (pic->getPic(), pic->getComponents(), width,

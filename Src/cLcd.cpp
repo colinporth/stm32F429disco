@@ -3,6 +3,21 @@
 #include "FreeSansBold.h"
 
 //{{{
+class cFontChar {
+public:
+  void* operator new (std::size_t size) { return pvPortMalloc (size); }
+  void operator delete (void *ptr) { vPortFree (ptr); }
+
+  uint8_t* bitmap;
+  int16_t left;
+  int16_t top;
+  int16_t pitch;
+  int16_t rows;
+  int16_t advance;
+  };
+//}}}
+
+//{{{
 cLcd::cLcd (uint32_t buffer0, uint32_t buffer1)  {
 
   mBuffer[false] = buffer0;
@@ -840,7 +855,7 @@ uint32_t cLcd::wait() {
 //}}}
 
 //{{{
-cLcd::cFontChar* cLcd::loadChar (uint16_t fontHeight, char ch) {
+cFontChar* cLcd::loadChar (uint16_t fontHeight, char ch) {
 
   FT_Set_Pixel_Sizes (FTface, 0, fontHeight);
   FT_Load_Char (FTface, ch, FT_LOAD_RENDER);
@@ -854,7 +869,7 @@ cLcd::cFontChar* cLcd::loadChar (uint16_t fontHeight, char ch) {
   fontChar->bitmap = nullptr;
 
   if (FTglyphSlot->bitmap.buffer) {
-    fontChar->bitmap = (uint8_t*)malloc (FTglyphSlot->bitmap.pitch * FTglyphSlot->bitmap.rows);
+    fontChar->bitmap = (uint8_t*)pvPortMalloc (FTglyphSlot->bitmap.pitch * FTglyphSlot->bitmap.rows);
     memcpy (fontChar->bitmap, FTglyphSlot->bitmap.buffer, FTglyphSlot->bitmap.pitch * FTglyphSlot->bitmap.rows);
     }
 
