@@ -336,7 +336,7 @@ void cLcd::sizeCpuBi (cTile& srcTile, int16_t x, int16_t y, uint16_t width, uint
       const uint8_t* srcy2x1 = srcy1x1 + ySrcOffset;
       const uint8_t* srcy2x2 = srcy2x1 + srcTile.mComponents;
 
-      //for (auto dstComponent = 0; dstComponent < 3; dstComponent++)
+      // only for src->components = 3,4
       *dstPtr++ = ((((*srcy1x1++ * xweight1 + *srcy1x2++ * xweight2) * yweight1) +
                      (*srcy2x1++ * xweight1 + *srcy2x2++ * xweight2) * yweight2) >> 17) |
                   (((((*srcy1x1++ * xweight1 + *srcy1x2++ * xweight2) * yweight1) +
