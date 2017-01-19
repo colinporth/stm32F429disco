@@ -1,6 +1,6 @@
 // cLcd.cpp
 #include "cLcd.h"
-#include "freeSansBold.h"
+#include "FreeSansBold.h"
 
 //{{{
 cLcd::cLcd (uint32_t buffer0, uint32_t buffer1)  {

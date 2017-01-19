@@ -6,17 +6,21 @@
 .global  g_pfnVectors
 .global  Default_Handler
 
-/* start address for the initialization values of the .data section.
-defined in linker script */
+/* start address for the initialization values of the .data section. defined in linker script */
 .word  _sidata
+
 /* start address for the .data section. defined in linker script */
 .word  _sdata
+
 /* end address for the .data section. defined in linker script */
 .word  _edata
+
 /* start address for the .bss section. defined in linker script */
 .word  _sbss
+
 /* end address for the .bss section. defined in linker script */
 .word  _ebss
+
 /* stack used for SystemInit_ExtMemCtl; always internal RAM used */
 
 /**
@@ -511,6 +515,3 @@ g_pfnVectors:
    .thumb_set DMA2D_IRQHandler,Default_Handler
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-
-
-
