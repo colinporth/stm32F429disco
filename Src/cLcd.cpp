@@ -42,7 +42,6 @@ void cLcd::setShowDebug (bool title, bool info, bool lcdStats, bool footer) {
 
   mShowTitle = title;
   mShowInfo = info;
-  mShowLcdStats = lcdStats;
   mShowFooter = footer;
 
   updateNumDrawLines();
@@ -317,7 +316,7 @@ void cLcd::sizeCpu (cTile& srcTile, int16_t x, int16_t y, uint16_t width, uint16
   }
 //}}}
 //{{{
-void cLcd::sizeCpuBiLinear (cTile& srcTile, int16_t x, int16_t y, uint16_t width, uint16_t height) {
+void cLcd::sizeCpuBi (cTile& srcTile, int16_t x, int16_t y, uint16_t width, uint16_t height) {
 
   uint32_t xStep16 = ((srcTile.mWidth - 1) << 16) / (width - 1);
   uint32_t yStep16 = ((srcTile.mHeight - 1) << 16) / (height - 1);
@@ -897,8 +896,6 @@ void cLcd::updateNumDrawLines() {
 
   auto numDrawLines = getHeight() / cWidget::getBoxHeight();
   if (mShowTitle && !mTitle.empty())
-    numDrawLines--;
-  if (mShowLcdStats)
     numDrawLines--;
   if (mShowFooter)
     numDrawLines--;
