@@ -118,8 +118,8 @@ public:
   cLcd (uint32_t buffer0, uint32_t buffer1);
   ~cLcd() {}
   void init (std::string title);
-  uint16_t getWidthPix() { return LCD_WIDTH; }
-  uint16_t getHeightPix() { return LCD_HEIGHT; }
+  uint16_t getWidth() { return LCD_WIDTH; }
+  uint16_t getHeight() { return LCD_HEIGHT; }
 
   void setShowDebug (bool title, bool info, bool lcdStats, bool footer);
   void info (uint16_t colour, std::string str);

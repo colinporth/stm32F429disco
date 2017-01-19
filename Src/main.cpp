@@ -1832,7 +1832,7 @@ int main() {
       else
         lcd->debug ("SD label:" + fatFs->getLabel() + " vsn:" + hex (fatFs->getVolumeSerialNumber()) +
                    " freeSectors:" + dec (fatFs->getFreeSectors()));
-      listDirectory ("", "PNG", "JPG");
+      listDirectory ("", "gif", "GIF");
       }
     else
       lcd->debug ("no SD card");
@@ -1859,7 +1859,7 @@ int main() {
     //auto scaleShift = 0;
     //auto scale = 1;
     //while ((scaleShift < 3) &&
-    //       ((width / scale > lcd->getWidthPix()) || (height /scale > lcd->getHeightPix()))) {
+    //       ((width / scale > lcd->getWidth()) || (height /scale > lcd->getHeight()))) {
     //  scale *= 2;
     //  scaleShift++;
     //  }
@@ -1869,21 +1869,22 @@ int main() {
     pic->setPic (buf, file.getSize());
     vPortFree (buf);
     auto tDecode = HAL_GetTick();
-
     auto width = pic->getWidth();
     auto height = pic->getHeight();
-    lcd->info (fileStr + " sz:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height));
+    lcd->info ("fileSize:" + dec(file.getSize()) + " " + dec(width) + ":" + dec(height) +
+               "read:" + dec(tRead-t0) + " dec:" + dec(tDecode-tRead) + " " +
+               fileStr);
 
     if (pic->getPic()) {
       cLcd::cTile picTile (pic->getPic(), pic->getComponents(), width,
-                           0,0, width > lcd->getWidthPix() ? lcd->getWidthPix() : width,
-                                height > lcd->getHeightPix() ? lcd->getHeightPix() : height);
+                           0,0, width > lcd->getWidth() ? lcd->getWidth() : width,
+                                height > lcd->getHeight() ? lcd->getHeight() : height);
       lcd->startRender();
       lcd->clear (COL_BLACK);
       lcd->copy (picTile, 0,0);
+      lcd->sizeCpuBiLinear (picTile, 0,0, lcd->getWidth(), lcd->getHeight());
       picTile.free();
       lcd->endRender (true);
-      lcd->info ("read:" + dec(tRead-t0) + " decode:" + dec(tDecode-tRead));
       }
     else
       lcd->debug ("- no piccy");
@@ -1891,13 +1892,15 @@ int main() {
     delete (pic);
     }
 
+  HAL_Delay (60000);
+
   while (true) {
     lcd->startRender();
     lcd->clear (COL_BLACK);
     //std::string str = "x:" + dec(touchX) + " y:" + dec(touchY) + " z:" + dec(touchZ);
-    //lcd->text (COL_YELLOW, getFontHeight(), str, 100, 200, lcd->getWidthPix(), getBoxHeight());
-    //auto x = lcd->getWidthPix() - ((touchY-1300)/4);
-    //auto y = lcd->getHeightPix() - ((touchX-1300)/4);
+    //lcd->text (COL_YELLOW, getFontHeight(), str, 100, 200, lcd->getWidth(), getBoxHeight());
+    //auto x = lcd->getWidth() - ((touchY-1300)/4);
+    //auto y = lcd->getHeight() - ((touchX-1300)/4);
     //lcd->ellipse (COL_YELLOW, x, y, touchZ, touchZ);
     lcd->endRender (true);
     //uint16_t value = PS2get();
