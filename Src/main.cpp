@@ -1424,7 +1424,7 @@ void sdramBank2Init() {
   }
 //}}}
 //}}}
-//{{{  Sd
+//{{{  sd
 typedef enum { MSD_OK, MSD_ERROR, MSD_ERROR_SD_NOT_PRESENT, MSD_NO_HIGH_SPEED } MSD_RESULT;
 //{{{  static vars
 SD_HandleTypeDef uSdHandle;
